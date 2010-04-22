@@ -30,9 +30,16 @@
 }
 
 - (void)setPaper:(id)newDetailItem {
-    if (paper != newDetailItem) {
+    if (paper != newDetailItem) {	
+		[paper removeObserver:self forKeyPath:@"downloaded"];
+		
         [paper release];
         paper = [newDetailItem retain];
+		
+		[paper addObserver:self 
+				forKeyPath:@"downloaded" 
+				   options:NSKeyValueObservingOptionNew 
+				   context:nil];
 		
 		if (pdf) {
 			CGPDFDocumentRelease(pdf);
@@ -59,10 +66,6 @@
 		leavesView.hidden = YES;
 		activityIndicator.hidden = NO;
 		[paper load];
-		[paper addObserver:self 
-				forKeyPath:@"downloaded" 
-				   options:NSKeyValueObservingOptionNew 
-				   context:nil];
 	}
 }
 

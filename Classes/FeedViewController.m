@@ -26,6 +26,9 @@
 
 
 - (void)dealloc {
+	[feed removeObserver:self 
+			  forKeyPath:@"papers" ];
+	
 	[feed release];
     [detailViewController release];
     [super dealloc];
