@@ -13,12 +13,17 @@
 
 @implementation Feed
 
-@synthesize papers;
+@synthesize papers, title;
 
-- (id) init
++ (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString {
+	return [[[[self class] alloc] initWithTitle:title URL:urlString] autorelease];
+}
+
+- (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString;
 {
 	if (self = [super init]) {
-		url = [[NSURL alloc] initWithString:@"http://www.plosntds.org/article/feed"];
+		title = [aTitle retain];
+		url = [[NSURL alloc] initWithString:urlString];
 		papers = [[NSMutableArray alloc] init];
 	}
 	return self;
@@ -26,6 +31,7 @@
 
 - (void) dealloc
 {
+	[title release];
 	[url release];
 	[papers release];
 	[super dealloc];

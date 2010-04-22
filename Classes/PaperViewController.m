@@ -35,7 +35,7 @@
 		
         [paper release];
         paper = [newDetailItem retain];
-		
+				
 		[paper addObserver:self 
 				forKeyPath:@"downloaded" 
 				   options:NSKeyValueObservingOptionNew 
@@ -55,7 +55,11 @@
 }
 
 - (void)configureView {
-	if (paper.downloaded) {
+	if (!paper) {
+		activityIndicator.hidden = YES;
+		leavesView.hidden = YES;
+	}
+	else if (paper.downloaded) {
 		leavesView.hidden = NO;
 		activityIndicator.hidden = YES;
 		if (!pdf)

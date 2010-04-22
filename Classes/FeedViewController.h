@@ -18,4 +18,6 @@
 
 @property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;
 
+- (id) initWithFeed:(Feed *)aFeed;
+
 @end

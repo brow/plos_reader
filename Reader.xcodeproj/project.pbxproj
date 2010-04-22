@@ -46,6 +46,7 @@
 		D33D56FB117FF39200BA7203 /* LeavesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D56F9117FF39200BA7203 /* LeavesViewController.m */; };
 		D33D5717117FF44C00BA7203 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D5716117FF44C00BA7203 /* QuartzCore.framework */; };
 		D33D580D1180113B00BA7203 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D580C1180113B00BA7203 /* Utilities.m */; };
+		D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D59A411802BC400BA7203 /* PubsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +124,8 @@
 		D33D5716117FF44C00BA7203 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D33D580B1180113B00BA7203 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		D33D580C1180113B00BA7203 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		D33D59A311802BC400BA7203 /* PubsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PubsViewController.h; sourceTree = "<group>"; };
+		D33D59A411802BC400BA7203 /* PubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PubsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +162,8 @@
 				28042008108E984D000629CD /* FeedViewController.m */,
 				28042009108E984D000629CD /* PaperViewController.h */,
 				2804200A108E984D000629CD /* PaperViewController.m */,
+				D33D59A311802BC400BA7203 /* PubsViewController.h */,
+				D33D59A411802BC400BA7203 /* PubsViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 				D33D56FA117FF39200BA7203 /* LeavesView.m in Sources */,
 				D33D56FB117FF39200BA7203 /* LeavesViewController.m in Sources */,
 				D33D580D1180113B00BA7203 /* Utilities.m in Sources */,
+				D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
