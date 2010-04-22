@@ -7,19 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeavesView.h"
+#import "Paper.h"
 
-@interface PaperViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
+@interface PaperViewController : UIViewController 
+<UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, LeavesViewDataSource> {
     
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
+	UIActivityIndicatorView *activityIndicator;
+	LeavesView *leavesView;
     
-    id detailItem;
-    UILabel *detailDescriptionLabel;
+    Paper *paper;
+	CGPDFDocumentRef pdf;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (assign) IBOutlet LeavesView *leavesView;
+@property (assign) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, retain) id detailItem;
-@property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
+@property (nonatomic, retain) Paper *paper;
 
 @end

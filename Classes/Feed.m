@@ -35,9 +35,10 @@
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request setDelegate:self];
 	[request startAsynchronous];
+	NSLog(@"[REQUEST %@]", url);
 }
 
-#pragma mark kvc accessors
+#pragma mark accessors
 
 - (NSArray *)papers {
     return papers;
@@ -86,7 +87,7 @@
 			paper.title = [paperNode stringValueForXPath:@"./a:title" namespaceMappings:ns];
 			paper.authors = [paperNode stringValueForXPath:@"./a:author/a:name" namespaceMappings:ns];
 			NSString *pdfUrl = [paperNode stringValueForXPath:@"./a:link[@type='application/pdf']/@href" namespaceMappings:ns];
-			paper.pdfUrl = [NSURL URLWithString:pdfUrl];
+			paper.remoteUrl = [NSURL URLWithString:pdfUrl];
 			
 			[newPapers addObject:paper];
 		}

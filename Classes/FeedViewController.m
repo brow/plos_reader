@@ -66,7 +66,7 @@
 #pragma mark UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    detailViewController.detailItem = [NSString stringWithFormat:@"Row %d", indexPath.row];
+    detailViewController.paper = [feed.papers objectAtIndex:indexPath.row];
 }
 
 #pragma mark UIViewController methods

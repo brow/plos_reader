@@ -42,6 +42,10 @@
 		D33D5497117FCCA700BA7203 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D548B117FCCA700BA7203 /* CTidy.m */; };
 		D33D5504117FD44C00BA7203 /* TouchXML+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D5503117FD44C00BA7203 /* TouchXML+Extras.m */; };
 		D33D550B117FD4A400BA7203 /* XMLParsingException.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D550A117FD4A400BA7203 /* XMLParsingException.m */; };
+		D33D56FA117FF39200BA7203 /* LeavesView.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D56F7117FF39200BA7203 /* LeavesView.m */; };
+		D33D56FB117FF39200BA7203 /* LeavesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D56F9117FF39200BA7203 /* LeavesViewController.m */; };
+		D33D5717117FF44C00BA7203 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D5716117FF44C00BA7203 /* QuartzCore.framework */; };
+		D33D580D1180113B00BA7203 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D580C1180113B00BA7203 /* Utilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +116,13 @@
 		D33D5503117FD44C00BA7203 /* TouchXML+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TouchXML+Extras.m"; sourceTree = "<group>"; };
 		D33D5509117FD4A400BA7203 /* XMLParsingException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParsingException.h; sourceTree = "<group>"; };
 		D33D550A117FD4A400BA7203 /* XMLParsingException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParsingException.m; sourceTree = "<group>"; };
+		D33D56F6117FF39200BA7203 /* LeavesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeavesView.h; sourceTree = "<group>"; };
+		D33D56F7117FF39200BA7203 /* LeavesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeavesView.m; sourceTree = "<group>"; };
+		D33D56F8117FF39200BA7203 /* LeavesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeavesViewController.h; sourceTree = "<group>"; };
+		D33D56F9117FF39200BA7203 /* LeavesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeavesViewController.m; sourceTree = "<group>"; };
+		D33D5716117FF44C00BA7203 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D33D580B1180113B00BA7203 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		D33D580C1180113B00BA7203 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +137,7 @@
 				D33D52A0117FB65B00BA7203 /* MobileCoreServices.framework in Frameworks */,
 				D33D52A2117FB65B00BA7203 /* SystemConfiguration.framework in Frameworks */,
 				D33D52A4117FB65B00BA7203 /* libz.1.2.3.dylib in Frameworks */,
+				D33D5717117FF44C00BA7203 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +186,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D33D580B1180113B00BA7203 /* Utilities.h */,
+				D33D580C1180113B00BA7203 /* Utilities.m */,
 				28A0AAE50D9B0CCF005BE974 /* Reader_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -200,6 +214,7 @@
 				D33D529F117FB65B00BA7203 /* MobileCoreServices.framework */,
 				D33D52A1117FB65B00BA7203 /* SystemConfiguration.framework */,
 				D33D52A3117FB65B00BA7203 /* libz.1.2.3.dylib */,
+				D33D5716117FF44C00BA7203 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -218,6 +233,7 @@
 		D33D5266117FB56000BA7203 /* 3rd Party */ = {
 			isa = PBXGroup;
 			children = (
+				D33D56F5117FF39200BA7203 /* Leaves */,
 				D33D5473117FCCA700BA7203 /* TouchXML */,
 				D33D5287117FB5B900BA7203 /* Reachability2.0 */,
 				D33D5267117FB56700BA7203 /* ASIHTTPRequest */,
@@ -300,6 +316,17 @@
 				D33D548B117FCCA700BA7203 /* CTidy.m */,
 			);
 			path = Tidy;
+			sourceTree = "<group>";
+		};
+		D33D56F5117FF39200BA7203 /* Leaves */ = {
+			isa = PBXGroup;
+			children = (
+				D33D56F6117FF39200BA7203 /* LeavesView.h */,
+				D33D56F7117FF39200BA7203 /* LeavesView.m */,
+				D33D56F8117FF39200BA7203 /* LeavesViewController.h */,
+				D33D56F9117FF39200BA7203 /* LeavesViewController.m */,
+			);
+			path = Leaves;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,6 +416,9 @@
 				D33D5497117FCCA700BA7203 /* CTidy.m in Sources */,
 				D33D5504117FD44C00BA7203 /* TouchXML+Extras.m in Sources */,
 				D33D550B117FD4A400BA7203 /* XMLParsingException.m in Sources */,
+				D33D56FA117FF39200BA7203 /* LeavesView.m in Sources */,
+				D33D56FB117FF39200BA7203 /* LeavesViewController.m in Sources */,
+				D33D580D1180113B00BA7203 /* Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

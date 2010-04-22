@@ -273,7 +273,7 @@
 					<string key="className">PaperViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="detailItem">id</string>
+						<string key="paper">id</string>
 						<string key="toolbar">UINavigationBar</string>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
