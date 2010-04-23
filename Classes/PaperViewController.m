@@ -19,7 +19,7 @@
 
 @implementation PaperViewController
 
-@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel;
+@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, citationButton;
 
 - (void)dealloc {
     [popoverController release];
@@ -143,9 +143,17 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	
 	leavesView.dataSource = self;
 	leavesView.delegate = self;
 	[self configureView];
+	
+	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 
+																									   topCapHeight:10]
+							  forState:UIControlStateNormal];
+	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButtonHighlighted.png"] stretchableImageWithLeftCapWidth:10 
+																												  topCapHeight:10]
+							  forState:UIControlStateHighlighted];
 }
 
 - (void)viewDidUnload {

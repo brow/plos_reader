@@ -49,6 +49,8 @@
 		D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D59A411802BC400BA7203 /* PubsViewController.m */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
+		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
+		D3FB39F3118161CF00AC0932 /* CitationButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +133,8 @@
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
+		D3FB39BB11815B0900AC0932 /* CitationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CitationButton.png; sourceTree = "<group>"; };
+		D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CitationButtonHighlighted.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +213,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */,
+				D3FB39BB11815B0900AC0932 /* CitationButton.png */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				2804203B108E9BAB000629CD /* DetailView.xib */,
 				8D1107310486CEB800E47090 /* Reader-Info.plist */,
@@ -394,6 +400,8 @@
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				2804203C108E9BAB000629CD /* DetailView.xib in Resources */,
 				D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */,
+				D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */,
+				D3FB39F3118161CF00AC0932 /* CitationButtonHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
