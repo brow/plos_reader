@@ -17,6 +17,7 @@
     UIToolbar *toolbar;
 	UIActivityIndicatorView *activityIndicator;
 	LeavesView *leavesView;
+	UILabel *pageLabel;
     
     Paper *paper;
 	CGPDFDocumentRef pdf;
@@ -25,6 +26,7 @@
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (assign) IBOutlet LeavesView *leavesView;
 @property (assign) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (assign) IBOutlet UILabel *pageLabel;
 
 @property (nonatomic, retain) Paper *paper;
 

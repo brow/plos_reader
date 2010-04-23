@@ -19,7 +19,7 @@
 
 @implementation PaperViewController
 
-@synthesize toolbar, popoverController, paper, leavesView, activityIndicator;
+@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel;
 
 - (void)dealloc {
     [popoverController release];
@@ -54,19 +54,30 @@
     }        
 }
 
+- (void) displayPageNumber:(NSUInteger)pageNumber {
+	pageLabel.text = [NSString stringWithFormat:
+						 @"%u / %u", 
+						 pageNumber, 
+						 CGPDFDocumentGetNumberOfPages(pdf)];
+}
+
 - (void)configureView {
 	if (!paper) {
+		pageLabel.hidden = YES;
 		activityIndicator.hidden = YES;
 		leavesView.hidden = YES;
 	}
 	else if (paper.downloaded) {
+		pageLabel.hidden = NO;
 		leavesView.hidden = NO;
 		activityIndicator.hidden = YES;
 		if (!pdf)
 			pdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPath]);
 		
 		[leavesView reloadData];
+		[self displayPageNumber:1];
 	} else {
+		pageLabel.hidden = YES;
 		leavesView.hidden = YES;
 		activityIndicator.hidden = NO;
 		[paper load];
@@ -77,6 +88,12 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	[self configureView];
+}
+
+#pragma mark  LeavesViewDelegate methods
+
+- (void) leavesView:(LeavesView *)leavesView didTurnToPageAtIndex:(NSUInteger)pageIndex {
+	[self displayPageNumber:pageIndex + 1];
 }
 
 #pragma mark LeavesViewDataSource methods
