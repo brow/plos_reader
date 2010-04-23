@@ -14,6 +14,8 @@
 @synthesize paper;
 
 - (void) awakeFromNib {
+	titleLabel.highlightedTextColor = [UIColor whiteColor];
+	authorLabel.highlightedTextColor = [UIColor whiteColor];
 }
 
 - (void)dealloc {
