@@ -10,18 +10,22 @@
 
 
 @interface Paper : NSObject {
-	NSURL *remoteUrl;
-	NSString *localPath;
+	NSURL *remotePDFUrl, *remoteXMLUrl;
+	NSString *localPDFPath;
 	NSString *title, *authors;
+	NSMutableDictionary *metadata;
 	
-	BOOL downloaded;
+	BOOL pdfDownloaded, xmlDownloaded, downloaded;
 }
 
-@property (retain) NSURL *remoteUrl;
+@property (retain) NSURL *remotePDFUrl;
+@property (retain) NSURL *remoteXMLUrl;
 @property (retain) NSString *title;
 @property (retain) NSString *authors;
-@property (readonly) NSString *localPath;
+@property (readonly) NSString *localPDFPath;
 @property (readonly) BOOL downloaded;
+@property (readonly) NSDictionary *metadata;
+@property (readonly) NSString *volumeIssueId;
 
 - (void) load;
 

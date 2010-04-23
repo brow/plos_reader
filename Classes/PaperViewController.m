@@ -19,7 +19,7 @@
 
 @implementation PaperViewController
 
-@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, citationButton;
+@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, citationButton, citationLabel;
 
 - (void)dealloc {
     [popoverController release];
@@ -66,19 +66,27 @@
 		pageLabel.hidden = YES;
 		activityIndicator.hidden = YES;
 		leavesView.hidden = YES;
+		citationLabel.hidden = YES;
+		citationButton.enabled = NO;
 	}
 	else if (paper.downloaded) {
 		pageLabel.hidden = NO;
 		leavesView.hidden = NO;
+		citationLabel.hidden = NO;
+		citationButton.enabled = YES;
 		activityIndicator.hidden = YES;
+		
 		if (!pdf)
-			pdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPath]);
+			pdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
 		
 		[leavesView reloadData];
 		[self displayPageNumber:1];
+		citationLabel.text = paper.volumeIssueId;
 	} else {
 		pageLabel.hidden = YES;
 		leavesView.hidden = YES;
+		citationLabel.hidden = YES;
+		citationButton.enabled = NO;
 		activityIndicator.hidden = NO;
 		[paper load];
 	}

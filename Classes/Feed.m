@@ -92,8 +92,12 @@
 		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns]) {
 			paper.title = [paperNode stringValueForXPath:@"./a:title" namespaceMappings:ns];
 			paper.authors = [paperNode stringValueForXPath:@"./a:author/a:name" namespaceMappings:ns];
+			
 			NSString *pdfUrl = [paperNode stringValueForXPath:@"./a:link[@type='application/pdf']/@href" namespaceMappings:ns];
-			paper.remoteUrl = [NSURL URLWithString:pdfUrl];
+			paper.remotePDFUrl = [NSURL URLWithString:pdfUrl];
+			
+			NSString *xmlUrl = [paperNode stringValueForXPath:@"./a:link[@type='text/xml']/@href" namespaceMappings:ns];
+			paper.remoteXMLUrl = [NSURL URLWithString:xmlUrl];
 			
 			[newPapers addObject:paper];
 		}

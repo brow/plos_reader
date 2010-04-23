@@ -19,6 +19,7 @@
 	LeavesView *leavesView;
 	UILabel *pageLabel;
 	UIButton *citationButton;
+	UILabel *citationLabel;
     
     Paper *paper;
 	CGPDFDocumentRef pdf;
@@ -29,6 +30,7 @@
 @property (assign) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (assign) IBOutlet UILabel *pageLabel;
 @property (assign) IBOutlet UIButton *citationButton;
+@property (assign) IBOutlet UILabel *citationLabel;
 
 @property (nonatomic, retain) Paper *paper;
 
