@@ -12,7 +12,7 @@
 
 @implementation FeedViewController
 
-@synthesize detailViewController;
+@synthesize detailViewController, paperCell;
 
 - (id) initWithFeed:(Feed *)aFeed
 {
@@ -56,20 +56,25 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"CellIdentifier";
+    static NSString *cellIdentifier = @"PaperCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PaperCell *cell = (PaperCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryNone;
+		[[NSBundle mainBundle] loadNibNamed:@"PaperCell" 
+									  owner:self 
+									options:nil];
+        cell = self.paperCell;
     }
 	
-	Paper *paper = [feed.papers objectAtIndex:indexPath.row];
-    cell.textLabel.text = paper.title;
+	cell.paper = [feed.papers objectAtIndex:indexPath.row];
     return cell;
 }
 
 #pragma mark UITableViewDelegate methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 100.0;
+}
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     detailViewController.paper = [feed.papers objectAtIndex:indexPath.row];

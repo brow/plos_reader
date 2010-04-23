@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "Feed.h"
+#import "PaperCell.h"
 
 @class PaperViewController;
 
 @interface FeedViewController : UITableViewController {
 	Feed *feed;
     PaperViewController *detailViewController;
+	PaperCell *paperCell;
 }
 
 @property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;
+@property (assign) IBOutlet PaperCell *paperCell;
 
 - (id) initWithFeed:(Feed *)aFeed;
 

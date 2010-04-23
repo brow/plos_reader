@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@class FeedViewController;
+@class PubsViewController;
 @class PaperViewController;
 
 @interface ReaderAppDelegate : NSObject <UIApplicationDelegate> {
@@ -18,14 +18,14 @@
     
     UISplitViewController *splitViewController;
     
-    FeedViewController *rootViewController;
+    PubsViewController *rootViewController;
     PaperViewController *detailViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
-@property (nonatomic, retain) IBOutlet FeedViewController *rootViewController;
+@property (nonatomic, retain) IBOutlet PubsViewController *rootViewController;
 @property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;
 
 @end
