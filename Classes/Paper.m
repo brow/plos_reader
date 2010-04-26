@@ -9,6 +9,7 @@
 #import "Paper.h"
 #import "ASIHTTPRequest.h"
 #import "TouchXML+Extras.h"
+#import "NSString+Extras.h"
 
 @implementation Paper
 
@@ -58,18 +59,42 @@
 	CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:xmlData
 												   options:CXMLDocumentTidyXML 
 													 error:nil] autorelease];
+	
 	[metadata setValue:[doc stringValueForXPath:@"article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']" 
 							  namespaceMappings:nil]
 				forKey:@"journal-id"];
+	
 	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/volume" 
 							  namespaceMappings:nil]
 				forKey:@"volume"];
+	
 	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/issue" 
 							  namespaceMappings:nil]
 				forKey:@"issue"];
+	
 	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/elocation-id" 
 							  namespaceMappings:nil]
 				forKey:@"elocation-id"];
+	
+	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/article-id[@pub-id-type='doi']" 
+							  namespaceMappings:nil]
+				forKey:@"doi"];
+	
+	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/pub-date[@pub-type='epub']/year" 
+							  namespaceMappings:nil]
+				forKey:@"year"];
+	
+	NSMutableArray *authorsMetadata = [NSMutableArray array];
+	for (CXMLNode *authorNode in [doc nodesForXPath:
+			@"article/front/article-meta/contrib-group/contrib[@contrib-type='author']/name[@name-style='western']" error:nil]) {
+		[authorsMetadata addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+									[authorNode stringValueForXPath:@"./surname" namespaceMappings:nil], @"surname",
+									[authorNode stringValueForXPath:@"./given-names" namespaceMappings:nil], @"given-names",
+									nil]];
+	}
+	[metadata setValue:authorsMetadata forKey:@"authors"];
+	 
+	NSLog(@"%@", metadata);
 }
 
 #pragma mark accessors
@@ -81,6 +106,30 @@
 			[metadata objectForKey:@"issue"],
 			[metadata objectForKey:@"elocation-id"],
 			nil];
+}
+
+- (NSString *) citation {
+	NSMutableString *citationString = [NSMutableString string];
+	
+	NSArray *authorsArr = [metadata objectForKey:@"authors"];
+	for (NSDictionary *author in authorsArr)
+		if ([authorsArr indexOfObject:author] < 5)
+			[citationString appendFormat:@"%@ %@%@", 
+			 [author objectForKey:@"surname"], 
+			 [[author objectForKey:@"given-names"] initials],
+			 ([authorsArr indexOfObject:author] < authorsArr.count-1) ? @", " : @" "];
+	
+	if (authorsArr.count > 5)
+		[citationString appendString:@"et al. "];
+	
+	[citationString appendFormat:@"(%@) %@. %@. doi:%@",
+	 [metadata objectForKey:@"year"],
+	 self.title,
+	 self.volumeIssueId,
+	 [metadata objectForKey:@"doi"]
+	 ];
+	
+	return citationString;
 }
 
 - (BOOL)downloaded {

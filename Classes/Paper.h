@@ -26,6 +26,7 @@
 @property (readonly) BOOL downloaded;
 @property (readonly) NSDictionary *metadata;
 @property (readonly) NSString *volumeIssueId;
+@property (readonly) NSString *citation;
 
 - (void) load;
 

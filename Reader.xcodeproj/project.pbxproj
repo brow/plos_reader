@@ -51,6 +51,7 @@
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
 		D3FB39F3118161CF00AC0932 /* CitationButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */; };
+		D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,6 +136,8 @@
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
 		D3FB39BB11815B0900AC0932 /* CitationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CitationButton.png; sourceTree = "<group>"; };
 		D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CitationButtonHighlighted.png; sourceTree = "<group>"; };
+		D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extras.h"; sourceTree = "<group>"; };
+		D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +178,8 @@
 				D33D59A411802BC400BA7203 /* PubsViewController.m */,
 				D3FB386B1180F48C00AC0932 /* PaperCell.h */,
 				D3FB386C1180F48C00AC0932 /* PaperCell.m */,
+				D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */,
+				D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -443,6 +448,7 @@
 				D33D580D1180113B00BA7203 /* Utilities.m in Sources */,
 				D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */,
 				D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */,
+				D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

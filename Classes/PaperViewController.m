@@ -92,6 +92,20 @@
 	}
 }
 
+#pragma mark actions
+
+- (IBAction) toggleCitationActions:(id)sender {
+	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:paper.citation 
+															 delegate:self 
+													cancelButtonTitle:nil 
+											   destructiveButtonTitle:nil 
+													 otherButtonTitles:@"Copy Citation",@"Email PDF",nil] autorelease];
+	actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+	[actionSheet showFromRect:citationButton.frame 
+					   inView:citationButton.superview 
+					 animated:YES];
+}
+
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

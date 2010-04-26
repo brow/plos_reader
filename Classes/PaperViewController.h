@@ -11,7 +11,7 @@
 #import "Paper.h"
 
 @interface PaperViewController : UIViewController 
-<UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, LeavesViewDataSource> {
+<UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, LeavesViewDataSource, UIActionSheetDelegate> {
     
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
@@ -33,5 +33,7 @@
 @property (assign) IBOutlet UILabel *citationLabel;
 
 @property (nonatomic, retain) Paper *paper;
+
+- (IBAction) toggleCitationActions:(id)sender;
 
 @end
