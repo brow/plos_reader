@@ -52,6 +52,7 @@
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
 		D3FB39F3118161CF00AC0932 /* CitationButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */; };
 		D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */; };
+		D3FB3C1A11862FAA00AC0932 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FB3C1911862FAA00AC0932 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CitationButtonHighlighted.png; sourceTree = "<group>"; };
 		D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extras.h"; sourceTree = "<group>"; };
 		D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
+		D3FB3C1911862FAA00AC0932 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				D33D52A2117FB65B00BA7203 /* SystemConfiguration.framework in Frameworks */,
 				D33D52A4117FB65B00BA7203 /* libz.1.2.3.dylib in Frameworks */,
 				D33D5717117FF44C00BA7203 /* QuartzCore.framework in Frameworks */,
+				D3FB3C1A11862FAA00AC0932 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +242,7 @@
 				D33D52A1117FB65B00BA7203 /* SystemConfiguration.framework */,
 				D33D52A3117FB65B00BA7203 /* libz.1.2.3.dylib */,
 				D33D5716117FF44C00BA7203 /* QuartzCore.framework */,
+				D3FB3C1911862FAA00AC0932 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

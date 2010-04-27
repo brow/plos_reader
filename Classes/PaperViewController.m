@@ -94,7 +94,7 @@
 
 #pragma mark actions
 
-- (IBAction) toggleCitationActions:(id)sender {
+- (IBAction) showCitationActions:(id)sender {
 	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:paper.citation 
 															 delegate:self 
 													cancelButtonTitle:nil 
@@ -104,6 +104,46 @@
 	[actionSheet showFromRect:citationButton.frame 
 					   inView:citationButton.superview 
 					 animated:YES];
+}
+
+- (IBAction) emailPDF:(id)sender {
+	MFMailComposeViewController *mailController = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailController setSubject:paper.title];
+	[mailController setMessageBody:paper.citation isHTML:NO];
+	[mailController addAttachmentData:[NSData dataWithContentsOfFile:paper.localPDFPath] 
+							 mimeType:@"application/pdf" 
+							 fileName:[[paper.metadata objectForKey:@"doi"] lastPathComponent]
+	 ];
+	mailController.mailComposeDelegate = self;
+	[super presentModalViewController:mailController animated:YES];
+}
+
+- (IBAction) copyCitation:(id)sender {
+	[[UIPasteboard generalPasteboard] setString:paper.citation];
+}
+
+#pragma mark MFMailComposeViewControllerDelegate methods
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller 
+		  didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
+{
+	[super dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	switch (buttonIndex) {
+		case 0:
+			[self copyCitation:self];
+			break;
+
+		case 1:
+			[self emailPDF:self];
+			break;
+		default:
+			break;
+	}
 }
 
 #pragma mark NSKeyValueObserving methods

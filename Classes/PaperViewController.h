@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "LeavesView.h"
 #import "Paper.h"
 
 @interface PaperViewController : UIViewController 
-<UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, LeavesViewDataSource, UIActionSheetDelegate> {
+<UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, 
+LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
+UINavigationControllerDelegate> {
     
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
@@ -34,6 +37,6 @@
 
 @property (nonatomic, retain) Paper *paper;
 
-- (IBAction) toggleCitationActions:(id)sender;
+- (IBAction) showCitationActions:(id)sender;
 
 @end
