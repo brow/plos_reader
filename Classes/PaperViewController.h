@@ -23,6 +23,7 @@ UINavigationControllerDelegate> {
 	UILabel *pageLabel;
 	UIButton *citationButton;
 	UILabel *citationLabel;
+	UIActionSheet *citationActionSheet;
     
     Paper *paper;
 	CGPDFDocumentRef pdf;

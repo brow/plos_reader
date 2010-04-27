@@ -95,13 +95,13 @@
 #pragma mark actions
 
 - (IBAction) showCitationActions:(id)sender {
-	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:paper.citation 
+	citationActionSheet = [[[UIActionSheet alloc] initWithTitle:paper.citation 
 															 delegate:self 
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
 													 otherButtonTitles:@"Copy Citation",@"Email PDF",nil] autorelease];
-	actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-	[actionSheet showFromRect:citationButton.frame 
+	citationActionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+	[citationActionSheet showFromRect:citationButton.frame 
 					   inView:citationButton.superview 
 					 animated:YES];
 }
@@ -128,6 +128,10 @@
 		  didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
 {
 	[super dismissModalViewControllerAnimated:YES];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+	citationActionSheet = nil;
 }
 
 #pragma mark UIActionSheetDelegate methods
@@ -201,6 +205,10 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+	[citationActionSheet dismissWithClickedButtonIndex:2 animated:YES];
 }
 
 - (void)viewDidLoad {
