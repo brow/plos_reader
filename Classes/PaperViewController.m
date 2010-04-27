@@ -19,7 +19,7 @@
 
 @implementation PaperViewController
 
-@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, citationButton, citationLabel;
+@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, citationButton, citationLabel, scrollView;
 
 - (void)dealloc {
     [popoverController release];
@@ -172,12 +172,17 @@
 	if (pdf) {
 		CGPDFPageRef page = CGPDFDocumentGetPage(pdf, index + 1);
 		CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
-		CGRect croppedRect = CGRectInset(pageRect, 46, 42);
-		croppedRect.origin.y -= 3;
+		CGRect croppedRect = CGRectInset(pageRect, 46, 44);
+		croppedRect.origin.y -= 2;
 		CGAffineTransform transform = aspectFit(croppedRect,
 												CGContextGetClipBoundingBox(ctx));
+		CGRect clipRect = CGRectApplyAffineTransform(croppedRect, transform);
+		
+		CGContextSaveGState(ctx);
+		CGContextClipToRect(ctx, clipRect);
 		CGContextConcatCTM(ctx, transform);
 		CGContextDrawPDFPage(ctx, page);
+		CGContextRestoreGState(ctx);
 	}
 }
 
@@ -209,6 +214,8 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[citationActionSheet dismissWithClickedButtonIndex:2 animated:YES];
+	scrollView.contentSize = leavesView.frame.size;
+	scrollView.scrollEnabled = UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 - (void)viewDidLoad {
@@ -224,6 +231,8 @@
 	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButtonHighlighted.png"] stretchableImageWithLeftCapWidth:10 
 																												  topCapHeight:10]
 							  forState:UIControlStateHighlighted];
+	
+	scrollView.canCancelContentTouches = NO;
 }
 
 - (void)viewDidUnload {

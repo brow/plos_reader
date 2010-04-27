@@ -16,6 +16,7 @@
 LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
 UINavigationControllerDelegate> {
     
+	UIScrollView *scrollView;
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
 	UIActivityIndicatorView *activityIndicator;
@@ -35,6 +36,7 @@ UINavigationControllerDelegate> {
 @property (assign) IBOutlet UILabel *pageLabel;
 @property (assign) IBOutlet UIButton *citationButton;
 @property (assign) IBOutlet UILabel *citationLabel;
+@property (assign) IBOutlet UIScrollView *scrollView;
 
 @property (nonatomic, retain) Paper *paper;
 
