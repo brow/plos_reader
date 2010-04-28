@@ -92,6 +92,10 @@
 	}
 }
 
+- (void) configureForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	scrollView.scrollEnabled = UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
 #pragma mark actions
 
 - (IBAction) showCitationActions:(id)sender {
@@ -215,7 +219,7 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[citationActionSheet dismissWithClickedButtonIndex:2 animated:YES];
 	scrollView.contentSize = leavesView.frame.size;
-	scrollView.delaysContentTouches = scrollView.scrollEnabled = UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	[self configureForInterfaceOrientation:interfaceOrientation];
 }
 
 - (void)viewDidLoad {
@@ -233,6 +237,8 @@
 							  forState:UIControlStateHighlighted];
 	
 	scrollView.canCancelContentTouches = NO;
+	
+	[self configureForInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)viewDidUnload {
