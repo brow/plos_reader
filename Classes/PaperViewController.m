@@ -215,7 +215,7 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[citationActionSheet dismissWithClickedButtonIndex:2 animated:YES];
 	scrollView.contentSize = leavesView.frame.size;
-	scrollView.scrollEnabled = UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	scrollView.delaysContentTouches = scrollView.scrollEnabled = UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 - (void)viewDidLoad {
