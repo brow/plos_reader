@@ -32,6 +32,8 @@
 	id<LeavesViewDelegate> delegate;
 	
 	CGSize pageSize;
+	NSMutableDictionary *pageCache;
+	
 	CGPoint touchBeganPoint;
 	BOOL touchIsActive;
 	CGRect nextPageRect, prevPageRect;
