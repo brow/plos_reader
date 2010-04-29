@@ -27,6 +27,7 @@
 @property (readonly) NSDictionary *metadata;
 @property (readonly) NSString *volumeIssueId;
 @property (readonly) NSString *citation;
+@property (readonly) NSString *runningHead;
 
 - (void) load;
 

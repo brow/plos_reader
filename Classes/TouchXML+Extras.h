@@ -10,7 +10,7 @@
 
 @interface CXMLNode (Extras)
 
-- (NSString *)stringValueForXPath:(NSString *)xpath namespaceMappings:(NSDictionary*)namespaceMappings;
+- (NSString *)flatStringForXPath:(NSString *)xpath namespaceMappings:(NSDictionary*)namespaceMappings;
 - (NSData *)xmlDataForXPath:(NSString *)xpath namespaceMappings:(NSDictionary*)namespaceMappings;
 - (BOOL) hasValueForXPath:(NSString *)xpath namespaceMappings:(NSDictionary*)namespaceMappings;
 

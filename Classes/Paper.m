@@ -60,36 +60,41 @@
 												   options:CXMLDocumentTidyXML 
 													 error:nil] autorelease];
 	
-	[metadata setValue:[doc stringValueForXPath:@"article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']" 
+	[metadata setValue:[doc flatStringForXPath:@"article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']" 
 							  namespaceMappings:nil]
 				forKey:@"journal-id"];
 	
-	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/volume" 
+	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/volume" 
 							  namespaceMappings:nil]
 				forKey:@"volume"];
 	
-	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/issue" 
+	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/issue" 
 							  namespaceMappings:nil]
 				forKey:@"issue"];
 	
-	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/elocation-id" 
+	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/elocation-id" 
 							  namespaceMappings:nil]
 				forKey:@"elocation-id"];
 	
-	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/article-id[@pub-id-type='doi']" 
+	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/article-id[@pub-id-type='doi']" 
 							  namespaceMappings:nil]
 				forKey:@"doi"];
 	
-	[metadata setValue:[doc stringValueForXPath:@"article/front/article-meta/pub-date[@pub-type='epub']/year" 
+	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/pub-date[@pub-type='epub']/year" 
 							  namespaceMappings:nil]
 				forKey:@"year"];
+	
+	NSString *runningHeadPath = @"article/front/article-meta/title-group/alt-title[@alt-title-type='running-head']";
+	if ([doc hasValueForXPath:runningHeadPath namespaceMappings:nil])
+		[metadata setValue:[doc flatStringForXPath:runningHeadPath namespaceMappings:nil]
+					forKey:@"running-head"];
 	
 	NSMutableArray *authorsMetadata = [NSMutableArray array];
 	for (CXMLNode *authorNode in [doc nodesForXPath:
 			@"article/front/article-meta/contrib-group/contrib[@contrib-type='author']/name[@name-style='western']" error:nil]) {
 		[authorsMetadata addObject:[NSDictionary dictionaryWithObjectsAndKeys:
-									[authorNode stringValueForXPath:@"./surname" namespaceMappings:nil], @"surname",
-									[authorNode stringValueForXPath:@"./given-names" namespaceMappings:nil], @"given-names",
+									[authorNode flatStringForXPath:@"./surname" namespaceMappings:nil], @"surname",
+									[authorNode flatStringForXPath:@"./given-names" namespaceMappings:nil], @"given-names",
 									nil]];
 	}
 	[metadata setValue:authorsMetadata forKey:@"authors"];
@@ -98,6 +103,14 @@
 }
 
 #pragma mark accessors
+
+- (NSString *) runningHead {
+	NSString *runningHead = [metadata objectForKey:@"running-head"];
+	if (runningHead)
+		return runningHead;
+	else
+		return self.title;
+}
 
 - (NSString *) volumeIssueId {
 	return [NSString stringWithFormat:@"%@ %@(%@): %@",

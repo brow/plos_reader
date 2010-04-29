@@ -82,7 +82,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		
 		[leavesView reloadData];
 		[self displayPageNumber:1];
-		citationLabel.text = paper.volumeIssueId;
+		citationLabel.text = paper.runningHead;
 	} else {
 		pageLabel.hidden = YES;
 		leavesView.hidden = YES;
