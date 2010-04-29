@@ -25,6 +25,7 @@ UINavigationControllerDelegate> {
 	UIButton *citationButton;
 	UILabel *citationLabel;
 	UIActionSheet *citationActionSheet;
+	UIImageView *innerShadowView;
     
     Paper *paper;
 	CGPDFDocumentRef pdf;
@@ -37,6 +38,7 @@ UINavigationControllerDelegate> {
 @property (assign) IBOutlet UIButton *citationButton;
 @property (assign) IBOutlet UILabel *citationLabel;
 @property (assign) IBOutlet UIScrollView *scrollView;
+@property (assign) IBOutlet UIImageView *innerShadowView;
 
 @property (nonatomic, retain) Paper *paper;
 

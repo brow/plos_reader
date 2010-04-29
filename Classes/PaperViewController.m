@@ -19,7 +19,8 @@
 
 @implementation PaperViewController
 
-@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, citationButton, citationLabel, scrollView;
+@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, 
+citationButton, citationLabel, scrollView, innerShadowView;
 
 - (void)dealloc {
     [popoverController release];
@@ -93,7 +94,18 @@
 }
 
 - (void) configureForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	scrollView.scrollEnabled = UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+		scrollView.scrollEnabled = YES;
+		innerShadowView.frame = CGRectMake(0, toolbar.frame.size.height, 
+										   self.view.bounds.size.width + 100, 
+										   self.view.bounds.size.height - toolbar.frame.size.height + 100);
+	} else {
+		scrollView.scrollEnabled = NO;
+		innerShadowView.frame = CGRectMake(-100, toolbar.frame.size.height, 
+										   self.view.bounds.size.width + 200, 
+										   self.view.bounds.size.height - toolbar.frame.size.height + 100);
+	}
+	
 }
 
 #pragma mark actions
