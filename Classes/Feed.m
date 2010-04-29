@@ -15,16 +15,17 @@
 
 @synthesize papers, title;
 
-+ (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString {
-	return [[[[self class] alloc] initWithTitle:title URL:urlString] autorelease];
++ (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName {
+	return [[[[self class] alloc] initWithTitle:title URL:urlString imageName:aImageName] autorelease];
 }
 
-- (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString;
+- (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString imageName:(NSString *)aImageName;
 {
 	if (self = [super init]) {
 		title = [aTitle retain];
 		url = [[NSURL alloc] initWithString:urlString];
 		papers = [[NSMutableArray alloc] init];
+		imageName = [aImageName retain];
 	}
 	return self;
 }
@@ -34,6 +35,7 @@
 	[title release];
 	[url release];
 	[papers release];
+	[imageName release];
 	[super dealloc];
 }
 
@@ -45,6 +47,10 @@
 }
 
 #pragma mark accessors
+
+- (UIImage *) image {
+	return [UIImage imageNamed:imageName];
+}
 
 - (NSArray *)papers {
     return papers;

@@ -9,6 +9,7 @@
 #import "PubsViewController.h"
 #import "FeedViewController.h"
 #import "Feed.h"
+#import "JournalCell.h"
 
 @implementation PubsViewController
 
@@ -20,12 +21,27 @@
 	[super awakeFromNib];
 	self.title = @"Journals";
 	feeds = [[NSArray alloc] initWithObjects:
-			 [Feed feedWithTitle:@"Biology" URL:@"http://www.plosbiology.org/article/feed"], 
-			 [Feed feedWithTitle:@"Medicine" URL:@"http://www.plosmedicine.org/article/feed"], 
-			 [Feed feedWithTitle:@"Computational Biology" URL:@"http://www.ploscompbiol.org/article/feed"], 
-			 [Feed feedWithTitle:@"Genetics" URL:@"http://www.plosgenetics.org/article/feed"], 
-			 [Feed feedWithTitle:@"Pathogens" URL:@"http://www.plospathogens.org/article/feed"], 
-			 [Feed feedWithTitle:@"Neglected Tropical Diseases" URL:@"http://www.plosntds.org/article/feed"], 
+			 [Feed feedWithTitle:@"Biology" 
+							 URL:@"http://www.plosbiology.org/article/feed" 
+					   imageName:@"PLoS_Biology.png"], 
+			 [Feed feedWithTitle:@"Medicine" 
+							 URL:@"http://www.plosmedicine.org/article/feed" 
+					   imageName:@"PLoS_Medicine.png"], 
+			 [Feed feedWithTitle:@"Genetics" 
+							 URL:@"http://www.plosgenetics.org/article/feed" 
+					   imageName:@"PLoS_Genetics.png"], 
+			 [Feed feedWithTitle:@"Pathogens" 
+							 URL:@"http://www.plospathogens.org/article/feed" 
+					   imageName:@"PLoS_Pathogens.png"],
+			 [Feed feedWithTitle:@"Computational Biology" 
+							 URL:@"http://www.ploscompbiol.org/article/feed" 
+					   imageName:@"PLoS_CompBio.png"], 
+			 [Feed feedWithTitle:@"Neglected Tropical Diseases" 
+							 URL:@"http://www.plosntds.org/article/feed" 
+					   imageName:@"PLoS_NTD.png"],
+			 [Feed feedWithTitle:@"One" 
+							 URL:@"http://feeds.plos.org/plosone/PLoSONE" 
+					   imageName:@"PLoS_One.png"],
 			 nil];
 }
 
@@ -55,20 +71,21 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"CellIdentifier";
+    static NSString *cellIdentifier = @"JournalCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
+    JournalCell *cell = (JournalCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil)
+        cell = [[[JournalCell alloc] initWithReuseIdentifier:cellIdentifier] autorelease];
 	
-	Feed *feed = [feeds objectAtIndex:indexPath.row];
-    cell.textLabel.text = feed.title;
+	cell.feed = [feeds objectAtIndex:indexPath.row];
     return cell;
 }
 
 #pragma mark UITableViewDelegate methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 70.0;
+}
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	Feed *feed = [feeds objectAtIndex:indexPath.row];

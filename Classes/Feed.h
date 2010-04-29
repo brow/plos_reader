@@ -13,13 +13,15 @@
 	NSString *title;
 	NSURL *url;
 	NSMutableArray *papers;
+	NSString *imageName;
 }
 
 @property (readonly) NSString *title;
 @property (readonly) NSArray *papers;
+@property (readonly) UIImage *image;
 
-+ (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString;
-- (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString;
++ (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName;
+- (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString imageName:(NSString *)aImageName;
 - (void) load;
 
 @end

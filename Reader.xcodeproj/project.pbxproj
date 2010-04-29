@@ -53,6 +53,16 @@
 		D3FB39F3118161CF00AC0932 /* CitationButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */; };
 		D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */; };
 		D3FB3C1A11862FAA00AC0932 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FB3C1911862FAA00AC0932 /* MessageUI.framework */; };
+		D3FB3E991189059100AC0932 /* JournalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB3E981189059100AC0932 /* JournalCell.m */; };
+		D3FB3EFC11890D5700AC0932 /* PLoS_Biology.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EF511890D5700AC0932 /* PLoS_Biology.png */; };
+		D3FB3EFD11890D5700AC0932 /* PLoS_CompBio.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EF611890D5700AC0932 /* PLoS_CompBio.png */; };
+		D3FB3EFE11890D5700AC0932 /* PLoS_Genetics.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EF711890D5700AC0932 /* PLoS_Genetics.png */; };
+		D3FB3EFF11890D5700AC0932 /* PLoS_Medicine.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EF811890D5700AC0932 /* PLoS_Medicine.png */; };
+		D3FB3F0011890D5700AC0932 /* PLoS_NTD.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EF911890D5700AC0932 /* PLoS_NTD.png */; };
+		D3FB3F0111890D5700AC0932 /* PLoS_One.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EFA11890D5700AC0932 /* PLoS_One.png */; };
+		D3FB3F0211890D5700AC0932 /* PLoS_Pathogens.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EFB11890D5700AC0932 /* PLoS_Pathogens.png */; };
+		D3FB3F2311891A0100AC0932 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3F2211891A0100AC0932 /* Background.png */; };
+		D3FB3F3A1189342000AC0932 /* InnerShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3F391189342000AC0932 /* InnerShadow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +150,17 @@
 		D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extras.h"; sourceTree = "<group>"; };
 		D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
 		D3FB3C1911862FAA00AC0932 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D3FB3E971189059100AC0932 /* JournalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalCell.h; sourceTree = "<group>"; };
+		D3FB3E981189059100AC0932 /* JournalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalCell.m; sourceTree = "<group>"; };
+		D3FB3EF511890D5700AC0932 /* PLoS_Biology.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_Biology.png; sourceTree = "<group>"; };
+		D3FB3EF611890D5700AC0932 /* PLoS_CompBio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_CompBio.png; sourceTree = "<group>"; };
+		D3FB3EF711890D5700AC0932 /* PLoS_Genetics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_Genetics.png; sourceTree = "<group>"; };
+		D3FB3EF811890D5700AC0932 /* PLoS_Medicine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_Medicine.png; sourceTree = "<group>"; };
+		D3FB3EF911890D5700AC0932 /* PLoS_NTD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_NTD.png; sourceTree = "<group>"; };
+		D3FB3EFA11890D5700AC0932 /* PLoS_One.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_One.png; sourceTree = "<group>"; };
+		D3FB3EFB11890D5700AC0932 /* PLoS_Pathogens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_Pathogens.png; sourceTree = "<group>"; };
+		D3FB3F2211891A0100AC0932 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		D3FB3F391189342000AC0932 /* InnerShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InnerShadow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +204,8 @@
 				D3FB386C1180F48C00AC0932 /* PaperCell.m */,
 				D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */,
 				D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */,
+				D3FB3E971189059100AC0932 /* JournalCell.h */,
+				D3FB3E981189059100AC0932 /* JournalCell.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -221,6 +244,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3FB3F391189342000AC0932 /* InnerShadow.png */,
+				D3FB3F2211891A0100AC0932 /* Background.png */,
+				D3FB3EF411890D4100AC0932 /* Journal Images */,
 				D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */,
 				D3FB39BB11815B0900AC0932 /* CitationButton.png */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
@@ -357,6 +383,20 @@
 			path = Leaves;
 			sourceTree = "<group>";
 		};
+		D3FB3EF411890D4100AC0932 /* Journal Images */ = {
+			isa = PBXGroup;
+			children = (
+				D3FB3EF511890D5700AC0932 /* PLoS_Biology.png */,
+				D3FB3EF611890D5700AC0932 /* PLoS_CompBio.png */,
+				D3FB3EF711890D5700AC0932 /* PLoS_Genetics.png */,
+				D3FB3EF811890D5700AC0932 /* PLoS_Medicine.png */,
+				D3FB3EF911890D5700AC0932 /* PLoS_NTD.png */,
+				D3FB3EFA11890D5700AC0932 /* PLoS_One.png */,
+				D3FB3EFB11890D5700AC0932 /* PLoS_Pathogens.png */,
+			);
+			name = "Journal Images";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -411,6 +451,15 @@
 				D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */,
 				D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */,
 				D3FB39F3118161CF00AC0932 /* CitationButtonHighlighted.png in Resources */,
+				D3FB3EFC11890D5700AC0932 /* PLoS_Biology.png in Resources */,
+				D3FB3EFD11890D5700AC0932 /* PLoS_CompBio.png in Resources */,
+				D3FB3EFE11890D5700AC0932 /* PLoS_Genetics.png in Resources */,
+				D3FB3EFF11890D5700AC0932 /* PLoS_Medicine.png in Resources */,
+				D3FB3F0011890D5700AC0932 /* PLoS_NTD.png in Resources */,
+				D3FB3F0111890D5700AC0932 /* PLoS_One.png in Resources */,
+				D3FB3F0211890D5700AC0932 /* PLoS_Pathogens.png in Resources */,
+				D3FB3F2311891A0100AC0932 /* Background.png in Resources */,
+				D3FB3F3A1189342000AC0932 /* InnerShadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +502,7 @@
 				D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */,
 				D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */,
 				D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */,
+				D3FB3E991189059100AC0932 /* JournalCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
