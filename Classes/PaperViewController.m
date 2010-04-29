@@ -64,18 +64,22 @@ citationButton, citationLabel, scrollView, innerShadowView;
 
 - (void)configureView {
 	if (!paper) {
-		pageLabel.hidden = YES;
 		activityIndicator.hidden = YES;
 		leavesView.hidden = YES;
-		citationLabel.hidden = YES;
-		citationButton.enabled = NO;
+		pageLabel.alpha = 0;
+		citationLabel.alpha = 0;
+		citationButton.alpha = 0;
 	}
 	else if (paper.downloaded) {
-		pageLabel.hidden = NO;
 		leavesView.hidden = NO;
-		citationLabel.hidden = NO;
-		citationButton.enabled = YES;
 		activityIndicator.hidden = YES;
+		
+		[UIView beginAnimations:@"" context:nil];
+		[UIView setAnimationDuration:0.4];
+		citationButton.alpha = 1;
+		citationLabel.alpha = 1;
+		pageLabel.alpha = 1;
+		[UIView commitAnimations];
 		
 		if (!pdf)
 			pdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
@@ -84,11 +88,11 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		[self displayPageNumber:1];
 		citationLabel.text = paper.runningHead;
 	} else {
-		pageLabel.hidden = YES;
 		leavesView.hidden = YES;
-		citationLabel.hidden = YES;
-		citationButton.enabled = NO;
 		activityIndicator.hidden = NO;
+		pageLabel.alpha = 0;
+		citationLabel.alpha = 0;
+		citationButton.alpha = 0;
 		[paper load];
 	}
 }
