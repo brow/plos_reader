@@ -39,7 +39,7 @@
 
 - (void) load {
 	if (!localPDFPath) {
-		NSString *localFile = (NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL));
+		NSString *localFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
 		localPDFPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:localFile] retain];
 		
 		ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
