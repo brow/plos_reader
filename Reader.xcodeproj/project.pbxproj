@@ -63,6 +63,7 @@
 		D3FB3F0211890D5700AC0932 /* PLoS_Pathogens.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3EFB11890D5700AC0932 /* PLoS_Pathogens.png */; };
 		D3FB3F2311891A0100AC0932 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3F2211891A0100AC0932 /* Background.png */; };
 		D3FB3F3A1189342000AC0932 /* InnerShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3F391189342000AC0932 /* InnerShadow.png */; };
+		D3FB4035118A04CD00AC0932 /* PageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB4034118A04CD00AC0932 /* PageScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,6 +162,8 @@
 		D3FB3EFB11890D5700AC0932 /* PLoS_Pathogens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_Pathogens.png; sourceTree = "<group>"; };
 		D3FB3F2211891A0100AC0932 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
 		D3FB3F391189342000AC0932 /* InnerShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InnerShadow.png; sourceTree = "<group>"; };
+		D3FB4033118A04CD00AC0932 /* PageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageScrollView.h; sourceTree = "<group>"; };
+		D3FB4034118A04CD00AC0932 /* PageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +209,8 @@
 				D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */,
 				D3FB3E971189059100AC0932 /* JournalCell.h */,
 				D3FB3E981189059100AC0932 /* JournalCell.m */,
+				D3FB4033118A04CD00AC0932 /* PageScrollView.h */,
+				D3FB4034118A04CD00AC0932 /* PageScrollView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */,
 				D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */,
 				D3FB3E991189059100AC0932 /* JournalCell.m in Sources */,
+				D3FB4035118A04CD00AC0932 /* PageScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

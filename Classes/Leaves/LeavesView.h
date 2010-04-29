@@ -40,6 +40,7 @@
 
 @property (assign) id<LeavesViewDataSource> dataSource;
 @property (assign) id<LeavesViewDelegate> delegate;
+@property (readonly) CGFloat targetWidth;
 
 - (void) reloadData;
 

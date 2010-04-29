@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "LeavesView.h"
+#import "PageScrollView.h"
 #import "Paper.h"
 
 @interface PaperViewController : UIViewController 
@@ -16,7 +17,7 @@
 LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
 UINavigationControllerDelegate> {
     
-	UIScrollView *scrollView;
+	PageScrollView *scrollView;
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
 	UIActivityIndicatorView *activityIndicator;
@@ -37,7 +38,7 @@ UINavigationControllerDelegate> {
 @property (assign) IBOutlet UILabel *pageLabel;
 @property (assign) IBOutlet UIButton *citationButton;
 @property (assign) IBOutlet UILabel *citationLabel;
-@property (assign) IBOutlet UIScrollView *scrollView;
+@property (assign) IBOutlet PageScrollView *scrollView;
 @property (assign) IBOutlet UIImageView *innerShadowView;
 
 @property (nonatomic, retain) Paper *paper;

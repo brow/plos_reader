@@ -253,6 +253,8 @@ citationButton, citationLabel, scrollView, innerShadowView;
 							  forState:UIControlStateHighlighted];
 	
 	scrollView.canCancelContentTouches = NO;
+	scrollView.delaysContentTouches = NO;
+	scrollView.leavesView = leavesView;
 	
 	[self configureForInterfaceOrientation:self.interfaceOrientation];
 }
