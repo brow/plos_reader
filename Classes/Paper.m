@@ -98,8 +98,6 @@
 									nil]];
 	}
 	[metadata setValue:authorsMetadata forKey:@"authors"];
-	 
-	NSLog(@"%@", metadata);
 }
 
 #pragma mark accessors
