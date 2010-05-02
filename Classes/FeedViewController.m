@@ -22,6 +22,10 @@
 			   forKeyPath:@"papers" 
 				  options:NSKeyValueObservingOptionNew 
 				  context:nil];
+		[feed addObserver:self 
+			   forKeyPath:@"downloaded" 
+				  options:NSKeyValueObservingOptionNew 
+				  context:nil];
 		self.navigationItem.title = feed.title;
 	}
 	return self;
@@ -30,17 +34,36 @@
 
 - (void)dealloc {
 	[feed removeObserver:self 
-			  forKeyPath:@"papers" ];
+			  forKeyPath:@"papers"];
+	[feed removeObserver:self 
+			  forKeyPath:@"downloaded"];
 	
 	[feed release];
     [detailViewController release];
     [super dealloc];
 }
 
+- (void)displayFeedStatus {
+	UIBarButtonItem *barButtonItem = nil;
+	if (feed.downloaded) {
+		//TODO: refresh button
+	} else {
+		UIActivityIndicatorView *activityIndicator = 
+			[[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+		[activityIndicator startAnimating];
+		barButtonItem =
+			[[[UIBarButtonItem alloc] initWithCustomView:activityIndicator] autorelease];
+	}
+	self.navigationItem.rightBarButtonItem = barButtonItem;
+}
+
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	[self.tableView reloadData];
+	if ([keyPath isEqualToString:@"downloaded"])
+		[self displayFeedStatus];
+	else
+		[self.tableView reloadData];
 }
 
 #pragma mark UITableViewDataSource methods
@@ -86,6 +109,7 @@
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+	[self displayFeedStatus];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

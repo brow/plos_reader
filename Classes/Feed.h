@@ -14,11 +14,13 @@
 	NSURL *url;
 	NSMutableArray *papers;
 	NSString *imageName;
+	BOOL downloaded;
 }
 
 @property (readonly) NSString *title;
 @property (readonly) NSArray *papers;
 @property (readonly) UIImage *image;
+@property (readonly) BOOL downloaded;
 
 + (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName;
 - (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString imageName:(NSString *)aImageName;

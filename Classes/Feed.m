@@ -43,10 +43,21 @@
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request setDelegate:self];
 	[request startAsynchronous];
+	[self setValue:[NSNumber numberWithBool:NO] forKey:@"downloaded"];
 	NSLog(@"[REQUEST %@]", url);
 }
 
 #pragma mark accessors
+
+- (BOOL)downloaded {
+    return downloaded;
+}
+
+- (void)setDownloaded:(BOOL)value {
+    if (downloaded != value) {
+        downloaded = value;
+    }
+}
 
 - (UIImage *) image {
 	return [UIImage imageNamed:imageName];
@@ -110,12 +121,14 @@
 	}
 	
 	[[self mutableArrayValueForKey:@"papers"] addObjectsFromArray:newPapers];
+	[self setValue:[NSNumber numberWithBool:YES] forKey:@"downloaded"];
 	
 	NSLog(@"[LOADED %@]", url);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
+	[self setValue:[NSNumber numberWithBool:YES] forKey:@"downloaded"];
 //	NSError *error = [request error];
 	NSLog(@"[FAILED %@]", url);
 }
