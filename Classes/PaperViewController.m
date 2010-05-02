@@ -221,7 +221,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 - (void)splitViewController: (UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
-    [toolbar setItems:items animated:YES];
+    [toolbar setItems:items animated:NO];
     [items release];
     self.popoverController = nil;
 }
