@@ -11,6 +11,7 @@
 
 @interface Feed : NSObject {
 	NSString *title;
+	NSString *localXMLPath;
 	NSURL *url;
 	NSMutableArray *papers;
 	NSString *imageName;

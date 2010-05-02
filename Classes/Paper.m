@@ -33,14 +33,19 @@
 	[title release];
 	[authors release];
 	[localPDFPath release];
+	[localXMLPath release];
 	[metadata release];
 	[super dealloc];
 }
 
+- (NSString *) generateUUID {
+	return [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
+}
+
 - (void) load {
 	if (!localPDFPath) {
-		NSString *localFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
-		localPDFPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:localFile] retain];
+		localPDFPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
+		localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
 		
 		ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
 		[pdfRequest setDelegate:self];
@@ -50,6 +55,7 @@
 		
 		ASIHTTPRequest *xmlRequest = [ASIHTTPRequest requestWithURL:remoteXMLUrl];
 		[xmlRequest setDelegate:self];
+		[xmlRequest setDownloadDestinationPath:localXMLPath];
 		[xmlRequest startAsynchronous];
 		NSLog(@"[REQUEST %@]", remoteXMLUrl);
 	}
@@ -156,7 +162,7 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {	
 	if ([request.url isEqual:remoteXMLUrl]) {
-		[self parsePaperXML:request.responseData];
+		[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 		xmlDownloaded = YES;
 	} else {
 		pdfDownloaded = YES;

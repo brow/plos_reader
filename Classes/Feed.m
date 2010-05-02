@@ -26,12 +26,15 @@
 		url = [[NSURL alloc] initWithString:urlString];
 		papers = [[NSMutableArray alloc] init];
 		imageName = [aImageName retain];
+		localXMLPath = nil;
+		downloaded = NO;
 	}
 	return self;
 }
 
 - (void) dealloc
 {
+	[localXMLPath release];
 	[title release];
 	[url release];
 	[papers release];
@@ -40,11 +43,45 @@
 }
 
 - (void) load {
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	[request setDelegate:self];
-	[request startAsynchronous];
-	[self setValue:[NSNumber numberWithBool:NO] forKey:@"downloaded"];
-	NSLog(@"[REQUEST %@]", url);
+	if (!localXMLPath) {
+		NSString *localFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
+		localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:localFile] retain];
+		
+		ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+		[request setDelegate:self];
+		[request setDownloadDestinationPath:localXMLPath];
+		[request startAsynchronous];
+		[self setValue:[NSNumber numberWithBool:NO] forKey:@"downloaded"];
+		NSLog(@"[REQUEST %@]", url);
+	}
+}
+
+- (void) parseFeedXML:(NSData *)data {
+	CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:data 
+													options:CXMLDocumentTidyXML 
+													  error:nil] autorelease];
+	
+	NSDictionary *ns = [NSDictionary dictionaryWithObject:@"http://www.w3.org/2005/Atom" 
+												   forKey:@"a"];
+	
+	NSMutableArray *newPapers = [NSMutableArray array];
+	for (CXMLNode *paperNode in [doc nodesForXPath:@"a:feed/a:entry" namespaceMappings:ns error:nil]) {
+		Paper *paper = [[[Paper alloc] init] autorelease];
+		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns]) {
+			paper.title = [paperNode flatStringForXPath:@"./a:title" namespaceMappings:ns];
+			paper.authors = [paperNode flatStringForXPath:@"./a:author/a:name" namespaceMappings:ns];
+			
+			NSString *pdfUrl = [paperNode flatStringForXPath:@"./a:link[@type='application/pdf']/@href" namespaceMappings:ns];
+			paper.remotePDFUrl = [NSURL URLWithString:pdfUrl];
+			
+			NSString *xmlUrl = [paperNode flatStringForXPath:@"./a:link[@type='text/xml']/@href" namespaceMappings:ns];
+			paper.remoteXMLUrl = [NSURL URLWithString:xmlUrl];
+			
+			[newPapers addObject:paper];
+		}
+	}
+	
+	[[self mutableArrayValueForKey:@"papers"] addObjectsFromArray:newPapers];
 }
 
 #pragma mark accessors
@@ -95,34 +132,8 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	
-	CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:[request responseData] 
-													  options:CXMLDocumentTidyXML 
-														error:nil] autorelease];
-	
-	NSDictionary *ns = [NSDictionary dictionaryWithObject:@"http://www.w3.org/2005/Atom" 
-														   forKey:@"a"];
-	
-	NSMutableArray *newPapers = [NSMutableArray array];
-	for (CXMLNode *paperNode in [doc nodesForXPath:@"a:feed/a:entry" namespaceMappings:ns error:nil]) {
-		Paper *paper = [[[Paper alloc] init] autorelease];
-		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns]) {
-			paper.title = [paperNode flatStringForXPath:@"./a:title" namespaceMappings:ns];
-			paper.authors = [paperNode flatStringForXPath:@"./a:author/a:name" namespaceMappings:ns];
-			
-			NSString *pdfUrl = [paperNode flatStringForXPath:@"./a:link[@type='application/pdf']/@href" namespaceMappings:ns];
-			paper.remotePDFUrl = [NSURL URLWithString:pdfUrl];
-			
-			NSString *xmlUrl = [paperNode flatStringForXPath:@"./a:link[@type='text/xml']/@href" namespaceMappings:ns];
-			paper.remoteXMLUrl = [NSURL URLWithString:xmlUrl];
-			
-			[newPapers addObject:paper];
-		}
-	}
-	
-	[[self mutableArrayValueForKey:@"papers"] addObjectsFromArray:newPapers];
 	[self setValue:[NSNumber numberWithBool:YES] forKey:@"downloaded"];
-	
+	[self parseFeedXML:[NSData dataWithContentsOfFile:localXMLPath]];
 	NSLog(@"[LOADED %@]", url);
 }
 

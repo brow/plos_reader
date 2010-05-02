@@ -11,7 +11,7 @@
 
 @interface Paper : NSObject {
 	NSURL *remotePDFUrl, *remoteXMLUrl;
-	NSString *localPDFPath;
+	NSString *localPDFPath, *localXMLPath;
 	NSString *title, *authors;
 	NSMutableDictionary *metadata;
 	
