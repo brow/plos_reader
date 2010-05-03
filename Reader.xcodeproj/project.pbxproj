@@ -64,6 +64,8 @@
 		D3FB3F2311891A0100AC0932 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3F2211891A0100AC0932 /* Background.png */; };
 		D3FB3F3A1189342000AC0932 /* InnerShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB3F391189342000AC0932 /* InnerShadow.png */; };
 		D3FB4035118A04CD00AC0932 /* PageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB4034118A04CD00AC0932 /* PageScrollView.m */; };
+		D3FB4298118E4C8B00AC0932 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */; };
+		D3FB4299118E4C8B00AC0932 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +166,8 @@
 		D3FB3F391189342000AC0932 /* InnerShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InnerShadow.png; sourceTree = "<group>"; };
 		D3FB4033118A04CD00AC0932 /* PageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageScrollView.h; sourceTree = "<group>"; };
 		D3FB4034118A04CD00AC0932 /* PageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageScrollView.m; sourceTree = "<group>"; };
+		D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
+		D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +253,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */,
+				D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */,
 				D3FB3F391189342000AC0932 /* InnerShadow.png */,
 				D3FB3F2211891A0100AC0932 /* Background.png */,
 				D3FB3EF411890D4100AC0932 /* Journal Images */,
@@ -465,6 +471,8 @@
 				D3FB3F0211890D5700AC0932 /* PLoS_Pathogens.png in Resources */,
 				D3FB3F2311891A0100AC0932 /* Background.png in Resources */,
 				D3FB3F3A1189342000AC0932 /* InnerShadow.png in Resources */,
+				D3FB4298118E4C8B00AC0932 /* Default-Landscape.png in Resources */,
+				D3FB4299118E4C8B00AC0932 /* Default-Portrait.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
