@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface Feed : NSObject {
 	NSString *title;
 	NSString *localXMLPath;

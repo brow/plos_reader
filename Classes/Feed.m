@@ -139,8 +139,7 @@
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-	[self setValue:[NSNumber numberWithBool:YES] forKey:@"downloaded"];
-//	NSError *error = [request error];
+	self.downloaded = YES;
 	NSLog(@"[FAILED %@]", url);
 }
 

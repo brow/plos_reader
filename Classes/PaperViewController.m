@@ -32,14 +32,14 @@ citationButton, citationLabel, scrollView, innerShadowView;
 
 - (void)setPaper:(id)newDetailItem {
     if (paper != newDetailItem) {	
-		[paper removeObserver:self forKeyPath:@"downloaded"];
+		[paper removeObserver:self forKeyPath:@"downloadStatus"];
 		[paper cancelLoad];
 		
         [paper release];
         paper = [newDetailItem retain];
 				
 		[paper addObserver:self 
-				forKeyPath:@"downloaded" 
+				forKeyPath:@"downloadStatus" 
 				   options:NSKeyValueObservingOptionNew 
 				   context:nil];
 		
@@ -49,6 +49,8 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		}
 		
 		[self configureView];
+		if (paper.downloadStatus != StatusDownloaded)
+			[paper load];
     }
 
     if (popoverController != nil) {
@@ -64,14 +66,14 @@ citationButton, citationLabel, scrollView, innerShadowView;
 }
 
 - (void)configureView {
-	if (!paper) {
+	if (!paper || paper.downloadStatus == StatusFailed) {
 		activityIndicator.hidden = YES;
 		leavesView.hidden = YES;
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
 	}
-	else if (paper.downloaded) {
+	else if (paper.downloadStatus == StatusDownloaded) {
 		leavesView.hidden = NO;
 		activityIndicator.hidden = YES;
 		
@@ -94,7 +96,6 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
-		[paper load];
 	}
 }
 

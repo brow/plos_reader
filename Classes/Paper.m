@@ -11,6 +11,13 @@
 #import "NSString+Extras.h"
 #import "ASIHTTPRequest.h"
 
+@interface Paper()
+
+- (void)setDownloadStatus:(Status)value;
+
+@end
+
+
 @implementation Paper
 
 @synthesize remotePDFUrl, remoteXMLUrl, title, authors, localPDFPath, metadata;
@@ -20,7 +27,7 @@
 	if (self = [super init]) {
 		xmlDownloaded = NO;
 		pdfDownloaded = NO;
-		downloaded = NO;
+		downloadStatus = StatusNotDownloaded;
 		metadata = [[NSMutableDictionary alloc] init];
 		requests = [[NSMutableArray alloc] init];
 	}
@@ -47,6 +54,9 @@
 - (void) load {
 	if (requests.count > 0)
 		return;
+	
+	if (self.downloadStatus != StatusDownloaded)
+		self.downloadStatus = StatusNotDownloaded;
 	
 	if (!pdfDownloaded) {
 		if (!localPDFPath)
@@ -164,12 +174,12 @@
 	return citationString;
 }
 
-- (BOOL)downloaded {
-    return downloaded;
+- (Status)downloadStatus {
+    return downloadStatus;
 }
 
-- (void)setDownloaded:(BOOL)aDownloaded {
-	downloaded = aDownloaded;
+- (void)setDownloadStatus:(Status)value {
+    downloadStatus = value;
 }
 
 #pragma mark ASIHTTPRequest delegate methods
@@ -186,7 +196,7 @@
 	}
 	
 	if (pdfDownloaded && xmlDownloaded)
-		self.downloaded = YES;
+		self.downloadStatus = StatusDownloaded;
 	
 	NSLog(@"[LOADED %@]", request.url);
 }
@@ -197,8 +207,17 @@
 	
 	if (request.error.code == ASIRequestCancelledErrorType)
 		NSLog(@"[CANCELLED %@]", request.url);
-	else
+	else {
+		[self cancelLoad];
+		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Download Failed" 
+														 message:@"This paper could not be downloaded. Please check your internet connection and try again." 
+														delegate:nil 
+											   cancelButtonTitle:@"OK" 
+											   otherButtonTitles:nil] autorelease];
+		[alert show];
+		self.downloadStatus = StatusFailed;
 		NSLog(@"[FAILED %@]", request.url);
+	}
 }
 
 @end

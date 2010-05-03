@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
+
 @interface Paper : NSObject {
 	NSURL *remotePDFUrl, *remoteXMLUrl;
 	NSString *localPDFPath, *localXMLPath;
@@ -15,7 +17,8 @@
 	NSMutableDictionary *metadata;
 	NSMutableArray *requests;
 	
-	BOOL pdfDownloaded, xmlDownloaded, downloaded;
+	BOOL pdfDownloaded, xmlDownloaded;
+	Status downloadStatus;
 }
 
 @property (retain) NSURL *remotePDFUrl;
@@ -23,7 +26,7 @@
 @property (retain) NSString *title;
 @property (retain) NSString *authors;
 @property (readonly) NSString *localPDFPath;
-@property (readonly) BOOL downloaded;
+@property (readonly) Status downloadStatus;
 @property (readonly) NSDictionary *metadata;
 @property (readonly) NSString *volumeIssueId;
 @property (readonly) NSString *citation;
