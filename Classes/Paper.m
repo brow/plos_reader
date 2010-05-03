@@ -7,9 +7,9 @@
 //
 
 #import "Paper.h"
-#import "ASIHTTPRequest.h"
 #import "TouchXML+Extras.h"
 #import "NSString+Extras.h"
+#import "ASIHTTPRequest.h"
 
 @implementation Paper
 
@@ -22,6 +22,7 @@
 		pdfDownloaded = NO;
 		downloaded = NO;
 		metadata = [[NSMutableDictionary alloc] init];
+		requests = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -35,6 +36,7 @@
 	[localPDFPath release];
 	[localXMLPath release];
 	[metadata release];
+	[requests release];
 	[super dealloc];
 }
 
@@ -43,22 +45,35 @@
 }
 
 - (void) load {
-	if (!localPDFPath) {
-		localPDFPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
-		localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
-		
+	if (requests.count > 0)
+		return;
+	
+	if (!pdfDownloaded) {
+		if (!localPDFPath)
+			localPDFPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
 		ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
 		[pdfRequest setDelegate:self];
 		[pdfRequest setDownloadDestinationPath:localPDFPath];
 		[pdfRequest startAsynchronous];
 		NSLog(@"[REQUEST %@]", remotePDFUrl);
-		
+		[requests addObject:pdfRequest];
+	}
+	
+	if (!xmlDownloaded) {	
+		if (!localXMLPath)
+			localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
 		ASIHTTPRequest *xmlRequest = [ASIHTTPRequest requestWithURL:remoteXMLUrl];
 		[xmlRequest setDelegate:self];
 		[xmlRequest setDownloadDestinationPath:localXMLPath];
 		[xmlRequest startAsynchronous];
+		[requests addObject:xmlRequest];
 		NSLog(@"[REQUEST %@]", remoteXMLUrl);
 	}
+}
+
+- (void) cancelLoad {
+	for (ASIHTTPRequest *request in [NSArray arrayWithArray:requests])
+		[request cancel];
 }
 
 - (void) parsePaperXML:(NSData *)xmlData {
@@ -161,6 +176,8 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {	
+	[requests removeObject:request];
+	
 	if ([request.url isEqual:remoteXMLUrl]) {
 		[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 		xmlDownloaded = YES;
@@ -176,7 +193,12 @@
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-	NSLog(@"[FAILED %@]", request.url);
+	[requests removeObject:request];
+	
+	if (request.error.code == ASIRequestCancelledErrorType)
+		NSLog(@"[CANCELLED %@]", request.url);
+	else
+		NSLog(@"[FAILED %@]", request.url);
 }
 
 @end

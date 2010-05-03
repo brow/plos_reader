@@ -33,6 +33,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 - (void)setPaper:(id)newDetailItem {
     if (paper != newDetailItem) {	
 		[paper removeObserver:self forKeyPath:@"downloaded"];
+		[paper cancelLoad];
 		
         [paper release];
         paper = [newDetailItem retain];

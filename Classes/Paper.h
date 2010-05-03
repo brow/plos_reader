@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface Paper : NSObject {
 	NSURL *remotePDFUrl, *remoteXMLUrl;
 	NSString *localPDFPath, *localXMLPath;
 	NSString *title, *authors;
 	NSMutableDictionary *metadata;
+	NSMutableArray *requests;
 	
 	BOOL pdfDownloaded, xmlDownloaded, downloaded;
 }
@@ -30,5 +30,6 @@
 @property (readonly) NSString *runningHead;
 
 - (void) load;
+- (void) cancelLoad;
 
 @end
