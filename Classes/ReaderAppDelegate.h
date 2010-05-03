@@ -19,13 +19,13 @@
     UISplitViewController *splitViewController;
     
     PubsViewController *rootViewController;
-    PaperViewController *detailViewController;
+    PaperViewController *paperViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
 @property (nonatomic, retain) IBOutlet PubsViewController *rootViewController;
-@property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;
+@property (nonatomic, retain) IBOutlet PaperViewController *paperViewController;
 
 @end

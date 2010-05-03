@@ -15,7 +15,7 @@
 
 @implementation ReaderAppDelegate
 
-@synthesize window, splitViewController, rootViewController, detailViewController;
+@synthesize window, splitViewController, rootViewController, paperViewController;
 
 - (void)dealloc {
     [splitViewController release];
@@ -39,6 +39,9 @@
 											   otherButtonTitles:nil] autorelease];
 		[alert show];
 	}
+	
+	if (!paperViewController.paper)
+		[paperViewController showMasterPopover];
     
     return YES;
 }

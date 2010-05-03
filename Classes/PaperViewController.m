@@ -112,6 +112,13 @@ citationButton, citationLabel, scrollView, innerShadowView;
 	
 }
 
+- (void) showMasterPopover {
+	if (toolbar.items.count == 0)
+		return;
+	UIBarButtonItem *masterButton = [toolbar.items objectAtIndex:0];
+	[masterButton.target performSelector:masterButton.action];
+}
+
 #pragma mark actions
 
 - (IBAction) showCitationActions:(id)sender {

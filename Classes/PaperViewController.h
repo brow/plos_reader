@@ -44,5 +44,6 @@ UINavigationControllerDelegate> {
 @property (nonatomic, retain) Paper *paper;
 
 - (IBAction) showCitationActions:(id)sender;
+- (void) showMasterPopover;
 
 @end

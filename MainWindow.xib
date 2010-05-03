@@ -137,14 +137,6 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">detailViewController</string>
-						<reference key="source" ref="963208320"/>
-						<reference key="destination" ref="23693665"/>
-					</object>
-					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">detailViewController</string>
 						<reference key="source" ref="720143809"/>
 						<reference key="destination" ref="23693665"/>
 					</object>
@@ -157,6 +149,14 @@
 						<reference key="destination" ref="23693665"/>
 					</object>
 					<int key="connectionID">49</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">paperViewController</string>
+						<reference key="source" ref="963208320"/>
+						<reference key="destination" ref="23693665"/>
+					</object>
+					<int key="connectionID">50</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -252,7 +252,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">49</int>
+			<int key="maxID">50</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -329,7 +329,7 @@
 					<string key="className">ReaderAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="detailViewController">PaperViewController</string>
+						<string key="paperViewController">PaperViewController</string>
 						<string key="rootViewController">FeedViewController</string>
 						<string key="splitViewController">UISplitViewController</string>
 						<string key="window">UIWindow</string>
