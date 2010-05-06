@@ -9,6 +9,7 @@
 #import "PaperViewController.h"
 #import "FeedViewController.h"
 #import "Utilities.h"
+#import "Paper+Saving.h"
 
 @interface PaperViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -128,7 +129,9 @@ citationButton, citationLabel, scrollView, innerShadowView;
 															 delegate:self 
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
-													 otherButtonTitles:@"Copy Citation",@"Email PDF",nil] autorelease];
+													 otherButtonTitles:@"Copy Citation",@"Email Article",nil] autorelease];
+	if (!paper.saved)
+		  [citationActionSheet addButtonWithTitle:@"Save Article"];
 	citationActionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
 	[citationActionSheet showFromRect:citationButton.frame 
 					   inView:citationButton.superview 
@@ -151,6 +154,10 @@ citationButton, citationLabel, scrollView, innerShadowView;
 	[[UIPasteboard generalPasteboard] setString:paper.citation];
 }
 
+- (IBAction) saveOffline:(id)sender {
+	[paper save];
+}
+
 #pragma mark MFMailComposeViewControllerDelegate methods
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller 
@@ -170,9 +177,11 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		case 0:
 			[self copyCitation:self];
 			break;
-
 		case 1:
 			[self emailPDF:self];
+			break;
+		case 2:
+			[self saveOffline:self];
 			break;
 		default:
 			break;

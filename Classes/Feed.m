@@ -70,6 +70,7 @@
 		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns]) {
 			paper.title = [paperNode flatStringForXPath:@"./a:title" namespaceMappings:ns];
 			paper.authors = [paperNode flatStringForXPath:@"./a:author/a:name" namespaceMappings:ns];
+			paper.identifier = [paperNode flatStringForXPath:@"./a:id" namespaceMappings:ns];
 			
 			NSString *pdfUrl = [paperNode flatStringForXPath:@"./a:link[@type='application/pdf']/@href" namespaceMappings:ns];
 			paper.remotePDFUrl = [NSURL URLWithString:pdfUrl];

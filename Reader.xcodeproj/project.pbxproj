@@ -47,6 +47,7 @@
 		D33D5717117FF44C00BA7203 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D5716117FF44C00BA7203 /* QuartzCore.framework */; };
 		D33D580D1180113B00BA7203 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D580C1180113B00BA7203 /* Utilities.m */; };
 		D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D59A411802BC400BA7203 /* PubsViewController.m */; };
+		D3AEC53D11934B8F009BE344 /* Paper+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AEC53C11934B8F009BE344 /* Paper+Saving.m */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
@@ -146,6 +147,8 @@
 		D33D580C1180113B00BA7203 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		D33D59A311802BC400BA7203 /* PubsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PubsViewController.h; sourceTree = "<group>"; };
 		D33D59A411802BC400BA7203 /* PubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PubsViewController.m; sourceTree = "<group>"; };
+		D3AEC53B11934B8F009BE344 /* Paper+Saving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Paper+Saving.h"; sourceTree = "<group>"; };
+		D3AEC53C11934B8F009BE344 /* Paper+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Paper+Saving.m"; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -294,6 +297,8 @@
 				D33D5253117FB3A200BA7203 /* Feed.m */,
 				D33D537E117FBD5D00BA7203 /* Paper.h */,
 				D33D537F117FBD5D00BA7203 /* Paper.m */,
+				D3AEC53B11934B8F009BE344 /* Paper+Saving.h */,
+				D3AEC53C11934B8F009BE344 /* Paper+Saving.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				D3FB3B5E11861CD600AC0932 /* NSString+Extras.m in Sources */,
 				D3FB3E991189059100AC0932 /* JournalCell.m in Sources */,
 				D3FB4035118A04CD00AC0932 /* PageScrollView.m in Sources */,
+				D3AEC53D11934B8F009BE344 /* Paper+Saving.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

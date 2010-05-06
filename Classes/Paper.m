@@ -10,6 +10,7 @@
 #import "TouchXML+Extras.h"
 #import "NSString+Extras.h"
 #import "ASIHTTPRequest.h"
+#import "Paper+Saving.h"
 
 @interface Paper()
 
@@ -20,7 +21,7 @@
 
 @implementation Paper
 
-@synthesize remotePDFUrl, remoteXMLUrl, title, authors, localPDFPath, metadata;
+@synthesize remotePDFUrl, remoteXMLUrl, title, authors, identifier, localPDFPath, metadata;
 
 - (id) init
 {
@@ -40,6 +41,7 @@
 	[remoteXMLUrl release];
 	[title release];
 	[authors release];
+	[identifier release];
 	[localPDFPath release];
 	[localXMLPath release];
 	[metadata release];
@@ -57,6 +59,9 @@
 	
 	if (self.downloadStatus != StatusDownloaded)
 		self.downloadStatus = StatusNotDownloaded;
+	
+	if ([self saved])
+		[self restore];
 	
 	if (!pdfDownloaded) {
 		if (!localPDFPath)
@@ -132,6 +137,11 @@
 }
 
 #pragma mark accessors
+
+- (NSString *) doi {
+	return [self.identifier stringByReplacingOccurrencesOfString:@"info:doi/" 
+													  withString:@""];
+}
 
 - (NSString *) runningHead {
 	NSString *runningHead = [metadata objectForKey:@"running-head"];

@@ -13,7 +13,7 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @interface Paper : NSObject {
 	NSURL *remotePDFUrl, *remoteXMLUrl;
 	NSString *localPDFPath, *localXMLPath;
-	NSString *title, *authors;
+	NSString *title, *authors, *identifier;
 	NSMutableDictionary *metadata;
 	NSMutableArray *requests;
 	
@@ -25,12 +25,14 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @property (retain) NSURL *remoteXMLUrl;
 @property (retain) NSString *title;
 @property (retain) NSString *authors;
+@property (retain) NSString *identifier;
 @property (readonly) NSString *localPDFPath;
 @property (readonly) Status downloadStatus;
 @property (readonly) NSDictionary *metadata;
 @property (readonly) NSString *volumeIssueId;
 @property (readonly) NSString *citation;
 @property (readonly) NSString *runningHead;
+@property (readonly) NSString *doi;
 
 - (void) load;
 - (void) cancelLoad;
