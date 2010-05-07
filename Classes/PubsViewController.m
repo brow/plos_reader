@@ -94,8 +94,16 @@ enum {SectionFolders, SectionJournals, NumSections};
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
 		
 		cell.textLabel.text = @"Saved Articles";
+		cell.imageView.image = [UIImage imageNamed:@"Folder.png"];
 		return cell;
 	}
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	if (section == SectionJournals)
+		return @"Journals";
+	else
+		return nil;
 }
 
 #pragma mark UITableViewDelegate methods

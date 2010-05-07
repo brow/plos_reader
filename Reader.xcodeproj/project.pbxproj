@@ -49,6 +49,7 @@
 		D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D59A411802BC400BA7203 /* PubsViewController.m */; };
 		D3AEC53D11934B8F009BE344 /* Paper+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AEC53C11934B8F009BE344 /* Paper+Saving.m */; };
 		D3AEC63F11937132009BE344 /* SavedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AEC63E11937132009BE344 /* SavedViewController.m */; };
+		D3AEC8B71194BFD6009BE344 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = D3AEC8B61194BFD6009BE344 /* Folder.png */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
@@ -152,6 +153,7 @@
 		D3AEC53C11934B8F009BE344 /* Paper+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Paper+Saving.m"; sourceTree = "<group>"; };
 		D3AEC63D11937132009BE344 /* SavedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedViewController.h; sourceTree = "<group>"; };
 		D3AEC63E11937132009BE344 /* SavedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedViewController.m; sourceTree = "<group>"; };
+		D3AEC8B61194BFD6009BE344 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3AEC8B61194BFD6009BE344 /* Folder.png */,
 				D3FB43B4118E83DA00AC0932 /* Icon.png */,
 				D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */,
 				D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */,
@@ -487,6 +490,7 @@
 				D3FB4298118E4C8B00AC0932 /* Default-Landscape.png in Resources */,
 				D3FB4299118E4C8B00AC0932 /* Default-Portrait.png in Resources */,
 				D3FB43B5118E83DA00AC0932 /* Icon.png in Resources */,
+				D3AEC8B71194BFD6009BE344 /* Folder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
