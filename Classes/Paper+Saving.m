@@ -61,17 +61,19 @@
 }
 
 - (void) restore {
-	[localPDFPath release];
-	localPDFPath = [self.permanentPDFPath retain];
-	[localXMLPath release];
-	localXMLPath = [self.permanentXMLPath retain];
+	[[NSFileManager defaultManager] copyItemAtPath:self.permanentPDFPath 
+											toPath:localPDFPath 
+											 error:nil];
+	[[NSFileManager defaultManager] copyItemAtPath:self.permanentXMLPath 
+											toPath:localXMLPath 
+											 error:nil];
+	
+	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 	
 	pdfDownloaded = YES;
 	xmlDownloaded = YES;
 	[self setValue:[NSNumber numberWithInt:StatusDownloaded] 
 			forKey:@"downloadStatus"];
-	
-	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 }
 
 + (NSArray *) savedPapers {

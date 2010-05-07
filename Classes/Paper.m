@@ -19,6 +19,7 @@
 
 @end
 
+NSString *temporaryPath();
 
 @implementation Paper
 
@@ -32,6 +33,8 @@
 		downloadStatus = StatusNotDownloaded;
 		metadata = [[NSMutableDictionary alloc] init];
 		requests = [[NSMutableArray alloc] init];
+		localPDFPath = [temporaryPath() retain];
+		localXMLPath = [temporaryPath() retain];
 	}
 	return self;
 }
@@ -58,23 +61,16 @@
 	[super dealloc];
 }
 
-- (NSString *) generateUUID {
-	return [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
-}
-
-- (void) load {
-	if (requests.count > 0)
+- (void) load {	
+	if (self.downloadStatus == StatusDownloaded || requests.count > 0)
 		return;
-	
-	if (self.downloadStatus != StatusDownloaded)
+	else
 		self.downloadStatus = StatusNotDownloaded;
-	
+
 	if ([self saved])
 		[self restore];
 	
 	if (!pdfDownloaded) {
-		if (!localPDFPath)
-			localPDFPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
 		ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
 		[pdfRequest setDelegate:self];
 		[pdfRequest setDownloadDestinationPath:localPDFPath];
@@ -84,8 +80,6 @@
 	}
 	
 	if (!xmlDownloaded) {	
-		if (!localXMLPath)
-			localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[self generateUUID]] retain];
 		ASIHTTPRequest *xmlRequest = [ASIHTTPRequest requestWithURL:remoteXMLUrl];
 		[xmlRequest setDelegate:self];
 		[xmlRequest setDownloadDestinationPath:localXMLPath];
@@ -268,3 +262,8 @@
 }
 
 @end
+
+NSString *temporaryPath() {
+	NSString *uuid = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
+	return [NSTemporaryDirectory() stringByAppendingPathComponent:uuid];
+}
