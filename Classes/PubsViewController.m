@@ -39,7 +39,7 @@
 			 [Feed feedWithTitle:@"Neglected Tropical Diseases" 
 							 URL:@"http://www.plosntds.org/article/feed" 
 					   imageName:@"PLoS_NTD.png"],
-			 [Feed feedWithTitle:@"One" 
+			 [Feed feedWithTitle:@"ONE" 
 							 URL:@"http://feeds.plos.org/plosone/PLoSONE" 
 					   imageName:@"PLoS_One.png"],
 			 nil];
