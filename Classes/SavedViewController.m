@@ -91,6 +91,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
