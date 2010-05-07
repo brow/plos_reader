@@ -93,4 +93,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
+
 @end

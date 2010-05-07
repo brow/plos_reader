@@ -70,6 +70,8 @@
 	xmlDownloaded = YES;
 	[self setValue:[NSNumber numberWithInt:StatusDownloaded] 
 			forKey:@"downloadStatus"];
+	
+	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 }
 
 + (NSArray *) savedPapers {
