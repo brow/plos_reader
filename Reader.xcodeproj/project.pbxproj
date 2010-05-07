@@ -152,6 +152,8 @@
 		D3AEC53C11934B8F009BE344 /* Paper+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Paper+Saving.m"; sourceTree = "<group>"; };
 		D3AEC63D11937132009BE344 /* SavedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedViewController.h; sourceTree = "<group>"; };
 		D3AEC63E11937132009BE344 /* SavedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedViewController.m; sourceTree = "<group>"; };
+		D3AEC779119487A8009BE344 /* untitled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = untitled.h; sourceTree = "<group>"; };
+		D3AEC77A119487A8009BE344 /* untitled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = untitled.m; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -225,6 +227,8 @@
 				D3FB3E981189059100AC0932 /* JournalCell.m */,
 				D3FB4033118A04CD00AC0932 /* PageScrollView.h */,
 				D3FB4034118A04CD00AC0932 /* PageScrollView.m */,
+				D3AEC779119487A8009BE344 /* untitled.h */,
+				D3AEC77A119487A8009BE344 /* untitled.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

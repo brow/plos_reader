@@ -13,6 +13,7 @@
 
 + (NSArray *) savedPapers;
 - (void) save;
+- (void) unsave;
 - (BOOL) saved;
 - (void) restore;
 

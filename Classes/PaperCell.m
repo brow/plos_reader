@@ -33,14 +33,7 @@
 	titleLabel.text = paper.title;
 	authorLabel.text = paper.authors;
 	
-	CGSize titleSize = [paper.title sizeWithFont:titleLabel.font 
-							   constrainedToSize:CGSizeMake(titleLabel.frame.size.width, 63)
-								   lineBreakMode:titleLabel.lineBreakMode];
-	
-	titleLabel.frame = CGRectMake(titleLabel.frame.origin.x, 
-								  titleLabel.frame.origin.y, 
-								  titleLabel.frame.size.width, 
-								  titleSize.height);
+	[self setNeedsLayout];
 }
 
 #pragma mark UITableViewCell methods
@@ -56,5 +49,19 @@
 	return @"PaperCell";
 }
 
+#pragma mark UIView methods
+
+- (void) layoutSubviews {
+	[super layoutSubviews];
+	
+	CGSize titleSize = [paper.title sizeWithFont:titleLabel.font 
+							   constrainedToSize:CGSizeMake(titleLabel.frame.size.width, 63)
+								   lineBreakMode:titleLabel.lineBreakMode];
+	
+	titleLabel.frame = CGRectMake(titleLabel.frame.origin.x, 
+								  titleLabel.frame.origin.y, 
+								  titleLabel.frame.size.width, 
+								  titleSize.height);
+}
 
 @end

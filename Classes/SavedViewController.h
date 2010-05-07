@@ -11,7 +11,7 @@
 #import "PaperViewController.h"
 
 @interface SavedViewController : UITableViewController {
-	NSArray *papers;
+	NSMutableArray *papers;
 	PaperCell *paperCell;
 	PaperViewController *detailViewController;
 }

@@ -18,7 +18,7 @@
 {
 	if (self = [super initWithStyle:UITableViewStylePlain]) {
 		self.navigationItem.title = @"Saved Articles";
-		papers = [[Paper savedPapers] retain];
+		papers = [[NSMutableArray alloc] initWithArray:[Paper savedPapers]];
 	}
 	return self;
 }
@@ -27,6 +27,12 @@
 - (void)dealloc {
 	[papers release];
     [super dealloc];
+}
+
+#pragma mark actions
+
+- (IBAction) toggleEditing {
+	[self.tableView setEditing:!self.tableView.editing animated:YES];
 }
 
 #pragma mark UITableViewDataSource methods
@@ -64,6 +70,27 @@
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     detailViewController.paper = [papers objectAtIndex:indexPath.row];
+}
+
+
+- (void)tableView:(UITableView *)tableView 
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
+forRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		[[papers objectAtIndex:indexPath.row] unsave];
+		[papers removeObjectAtIndex:indexPath.row];
+		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+							  withRowAnimation:YES];
+	}
+}
+
+
+#pragma mark UIViewController methods
+
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 @end

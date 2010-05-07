@@ -55,6 +55,11 @@
 											 error:nil];
 }
 
+- (void) unsave {
+	[[NSFileManager defaultManager] removeItemAtPath:self.permanentPDFPath error:nil];
+	[[NSFileManager defaultManager] removeItemAtPath:self.permanentXMLPath error:nil];
+}
+
 - (void) restore {
 	[localPDFPath release];
 	localPDFPath = [self.permanentPDFPath retain];
