@@ -11,6 +11,7 @@
 
 @interface Paper(Saving)
 
++ (NSArray *) savedPapers;
 - (void) save;
 - (BOOL) saved;
 - (void) restore;

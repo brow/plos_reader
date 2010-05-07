@@ -34,6 +34,7 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @property (readonly) NSString *runningHead;
 @property (readonly) NSString *doi;
 
+- (id) initWithPaperXML:(NSData *)xmlData;
 - (void) load;
 - (void) cancelLoad;
 

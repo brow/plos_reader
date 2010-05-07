@@ -15,6 +15,7 @@
 @interface Paper()
 
 - (void)setDownloadStatus:(Status)value;
+- (void) parsePaperXML:(NSData *)xmlData;
 
 @end
 
@@ -31,6 +32,14 @@
 		downloadStatus = StatusNotDownloaded;
 		metadata = [[NSMutableDictionary alloc] init];
 		requests = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+- (id) initWithPaperXML:(NSData *)xmlData
+{
+	if (self = [self init]) {
+		[self parsePaperXML:xmlData];
 	}
 	return self;
 }
@@ -96,6 +105,10 @@
 												   options:CXMLDocumentTidyXML 
 													 error:nil] autorelease];
 	
+	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/title-group/article-title" 
+							 namespaceMappings:nil]
+				forKey:@"title"];
+	
 	[metadata setValue:[doc flatStringForXPath:@"article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']" 
 							  namespaceMappings:nil]
 				forKey:@"journal-id"];
@@ -138,9 +151,33 @@
 
 #pragma mark accessors
 
+- (NSString *) title {
+	if (title)
+		return title;
+	else 
+		return [metadata objectForKey:@"title"];
+}
+
+- (NSString *) authors {
+	if (authors)
+		return authors;
+	else if ([[metadata objectForKey:@"authors"] count] > 0) {
+		NSDictionary *firstAuthor = [[metadata objectForKey:@"authors"] objectAtIndex:0];
+		return [NSString stringWithFormat:@"%@ %@%@",
+				[firstAuthor objectForKey:@"given-names"],
+				[firstAuthor objectForKey:@"surname"],
+				([[metadata objectForKey:@"authors"] count] > 1) ? @" et al." : @""];
+	}
+	else
+		 return @"";
+}
+
 - (NSString *) doi {
-	return [self.identifier stringByReplacingOccurrencesOfString:@"info:doi/" 
-													  withString:@""];
+	if (self.identifier)
+		return [self.identifier stringByReplacingOccurrencesOfString:@"info:doi/" 
+														  withString:@""];
+	else
+		return [metadata objectForKey:@"doi"];
 }
 
 - (NSString *) runningHead {

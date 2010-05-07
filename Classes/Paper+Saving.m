@@ -11,12 +11,12 @@
 
 @implementation Paper(Saving)
 
-- (NSString *) documentsDirectory {
++ (NSString *) documentsDirectory {
 	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 }
 
-- (NSString *) savedPapersDirectory {
-	return [self.documentsDirectory stringByAppendingPathComponent:@"saved"];
++ (NSString *) savedPapersDirectory {
+	return [[self documentsDirectory] stringByAppendingPathComponent:@"saved"];
 }
 
 - (NSString *)filenameBase {
@@ -26,12 +26,12 @@
 }
 
 - (NSString *) permanentPDFPath {
-	return [self.savedPapersDirectory stringByAppendingPathComponent:
+	return [[self.class savedPapersDirectory] stringByAppendingPathComponent:
 			[[self filenameBase] stringByAppendingPathExtension:@"pdf"]];
 }
 
 - (NSString *) permanentXMLPath {
-	return [self.savedPapersDirectory stringByAppendingPathComponent:
+	return [[self.class savedPapersDirectory] stringByAppendingPathComponent:
 			[[self filenameBase] stringByAppendingPathExtension:@"xml"]];
 }
 
@@ -43,8 +43,8 @@
 - (void) save {
 	assert(self.downloadStatus == StatusDownloaded);
 	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:self.savedPapersDirectory])
-		[[NSFileManager defaultManager] createDirectoryAtPath:self.savedPapersDirectory 
+	if (![[NSFileManager defaultManager] fileExistsAtPath:[self.class savedPapersDirectory]])
+		[[NSFileManager defaultManager] createDirectoryAtPath:[self.class savedPapersDirectory]
 												   attributes:nil];
 	
 	[[NSFileManager defaultManager] copyItemAtPath:localPDFPath 
@@ -65,6 +65,19 @@
 	xmlDownloaded = YES;
 	[self setValue:[NSNumber numberWithInt:StatusDownloaded] 
 			forKey:@"downloadStatus"];
+}
+
++ (NSArray *) savedPapers {
+	NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self savedPapersDirectory] 
+																			 error:nil];
+	NSMutableArray *savedPapers = [NSMutableArray array];
+	for (NSString *filename in filenames)
+		if ([filename.pathExtension isEqualToString:@"xml"]) {
+			NSString *xmlPath = [self.savedPapersDirectory stringByAppendingPathComponent:filename];
+			NSData *xmlData = [NSData dataWithContentsOfFile:xmlPath];
+			[savedPapers addObject:[[[Paper alloc] initWithPaperXML:xmlData] autorelease]];
+		}
+	return savedPapers;
 }
 
 @end

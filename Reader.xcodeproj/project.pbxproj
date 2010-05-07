@@ -48,6 +48,7 @@
 		D33D580D1180113B00BA7203 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D580C1180113B00BA7203 /* Utilities.m */; };
 		D33D59A511802BC400BA7203 /* PubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D59A411802BC400BA7203 /* PubsViewController.m */; };
 		D3AEC53D11934B8F009BE344 /* Paper+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AEC53C11934B8F009BE344 /* Paper+Saving.m */; };
+		D3AEC63F11937132009BE344 /* SavedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AEC63E11937132009BE344 /* SavedViewController.m */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
@@ -149,6 +150,8 @@
 		D33D59A411802BC400BA7203 /* PubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PubsViewController.m; sourceTree = "<group>"; };
 		D3AEC53B11934B8F009BE344 /* Paper+Saving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Paper+Saving.h"; sourceTree = "<group>"; };
 		D3AEC53C11934B8F009BE344 /* Paper+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Paper+Saving.m"; sourceTree = "<group>"; };
+		D3AEC63D11937132009BE344 /* SavedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedViewController.h; sourceTree = "<group>"; };
+		D3AEC63E11937132009BE344 /* SavedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedViewController.m; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				2804200A108E984D000629CD /* PaperViewController.m */,
 				D33D59A311802BC400BA7203 /* PubsViewController.h */,
 				D33D59A411802BC400BA7203 /* PubsViewController.m */,
+				D3AEC63D11937132009BE344 /* SavedViewController.h */,
+				D3AEC63E11937132009BE344 /* SavedViewController.m */,
 				D3FB386B1180F48C00AC0932 /* PaperCell.h */,
 				D3FB386C1180F48C00AC0932 /* PaperCell.m */,
 				D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */,
@@ -527,6 +532,7 @@
 				D3FB3E991189059100AC0932 /* JournalCell.m in Sources */,
 				D3FB4035118A04CD00AC0932 /* PageScrollView.m in Sources */,
 				D3AEC53D11934B8F009BE344 /* Paper+Saving.m in Sources */,
+				D3AEC63F11937132009BE344 /* SavedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

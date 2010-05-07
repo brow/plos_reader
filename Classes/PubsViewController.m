@@ -8,11 +8,13 @@
 
 #import "PubsViewController.h"
 #import "FeedViewController.h"
+#import "SavedViewController.h"
 #import "Feed.h"
 #import "JournalCell.h"
 
-@implementation PubsViewController
+enum {SectionFolders, SectionJournals, NumSections};
 
+@implementation PubsViewController
 
 @synthesize detailViewController;
 
@@ -61,24 +63,39 @@
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    return 1;
+    return NumSections;
 }
 
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-	return feeds.count;
+	switch (section) {
+		case SectionFolders: return 1;
+		case SectionJournals: return feeds.count;
+		default: return 0;
+	}
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"JournalCell";
-    
-    JournalCell *cell = (JournalCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil)
-        cell = [[[JournalCell alloc] initWithReuseIdentifier:cellIdentifier] autorelease];
-	
-	cell.feed = [feeds objectAtIndex:indexPath.row];
-    return cell;
+	if (indexPath.section == SectionJournals) {
+		NSString *cellIdentifier = @"JournalCell";
+		
+		JournalCell *cell = (JournalCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+		if (cell == nil)
+			cell = [[[JournalCell alloc] initWithReuseIdentifier:cellIdentifier] autorelease];
+		
+		cell.feed = [feeds objectAtIndex:indexPath.row];
+		return cell;
+	} else {
+		NSString *cellIdentifier = @"FolderCell";
+		
+		UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+		if (cell == nil)
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+		
+		cell.textLabel.text = @"Saved Articles";
+		return cell;
+	}
 }
 
 #pragma mark UITableViewDelegate methods
@@ -88,10 +105,16 @@
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	Feed *feed = [feeds objectAtIndex:indexPath.row];
-	FeedViewController *viewController = [[[FeedViewController alloc] initWithFeed:feed] autorelease];
-	viewController.detailViewController = self.detailViewController;
-	[self.navigationController pushViewController:viewController animated:YES];
+	if (indexPath.section == SectionJournals) {
+		Feed *feed = [feeds objectAtIndex:indexPath.row];
+		FeedViewController *viewController = [[[FeedViewController alloc] initWithFeed:feed] autorelease];
+		viewController.detailViewController = self.detailViewController;
+		[self.navigationController pushViewController:viewController animated:YES];
+	} else {
+		SavedViewController *vc = [[[SavedViewController alloc] init] autorelease];
+		vc.detailViewController = self.detailViewController;
+		[self.navigationController pushViewController:vc animated:YES];
+	}
 }
 
 #pragma mark UIViewController methods
