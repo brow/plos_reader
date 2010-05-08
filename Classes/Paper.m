@@ -211,6 +211,7 @@ NSString *temporaryPath();
 		components.year = [[metadata objectForKey:@"pub-year"] intValue];
 		components.month = [[metadata objectForKey:@"pub-month"] intValue];
 		components.day = [[metadata objectForKey:@"pub-day"] intValue];
+		components.hour = 7;
 		NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 		calendar.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
 		return [calendar dateFromComponents:components];
