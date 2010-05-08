@@ -10,6 +10,8 @@
 #import "Paper+Saving.h"
 #import "PaperCell.h"
 
+NSInteger dateSort(Paper *a, Paper *b, void *context) { return [b.date compare:a.date]; }
+
 @implementation SavedViewController
 
 @synthesize paperCell, detailViewController;
@@ -18,7 +20,7 @@
 {
 	if (self = [super initWithStyle:UITableViewStylePlain]) {
 		self.navigationItem.title = @"Saved Articles";
-		papers = [[NSMutableArray alloc] initWithArray:[[[Paper savedPapersManager] savedPapers] allObjects]];
+		papers = [[NSMutableArray alloc] init];
 		
 		[[Paper savedPapersManager] addObserver:self 
 									 forKeyPath:@"savedPapers" 
@@ -36,12 +38,17 @@
     [super dealloc];
 }
 
+- (void) reload {
+	NSArray *unsortedPapers = [[[Paper savedPapersManager] savedPapers] allObjects];
+	[papers setArray:[unsortedPapers sortedArrayUsingFunction:dateSort context:nil]];
+	[self.tableView reloadData];
+}
+
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeInsertion) {
-		[papers setArray:[[[Paper savedPapersManager] savedPapers] allObjects]];
-		[self.tableView reloadData];
+		
 	}
 }
 
@@ -102,6 +109,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 	[super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+	[self reload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
