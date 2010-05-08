@@ -261,6 +261,18 @@ NSString *temporaryPath();
 	}
 }
 
+#pragma mark NSObject methods
+
+- (BOOL)isEqual:(id)anObject {
+	if (![anObject isKindOfClass:[Paper class]])
+		return NO;
+	return [self.doi isEqualToString:[anObject doi]];
+}
+
+- (NSUInteger)hash {
+	return [self.doi hash];
+}
+
 @end
 
 NSString *temporaryPath() {

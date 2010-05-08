@@ -8,10 +8,17 @@
 
 #import "Paper.h"
 
+@interface SavedPapersManager : NSObject {
+}
+
+- (NSSet *) savedPapers;
+
+@end
+
 
 @interface Paper(Saving)
 
-+ (NSArray *) savedPapers;
++ (SavedPapersManager *) savedPapersManager;
 - (void) save;
 - (void) unsave;
 - (BOOL) saved;

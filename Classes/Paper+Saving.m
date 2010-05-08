@@ -8,6 +8,7 @@
 
 #import "Paper+Saving.h"
 
+static SavedPapersManager *savedPapersManager;
 
 @implementation Paper(Saving)
 
@@ -47,17 +48,29 @@
 		[[NSFileManager defaultManager] createDirectoryAtPath:[self.class savedPapersDirectory]
 												   attributes:nil];
 	
+	[[Paper savedPapersManager] willChangeValueForKey:@"savedPapers" 
+									  withSetMutation:NSKeyValueUnionSetMutation 
+										 usingObjects:[NSSet setWithObject:self]];
 	[[NSFileManager defaultManager] copyItemAtPath:localPDFPath 
 											toPath:self.permanentPDFPath 
 											 error:nil];
 	[[NSFileManager defaultManager] copyItemAtPath:localXMLPath
 											toPath:self.permanentXMLPath 
 											 error:nil];
+	[[Paper savedPapersManager] didChangeValueForKey:@"savedPapers" 
+									 withSetMutation:NSKeyValueUnionSetMutation 
+											usingObjects:[NSSet setWithObject:self]];
 }
 
-- (void) unsave {
+- (void) unsave {	
+	[[Paper savedPapersManager] willChangeValueForKey:@"savedPapers" 
+									  withSetMutation:NSKeyValueMinusSetMutation 
+										 usingObjects:[NSSet setWithObject:self]];
 	[[NSFileManager defaultManager] removeItemAtPath:self.permanentPDFPath error:nil];
 	[[NSFileManager defaultManager] removeItemAtPath:self.permanentXMLPath error:nil];
+	[[Paper savedPapersManager] didChangeValueForKey:@"savedPapers" 
+									 withSetMutation:NSKeyValueMinusSetMutation 
+										usingObjects:[NSSet setWithObject:self]];
 }
 
 - (void) restore {
@@ -76,17 +89,31 @@
 			forKey:@"downloadStatus"];
 }
 
-+ (NSArray *) savedPapers {
-	NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self savedPapersDirectory] 
++ (SavedPapersManager *) savedPapersManager {
+	if (!savedPapersManager)
+		savedPapersManager = [[SavedPapersManager alloc] init];
+	return savedPapersManager;
+}
+
+@end
+
+@implementation SavedPapersManager									  
+									  
+- (NSSet *) savedPapers {
+	NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[Paper savedPapersDirectory] 
 																			 error:nil];
-	NSMutableArray *savedPapers = [NSMutableArray array];
+	NSMutableSet *savedPapers = [NSMutableSet set];
 	for (NSString *filename in filenames)
 		if ([filename.pathExtension isEqualToString:@"xml"]) {
-			NSString *xmlPath = [self.savedPapersDirectory stringByAppendingPathComponent:filename];
+			NSString *xmlPath = [[Paper savedPapersDirectory] stringByAppendingPathComponent:filename];
 			NSData *xmlData = [NSData dataWithContentsOfFile:xmlPath];
 			[savedPapers addObject:[[[Paper alloc] initWithPaperXML:xmlData] autorelease]];
 		}
 	return savedPapers;
+}
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
+	return NO;
 }
 
 @end

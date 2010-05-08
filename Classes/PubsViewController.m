@@ -11,6 +11,7 @@
 #import "SavedViewController.h"
 #import "Feed.h"
 #import "JournalCell.h"
+#import "Paper+Saving.h"
 
 enum {SectionFolders, SectionJournals, NumSections};
 
@@ -45,10 +46,17 @@ enum {SectionFolders, SectionJournals, NumSections};
 							 URL:@"http://feeds.plos.org/plosone/PLoSONE" 
 					   imageName:@"PLoS_One.png"],
 			 nil];
+	
+	[[Paper savedPapersManager] addObserver:self 
+								 forKeyPath:@"savedPapers" 
+									options:NSKeyValueObservingOptionNew
+									context:nil];
 }
 
 
 - (void)dealloc {
+	[[Paper savedPapersManager] removeObserver:self 
+									forKeyPath:@"savedPapers"];
 	[feeds release];
     [detailViewController release];
     [super dealloc];
@@ -69,7 +77,7 @@ enum {SectionFolders, SectionJournals, NumSections};
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
-		case SectionFolders: return 1;
+		case SectionFolders: return [Paper savedPapersManager].savedPapers.count > 0 ? 1 : 0;
 		case SectionJournals: return feeds.count;
 		default: return 0;
 	}
@@ -100,7 +108,7 @@ enum {SectionFolders, SectionJournals, NumSections};
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	if (section == SectionJournals)
+	if (section == SectionJournals && [Paper savedPapersManager].savedPapers.count > 0)
 		return @"Journals";
 	else
 		return nil;

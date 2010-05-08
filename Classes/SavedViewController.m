@@ -18,21 +18,31 @@
 {
 	if (self = [super initWithStyle:UITableViewStylePlain]) {
 		self.navigationItem.title = @"Saved Articles";
-		papers = [[NSMutableArray alloc] initWithArray:[Paper savedPapers]];
+		papers = [[NSMutableArray alloc] initWithArray:[[[Paper savedPapersManager] savedPapers] allObjects]];
+		
+		[[Paper savedPapersManager] addObserver:self 
+									 forKeyPath:@"savedPapers" 
+										options:NSKeyValueObservingOptionNew
+										context:nil];
 	}
 	return self;
 }
 
 
 - (void)dealloc {
+	[[Paper savedPapersManager] removeObserver:self 
+									forKeyPath:@"savedPapers"];
 	[papers release];
     [super dealloc];
 }
 
-#pragma mark actions
+#pragma mark NSKeyValueObserving methods
 
-- (IBAction) toggleEditing {
-	[self.tableView setEditing:!self.tableView.editing animated:YES];
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeInsertion) {
+		[papers setArray:[[[Paper savedPapersManager] savedPapers] allObjects]];
+		[self.tableView reloadData];
+	}
 }
 
 #pragma mark UITableViewDataSource methods
