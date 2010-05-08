@@ -23,9 +23,9 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 
 @property (retain) NSURL *remotePDFUrl;
 @property (retain) NSURL *remoteXMLUrl;
-@property (retain) NSString *title;
-@property (retain) NSString *authors;
-@property (retain) NSString *identifier;
+@property (readonly) NSDate *date;
+@property (readonly) NSString *title;
+@property (readonly) NSString *authors;
 @property (readonly) NSString *localPDFPath;
 @property (readonly) Status downloadStatus;
 @property (readonly) NSDictionary *metadata;
@@ -34,6 +34,8 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @property (readonly) NSString *runningHead;
 @property (readonly) NSString *doi;
 
++ (id) paperWithAtomXMLNode:(id)xmlString;
+- (id) initWithAtomXMLNode:(id)xmlString;
 - (id) initWithPaperXML:(NSData *)xmlData;
 - (void) parsePaperXML:(NSData *)xmlData;
 - (void) load;

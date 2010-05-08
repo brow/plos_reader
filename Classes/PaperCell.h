@@ -11,7 +11,7 @@
 
 @interface PaperCell : UITableViewCell {
 	Paper *paper;
-	IBOutlet UILabel *titleLabel, *authorLabel;
+	IBOutlet UILabel *titleLabel, *authorLabel, *dateLabel;
 }
 
 @property (retain) Paper *paper;

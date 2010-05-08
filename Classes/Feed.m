@@ -65,22 +65,9 @@
 												   forKey:@"a"];
 	
 	NSMutableArray *newPapers = [NSMutableArray array];
-	for (CXMLNode *paperNode in [doc nodesForXPath:@"a:feed/a:entry" namespaceMappings:ns error:nil]) {
-		Paper *paper = [[[Paper alloc] init] autorelease];
-		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns]) {
-			paper.title = [paperNode flatStringForXPath:@"./a:title" namespaceMappings:ns];
-			paper.authors = [paperNode flatStringForXPath:@"./a:author/a:name" namespaceMappings:ns];
-			paper.identifier = [paperNode flatStringForXPath:@"./a:id" namespaceMappings:ns];
-			
-			NSString *pdfUrl = [paperNode flatStringForXPath:@"./a:link[@type='application/pdf']/@href" namespaceMappings:ns];
-			paper.remotePDFUrl = [NSURL URLWithString:pdfUrl];
-			
-			NSString *xmlUrl = [paperNode flatStringForXPath:@"./a:link[@type='text/xml']/@href" namespaceMappings:ns];
-			paper.remoteXMLUrl = [NSURL URLWithString:xmlUrl];
-			
-			[newPapers addObject:paper];
-		}
-	}
+	for (CXMLNode *paperNode in [doc nodesForXPath:@"a:feed/a:entry" namespaceMappings:ns error:nil])
+		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns])
+			[newPapers addObject:[Paper paperWithAtomXMLNode:paperNode]];
 	
 	[[self mutableArrayValueForKey:@"papers"] addObjectsFromArray:newPapers];
 }

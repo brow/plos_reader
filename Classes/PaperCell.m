@@ -8,7 +8,6 @@
 
 #import "PaperCell.h"
 
-
 @implementation PaperCell
 
 @synthesize paper;
@@ -16,6 +15,7 @@
 - (void) awakeFromNib {
 	titleLabel.highlightedTextColor = [UIColor whiteColor];
 	authorLabel.highlightedTextColor = [UIColor whiteColor];
+	dateLabel.highlightedTextColor = [UIColor whiteColor];
 }
 
 - (void)dealloc {
@@ -32,6 +32,10 @@
 	
 	titleLabel.text = paper.title;
 	authorLabel.text = paper.authors;
+	
+	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+	formatter.dateStyle = NSDateFormatterShortStyle;
+	dateLabel.text = [formatter stringFromDate:paper.date];
 	
 	[self setNeedsLayout];
 }
