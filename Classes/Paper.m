@@ -143,6 +143,10 @@ NSString *temporaryPath();
 							  namespaceMappings:nil]
 				forKey:@"journal-id"];
 	
+	[metadata setValue:[doc flatStringForXPath:@"article/front/journal-meta/journal-title" 
+							 namespaceMappings:nil] 
+				forKey:@"journal-title"];
+	
 	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/volume" 
 							  namespaceMappings:nil]
 				forKey:@"volume"];
@@ -196,6 +200,25 @@ NSString *temporaryPath();
 }
 
 #pragma mark accessors
+
+- (NSString *) feedTitle {
+	return [metadata objectForKey:@"feed-title"];
+}
+
+- (void) setFeedTitle:(NSString *)value {
+	[metadata setObject:value 
+				 forKey:@"feed-title"];
+}
+
+- (NSString *) shortJournalTitle {
+	NSString *fullName = [metadata objectForKey:@"journal-title"];
+	if (fullName && fullName.length < 20)
+		return fullName;
+	else if ([metadata objectForKey:@"journal-id"])
+		return [metadata objectForKey:@"journal-id"];
+	else
+		return self.feedTitle;
+}
 
 - (NSDate *) date {
 	if ([metadata objectForKey:@"published"]) {

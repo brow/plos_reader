@@ -27,6 +27,7 @@ UINavigationControllerDelegate> {
 	UILabel *citationLabel;
 	UIActionSheet *citationActionSheet;
 	UIImageView *innerShadowView;
+	UIBarButtonItem *masterButton;
     
     Paper *paper;
 	CGPDFDocumentRef pdf;

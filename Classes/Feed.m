@@ -66,8 +66,11 @@
 	
 	NSMutableArray *newPapers = [NSMutableArray array];
 	for (CXMLNode *paperNode in [doc nodesForXPath:@"a:feed/a:entry" namespaceMappings:ns error:nil])
-		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns])
-			[newPapers addObject:[Paper paperWithAtomXMLNode:paperNode]];
+		if ([paperNode hasValueForXPath:@"./a:author/a:name" namespaceMappings:ns]) {
+			Paper *paper = [Paper paperWithAtomXMLNode:paperNode];
+			paper.feedTitle = self.title;
+			[newPapers addObject:paper];
+		}
 	
 	[[self mutableArrayValueForKey:@"papers"] addObjectsFromArray:newPapers];
 }

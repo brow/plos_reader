@@ -24,25 +24,25 @@ enum {SectionFolders, SectionJournals, NumSections};
 	[super awakeFromNib];
 	self.title = @"Journals";
 	feeds = [[NSArray alloc] initWithObjects:
-			 [Feed feedWithTitle:@"Biology" 
+			 [Feed feedWithTitle:@"PLoS Biology" 
 							 URL:@"http://www.plosbiology.org/article/feed" 
 					   imageName:@"PLoS_Biology.png"], 
-			 [Feed feedWithTitle:@"Medicine" 
+			 [Feed feedWithTitle:@"PLoS Medicine" 
 							 URL:@"http://www.plosmedicine.org/article/feed" 
 					   imageName:@"PLoS_Medicine.png"], 
-			 [Feed feedWithTitle:@"Genetics" 
+			 [Feed feedWithTitle:@"PLoS Genetics" 
 							 URL:@"http://www.plosgenetics.org/article/feed" 
 					   imageName:@"PLoS_Genetics.png"], 
-			 [Feed feedWithTitle:@"Pathogens" 
+			 [Feed feedWithTitle:@"PLoS Pathogens" 
 							 URL:@"http://www.plospathogens.org/article/feed" 
 					   imageName:@"PLoS_Pathogens.png"],
-			 [Feed feedWithTitle:@"Computational Biology" 
+			 [Feed feedWithTitle:@"PLoS Comput Biol" 
 							 URL:@"http://www.ploscompbiol.org/article/feed" 
 					   imageName:@"PLoS_CompBio.png"], 
-			 [Feed feedWithTitle:@"Neglected Tropical Diseases" 
+			 [Feed feedWithTitle:@"PLoS Negl Trop Dis" 
 							 URL:@"http://www.plosntds.org/article/feed" 
 					   imageName:@"PLoS_NTD.png"],
-			 [Feed feedWithTitle:@"ONE" 
+			 [Feed feedWithTitle:@"PLoS ONE" 
 							 URL:@"http://feeds.plos.org/plosone/PLoSONE" 
 					   imageName:@"PLoS_One.png"],
 			 nil];

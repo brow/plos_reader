@@ -66,6 +66,13 @@ citationButton, citationLabel, scrollView, innerShadowView;
 						 CGPDFDocumentGetNumberOfPages(pdf)];
 }
 
+- (void)configureMasterButton {
+	if (paper)
+		masterButton.title = paper.shortJournalTitle;
+	else
+		masterButton.title = @"Journals";
+}
+
 - (void)configureView {
 	if (!paper || paper.downloadStatus == StatusFailed) {
 		activityIndicator.hidden = YES;
@@ -98,6 +105,8 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
 	}
+	
+	[self configureMasterButton];
 }
 
 - (void) configureForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -116,9 +125,6 @@ citationButton, citationLabel, scrollView, innerShadowView;
 }
 
 - (void) showMasterPopover {
-	if (toolbar.items.count == 0)
-		return;
-	UIBarButtonItem *masterButton = [toolbar.items objectAtIndex:0];
 	[masterButton.target performSelector:masterButton.action];
 }
 
@@ -238,12 +244,13 @@ citationButton, citationLabel, scrollView, innerShadowView;
 #pragma mark UISplitViewControllerDelegate methods
 
 - (void)splitViewController: (UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
-    barButtonItem.title = @"Papers";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:YES];
     [items release];
     self.popoverController = pc;
+	masterButton = barButtonItem;
+	[self configureMasterButton];
 }
 
 
@@ -253,6 +260,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
     [toolbar setItems:items animated:NO];
     [items release];
     self.popoverController = nil;
+	masterButton = nil;
 }
 
 #pragma mark UIViewController methods
