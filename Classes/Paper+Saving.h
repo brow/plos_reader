@@ -23,5 +23,7 @@
 - (void) unsave;
 - (BOOL) saved;
 - (void) restore;
+- (void) autosave;
++ (Paper *) autosavedPaper;
 
 @end

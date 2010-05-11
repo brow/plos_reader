@@ -20,6 +20,18 @@ static SavedPapersManager *savedPapersManager;
 	return [[self documentsDirectory] stringByAppendingPathComponent:@"saved"];
 }
 
++ (NSString *) autosavedPaperDirectory {
+	return [[self documentsDirectory] stringByAppendingPathComponent:@"autosaved"];
+}
+
++ (NSString *) autosavedXMLPath {
+	return [[self autosavedPaperDirectory] stringByAppendingPathComponent:@"paper.xml"];
+}
+
++ (NSString *) autosavedPDFPath {
+	return [[self autosavedPaperDirectory] stringByAppendingPathComponent:@"paper.pdf"];
+}
+
 - (NSString *)filenameBase {
 	assert(self.doi);
 	return [self.doi stringByReplacingOccurrencesOfString:@"/" 
@@ -87,6 +99,49 @@ static SavedPapersManager *savedPapersManager;
 	xmlDownloaded = YES;
 	[self setValue:[NSNumber numberWithInt:StatusDownloaded] 
 			forKey:@"downloadStatus"];
+}
+
+- (void) autosave {
+	if (self.downloadStatus == StatusDownloaded) {
+		if (![[NSFileManager defaultManager] fileExistsAtPath:[self.class autosavedPaperDirectory]])
+			[[NSFileManager defaultManager] createDirectoryAtPath:[self.class autosavedPaperDirectory]
+													   attributes:nil];
+
+		[[NSFileManager defaultManager] removeItemAtPath:[Paper autosavedPDFPath] error:nil];
+		[[NSFileManager defaultManager] removeItemAtPath:[Paper autosavedXMLPath] error:nil];
+		
+		[[NSFileManager defaultManager] copyItemAtPath:localPDFPath 
+												toPath:[Paper autosavedPDFPath]
+												 error:nil];
+		[[NSFileManager defaultManager] copyItemAtPath:localXMLPath 
+												toPath:[Paper autosavedXMLPath]
+												 error:nil];
+	}
+}
+
++ (Paper *) autosavedPaper {
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[Paper autosavedXMLPath]] &&
+		[[NSFileManager defaultManager] fileExistsAtPath:[Paper autosavedPDFPath]]) 
+	{
+		NSData *xmlData = [NSData dataWithContentsOfFile:[Paper autosavedXMLPath]];
+		Paper *paper = [[[Paper alloc] initWithPaperXML:xmlData] autorelease];
+		
+		[[NSFileManager defaultManager] copyItemAtPath:[Paper autosavedPDFPath]
+												toPath:paper->localPDFPath 
+												 error:nil];
+		[[NSFileManager defaultManager] copyItemAtPath:[Paper autosavedXMLPath]
+												toPath:paper->localXMLPath 
+												 error:nil];
+		
+		paper->pdfDownloaded = YES;
+		paper->xmlDownloaded = YES;
+		[paper setValue:[NSNumber numberWithInt:StatusDownloaded] 
+				 forKey:@"downloadStatus"];
+		
+		return paper;
+	}
+	else
+		return nil;
 }
 
 + (SavedPapersManager *) savedPapersManager {

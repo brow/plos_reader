@@ -89,7 +89,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 			pdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
 		
 		[leavesView reloadData];
-		[self displayPageNumber:1];
+		[self displayPageNumber:leavesView.currentPageIndex+1];
 		citationLabel.text = paper.runningHead;
 	} else {
 		leavesView.hidden = YES;
@@ -120,6 +120,17 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		return;
 	UIBarButtonItem *masterButton = [toolbar.items objectAtIndex:0];
 	[masterButton.target performSelector:masterButton.action];
+}
+
+#pragma mark properties
+
+- (NSUInteger)page {
+    return leavesView.currentPageIndex;
+}
+
+- (void)setPage:(NSUInteger)value {
+    leavesView.currentPageIndex = value;
+	[self displayPageNumber:value+1];
 }
 
 #pragma mark actions

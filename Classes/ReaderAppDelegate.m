@@ -12,6 +12,7 @@
 #import "FeedViewController.h"
 #import "PaperViewController.h"
 #import "Reachability.h"
+#import "Paper+Saving.h"
 
 @implementation ReaderAppDelegate
 
@@ -40,6 +41,11 @@
 		[alert show];
 	}
 	
+	if ([Paper autosavedPaper]) {
+		paperViewController.paper = [Paper autosavedPaper];
+		paperViewController.page = [[NSUserDefaults standardUserDefaults] integerForKey:@"autosavedPage"];
+	}
+	
 	if (!paperViewController.paper)
 		[paperViewController showMasterPopover];
     
@@ -48,7 +54,12 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Save data if appropriate
+	if (paperViewController.paper) {
+		[paperViewController.paper autosave];
+		[[NSUserDefaults standardUserDefaults] setInteger:paperViewController.page 
+												   forKey:@"autosavedPage"];
+	}
+	
 }
 
 

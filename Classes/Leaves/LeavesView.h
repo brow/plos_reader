@@ -43,6 +43,7 @@
 @property (assign) id<LeavesViewDataSource> dataSource;
 @property (assign) id<LeavesViewDelegate> delegate;
 @property (readonly) CGFloat targetWidth;
+@property (assign) NSUInteger currentPageIndex;
 
 - (void) reloadData;
 

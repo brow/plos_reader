@@ -11,7 +11,7 @@
 @interface LeavesView () 
 
 @property (assign) CGFloat leafEdge;
-@property (assign) NSUInteger currentPageIndex;
+//@property (assign) NSUInteger currentPageIndex;
 
 @end
 

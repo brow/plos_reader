@@ -42,6 +42,7 @@ UINavigationControllerDelegate> {
 @property (assign) IBOutlet UIImageView *innerShadowView;
 
 @property (nonatomic, retain) Paper *paper;
+@property (assign) NSUInteger page;
 
 - (IBAction) showCitationActions:(id)sender;
 - (void) showMasterPopover;
