@@ -158,7 +158,10 @@ citationButton, citationLabel, scrollView, innerShadowView;
 - (IBAction) emailPDF:(id)sender {
 	MFMailComposeViewController *mailController = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailController setSubject:paper.title];
-	[mailController setMessageBody:paper.citation isHTML:NO];
+	[mailController setMessageBody:[NSString stringWithFormat:@"%@\n\n%@",
+									paper.citation,
+									paper.doiLink]
+							isHTML:NO];
 	[mailController addAttachmentData:[NSData dataWithContentsOfFile:paper.localPDFPath] 
 							 mimeType:@"application/pdf" 
 							 fileName:[[paper.metadata objectForKey:@"doi"] lastPathComponent]

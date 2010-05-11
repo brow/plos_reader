@@ -33,6 +33,7 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @property (readonly) NSString *citation;
 @property (readonly) NSString *runningHead;
 @property (readonly) NSString *doi;
+@property (readonly) NSString *doiLink;
 @property (readonly) NSString *shortJournalTitle;
 @property (retain) NSString *feedTitle;
 

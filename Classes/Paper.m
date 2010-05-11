@@ -264,6 +264,13 @@ NSString *temporaryPath();
 	return [metadata objectForKey:@"doi"];
 }
 
+- (NSString *) doiLink {
+	if (self.doi)
+		return [NSString stringWithFormat:@"http://dx.doi.org/%@", self.doi];
+	else
+		return nil;
+}
+
 - (NSString *) runningHead {
 	NSString *runningHead = [metadata objectForKey:@"running-head"];
 	if (runningHead)
