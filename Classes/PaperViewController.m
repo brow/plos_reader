@@ -226,7 +226,6 @@ citationButton, citationLabel, scrollView, innerShadowView;
 
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
 	if (paper && paper.downloadStatus == StatusDownloaded) {
-		NSDate *startDate = [NSDate date];
 		
 		CGPDFDocumentRef aPdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
 		
@@ -245,7 +244,6 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		CGContextRestoreGState(ctx);
 		
 		CGPDFDocumentRelease(aPdf);
-		NSLog(@"%.3f", [[NSDate date] timeIntervalSinceDate:startDate]);
 	}
 }
 
@@ -288,6 +286,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 	
 	leavesView.dataSource = self;
 	leavesView.delegate = self;
+	leavesView.backgroundRendering = YES;
 	[self configureView];
 	
 	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 
