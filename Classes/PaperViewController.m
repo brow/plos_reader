@@ -207,7 +207,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 
 #pragma mark  LeavesViewDelegate methods
 
-- (void) leavesView:(LeavesView *)leavesView didTurnToPageAtIndex:(NSUInteger)pageIndex {
+- (void) leavesView:(LeavesView *)leavesView willTurnToPageAtIndex:(NSUInteger)pageIndex {
 	[self displayPageNumber:pageIndex + 1];
 }
 
