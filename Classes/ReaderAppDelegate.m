@@ -33,8 +33,8 @@
     [window makeKeyAndVisible];
 	
 	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
-		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Connection Failed" 
-														 message:@"An internet connection is required to download new journal articles." 
+		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Offline Mode" 
+														 message:@"Only saved articles will be available. To download new articles, check your internet connection and reopen PLoS Reader." 
 														delegate:nil 
 											   cancelButtonTitle:@"OK" 
 											   otherButtonTitles:nil] autorelease];
