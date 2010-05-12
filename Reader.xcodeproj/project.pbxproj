@@ -16,6 +16,8 @@
 		2804203C108E9BAB000629CD /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2804203B108E9BAB000629CD /* DetailView.xib */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
+		D33D3BC5119A0FAA0083A058 /* SubjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D3BC4119A0FAA0083A058 /* SubjectsViewController.m */; };
+		D33D3C30119A1F960083A058 /* UIColor+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D3C2F119A1F960083A058 /* UIColor+Extras.m */; };
 		D33D5254117FB3A200BA7203 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D5253117FB3A200BA7203 /* Feed.m */; };
 		D33D527A117FB57600BA7203 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D526C117FB57600BA7203 /* ASIAuthenticationDialog.m */; };
 		D33D527B117FB57600BA7203 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D526E117FB57600BA7203 /* ASIFormDataRequest.m */; };
@@ -88,6 +90,10 @@
 		28AD735F0D9D9599002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Reader-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Reader-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		D33D3BC3119A0FAA0083A058 /* SubjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsViewController.h; sourceTree = "<group>"; };
+		D33D3BC4119A0FAA0083A058 /* SubjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsViewController.m; sourceTree = "<group>"; };
+		D33D3C2E119A1F960083A058 /* UIColor+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extras.h"; sourceTree = "<group>"; };
+		D33D3C2F119A1F960083A058 /* UIColor+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extras.m"; sourceTree = "<group>"; };
 		D33D5252117FB3A200BA7203 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
 		D33D5253117FB3A200BA7203 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		D33D526B117FB57600BA7203 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -205,28 +211,10 @@
 			children = (
 				D33D5266117FB56000BA7203 /* 3rd Party */,
 				D33D5255117FB3A700BA7203 /* Data */,
-				D33D5502117FD44C00BA7203 /* TouchXML+Extras.h */,
-				D33D5503117FD44C00BA7203 /* TouchXML+Extras.m */,
-				D33D5509117FD4A400BA7203 /* XMLParsingException.h */,
-				D33D550A117FD4A400BA7203 /* XMLParsingException.m */,
-				1D3623240D0F684500981E51 /* ReaderAppDelegate.h */,
-				1D3623250D0F684500981E51 /* ReaderAppDelegate.m */,
-				28042007108E984D000629CD /* FeedViewController.h */,
-				28042008108E984D000629CD /* FeedViewController.m */,
-				28042009108E984D000629CD /* PaperViewController.h */,
-				2804200A108E984D000629CD /* PaperViewController.m */,
-				D33D59A311802BC400BA7203 /* PubsViewController.h */,
-				D33D59A411802BC400BA7203 /* PubsViewController.m */,
-				D3AEC63D11937132009BE344 /* SavedViewController.h */,
-				D3AEC63E11937132009BE344 /* SavedViewController.m */,
-				D3FB386B1180F48C00AC0932 /* PaperCell.h */,
-				D3FB386C1180F48C00AC0932 /* PaperCell.m */,
-				D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */,
-				D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */,
-				D3FB3E971189059100AC0932 /* JournalCell.h */,
-				D3FB3E981189059100AC0932 /* JournalCell.m */,
-				D3FB4033118A04CD00AC0932 /* PageScrollView.h */,
-				D3FB4034118A04CD00AC0932 /* PageScrollView.m */,
+				D33D3BB2119A0DFA0083A058 /* App Delegate */,
+				D33D3BB3119A0E130083A058 /* Views */,
+				D33D3BB4119A0E210083A058 /* View Controllers */,
+				D33D3BB5119A0E3A0083A058 /* Extras */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -298,9 +286,63 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D33D3BB2119A0DFA0083A058 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				1D3623240D0F684500981E51 /* ReaderAppDelegate.h */,
+				1D3623250D0F684500981E51 /* ReaderAppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		D33D3BB3119A0E130083A058 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D3FB386B1180F48C00AC0932 /* PaperCell.h */,
+				D3FB386C1180F48C00AC0932 /* PaperCell.m */,
+				D3FB3E971189059100AC0932 /* JournalCell.h */,
+				D3FB3E981189059100AC0932 /* JournalCell.m */,
+				D3FB4033118A04CD00AC0932 /* PageScrollView.h */,
+				D3FB4034118A04CD00AC0932 /* PageScrollView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		D33D3BB4119A0E210083A058 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D33D3BC3119A0FAA0083A058 /* SubjectsViewController.h */,
+				D33D3BC4119A0FAA0083A058 /* SubjectsViewController.m */,
+				28042007108E984D000629CD /* FeedViewController.h */,
+				28042008108E984D000629CD /* FeedViewController.m */,
+				28042009108E984D000629CD /* PaperViewController.h */,
+				2804200A108E984D000629CD /* PaperViewController.m */,
+				D33D59A311802BC400BA7203 /* PubsViewController.h */,
+				D33D59A411802BC400BA7203 /* PubsViewController.m */,
+				D3AEC63D11937132009BE344 /* SavedViewController.h */,
+				D3AEC63E11937132009BE344 /* SavedViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		D33D3BB5119A0E3A0083A058 /* Extras */ = {
+			isa = PBXGroup;
+			children = (
+				D33D5502117FD44C00BA7203 /* TouchXML+Extras.h */,
+				D33D5503117FD44C00BA7203 /* TouchXML+Extras.m */,
+				D3FB3B5C11861CD600AC0932 /* NSString+Extras.h */,
+				D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */,
+				D33D3C2E119A1F960083A058 /* UIColor+Extras.h */,
+				D33D3C2F119A1F960083A058 /* UIColor+Extras.m */,
+			);
+			name = Extras;
+			sourceTree = "<group>";
+		};
 		D33D5255117FB3A700BA7203 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D33D5509117FD4A400BA7203 /* XMLParsingException.h */,
+				D33D550A117FD4A400BA7203 /* XMLParsingException.m */,
 				D33D5252117FB3A200BA7203 /* Feed.h */,
 				D33D5253117FB3A200BA7203 /* Feed.m */,
 				D33D537E117FBD5D00BA7203 /* Paper.h */,
@@ -537,6 +579,8 @@
 				D3FB4035118A04CD00AC0932 /* PageScrollView.m in Sources */,
 				D3AEC53D11934B8F009BE344 /* Paper+Saving.m in Sources */,
 				D3AEC63F11937132009BE344 /* SavedViewController.m in Sources */,
+				D33D3BC5119A0FAA0083A058 /* SubjectsViewController.m in Sources */,
+				D33D3C30119A1F960083A058 /* UIColor+Extras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

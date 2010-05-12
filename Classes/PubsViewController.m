@@ -9,6 +9,7 @@
 #import "PubsViewController.h"
 #import "FeedViewController.h"
 #import "SavedViewController.h"
+#import "SubjectsViewController.h"
 #import "Feed.h"
 #import "JournalCell.h"
 #import "Paper+Saving.h"
@@ -123,9 +124,15 @@ enum {SectionFolders, SectionJournals, NumSections};
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == SectionJournals) {
 		Feed *feed = [feeds objectAtIndex:indexPath.row];
-		FeedViewController *viewController = [[[FeedViewController alloc] initWithFeed:feed] autorelease];
-		viewController.detailViewController = self.detailViewController;
-		[self.navigationController pushViewController:viewController animated:YES];
+		if (feed.title == @"PLoS ONE") {
+			SubjectsViewController *viewController = [[[SubjectsViewController alloc] init] autorelease];
+			viewController.detailViewController = self.detailViewController;
+			[self.navigationController pushViewController:viewController animated:YES];
+		} else {
+			FeedViewController *viewController = [[[FeedViewController alloc] initWithFeed:feed] autorelease];
+			viewController.detailViewController = self.detailViewController;
+			[self.navigationController pushViewController:viewController animated:YES];
+		}
 	} else {
 		SavedViewController *vc = [[[SavedViewController alloc] init] autorelease];
 		vc.detailViewController = self.detailViewController;
