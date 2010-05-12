@@ -30,7 +30,6 @@ UINavigationControllerDelegate> {
 	UIBarButtonItem *masterButton;
     
     Paper *paper;
-	CGPDFDocumentRef pdf;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;

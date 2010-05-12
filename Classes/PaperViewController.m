@@ -44,11 +44,6 @@ citationButton, citationLabel, scrollView, innerShadowView;
 				   options:NSKeyValueObservingOptionNew 
 				   context:nil];
 		
-		if (pdf) {
-			CGPDFDocumentRelease(pdf);
-			pdf = nil;
-		}
-		
 		[self configureView];
 		if (paper.downloadStatus != StatusDownloaded)
 			[paper load];
@@ -63,7 +58,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 	pageLabel.text = [NSString stringWithFormat:
 						 @"%u / %u", 
 						 pageNumber, 
-						 CGPDFDocumentGetNumberOfPages(pdf)];
+						 [self numberOfPagesInLeavesView:leavesView]];
 }
 
 - (void)configureMasterButton {
@@ -91,10 +86,6 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		citationLabel.alpha = 1;
 		pageLabel.alpha = 1;
 		[UIView commitAnimations];
-		
-		if (!pdf)
-			pdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
-		
 		[leavesView reloadData];
 		[self displayPageNumber:leavesView.currentPageIndex+1];
 		citationLabel.text = paper.runningHead;
@@ -223,12 +214,23 @@ citationButton, citationLabel, scrollView, innerShadowView;
 #pragma mark LeavesViewDataSource methods
 
 - (NSUInteger) numberOfPagesInLeavesView:(LeavesView*)leavesView {
-	return pdf ? CGPDFDocumentGetNumberOfPages(pdf) : 0;
+	if (paper && paper.downloadStatus == StatusDownloaded) {
+		CGPDFDocumentRef aPdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
+		NSUInteger ret = CGPDFDocumentGetNumberOfPages(aPdf);
+		CGPDFDocumentRelease(aPdf);
+		return ret;
+	} else {
+		return 0;
+	}
 }
 
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
-	if (pdf) {
-		CGPDFPageRef page = CGPDFDocumentGetPage(pdf, index + 1);
+	if (paper && paper.downloadStatus == StatusDownloaded) {
+		NSDate *startDate = [NSDate date];
+		
+		CGPDFDocumentRef aPdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
+		
+		CGPDFPageRef page = CGPDFDocumentGetPage(aPdf, index + 1);
 		CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
 		CGRect croppedRect = CGRectInset(pageRect, 46, 44);
 		croppedRect.origin.y -= 2;
@@ -241,6 +243,9 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		CGContextConcatCTM(ctx, transform);
 		CGContextDrawPDFPage(ctx, page);
 		CGContextRestoreGState(ctx);
+		
+		CGPDFDocumentRelease(aPdf);
+		NSLog(@"%.3f", [[NSDate date] timeIntervalSinceDate:startDate]);
 	}
 }
 
