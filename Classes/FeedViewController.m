@@ -9,6 +9,7 @@
 #import "FeedViewController.h"
 #import "PaperViewController.h"
 #import "Paper.h"
+#import "AboutViewController.h"
 
 @implementation FeedViewController
 
@@ -25,7 +26,13 @@
 		[feed addObserver:self 
 			   forKeyPath:@"downloaded" 
 				  options:NSKeyValueObservingOptionNew 
-				  context:nil];
+				  context:nil];		
+		
+		actionsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"FeedActions.png"] 
+														 style:UIBarButtonItemStylePlain
+														target:self 
+														action:@selector(showActions:)];
+		
 		self.navigationItem.title = feed.title;
 	}
 	return self;
@@ -40,21 +47,63 @@
 	
 	[feed release];
     [detailViewController release];
+	[actionsButton release];
     [super dealloc];
 }
 
 - (void)displayFeedStatus {
-	UIBarButtonItem *barButtonItem = nil;
 	if (feed.downloaded) {
-		//TODO: refresh button
+		[self.navigationItem setRightBarButtonItem:actionsButton animated:YES];
 	} else {
 		UIActivityIndicatorView *activityIndicator = 
 			[[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
 		[activityIndicator startAnimating];
-		barButtonItem =
+		UIBarButtonItem *barButtonItem =
 			[[[UIBarButtonItem alloc] initWithCustomView:activityIndicator] autorelease];
+		[self.navigationItem setRightBarButtonItem:barButtonItem animated:YES];
 	}
-	self.navigationItem.rightBarButtonItem = barButtonItem;
+}
+
+#pragma mark actions
+
+- (IBAction) showActions:(id)sender {
+	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:nil 
+															  delegate:self 
+													 cancelButtonTitle:nil  
+												destructiveButtonTitle:nil 
+													 otherButtonTitles:@"Refresh Articles",@"About This Journal",nil] autorelease];
+	
+	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+		[actionSheet addButtonWithTitle:@"Cancel"];
+		actionSheet.cancelButtonIndex = 2;
+	}
+	
+	[actionSheet showFromBarButtonItem:actionsButton animated:YES];
+	
+	/* Nav bar buttons still receive touches for some reason. */
+	self.navigationController.navigationBar.userInteractionEnabled = NO;
+}
+
+- (IBAction) showAbout:(id)sender {
+	UIViewController *vc = [[[AboutViewController alloc] init] autorelease];
+	vc.modalPresentationStyle = UIModalPresentationFormSheet;
+	vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+ 	[self presentModalViewController:vc animated:YES];
+}
+
+#pragma mark UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	self.navigationController.navigationBar.userInteractionEnabled = YES;
+	switch (buttonIndex) {
+		case 0:
+			break;
+		case 1:
+			[self showAbout:self];
+			break;
+		default:
+			break;
+	}
 }
 
 #pragma mark NSKeyValueObserving methods

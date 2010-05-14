@@ -12,10 +12,11 @@
 
 @class PaperViewController;
 
-@interface FeedViewController : UITableViewController {
+@interface FeedViewController : UITableViewController <UIActionSheetDelegate> {
 	Feed *feed;
     PaperViewController *detailViewController;
 	PaperCell *paperCell;
+	UIBarButtonItem *actionsButton;
 }
 
 @property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;
