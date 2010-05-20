@@ -20,7 +20,9 @@ UINavigationControllerDelegate> {
 	PageScrollView *scrollView;
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
-	UIActivityIndicatorView *activityIndicator;
+	UIView *downloadingView;
+	UILabel *downloadingTitleLabel;
+	UIProgressView *progressIndicator;
 	LeavesView *leavesView;
 	UILabel *pageLabel;
 	UIButton *citationButton;
@@ -34,12 +36,14 @@ UINavigationControllerDelegate> {
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (assign) IBOutlet LeavesView *leavesView;
-@property (assign) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (assign) IBOutlet UIView *downloadingView;
+@property (assign) IBOutlet UIProgressView *progressIndicator;
 @property (assign) IBOutlet UILabel *pageLabel;
 @property (assign) IBOutlet UIButton *citationButton;
 @property (assign) IBOutlet UILabel *citationLabel;
 @property (assign) IBOutlet PageScrollView *scrollView;
 @property (assign) IBOutlet UIImageView *innerShadowView;
+@property (assign) IBOutlet UILabel *downloadingTitleLabel;
 
 @property (nonatomic, retain) Paper *paper;
 @property (assign) NSUInteger page;

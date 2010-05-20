@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ASINetworkQueue.h"
 
 typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 
@@ -15,10 +16,10 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 	NSString *localPDFPath, *localXMLPath;
 	NSString *title, *authors, *identifier;
 	NSMutableDictionary *metadata;
-	NSMutableArray *requests;
+	ASINetworkQueue *requestsQueue;
 	
-	BOOL pdfDownloaded, xmlDownloaded;
 	Status downloadStatus;
+	float downloadProgress;
 }
 
 @property (retain) NSURL *remotePDFUrl;
@@ -28,6 +29,7 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @property (readonly) NSString *authors;
 @property (readonly) NSString *localPDFPath;
 @property (readonly) Status downloadStatus;
+@property (readonly) float downloadProgress;
 @property (readonly) NSDictionary *metadata;
 @property (readonly) NSString *volumeIssueId;
 @property (readonly) NSString *citation;

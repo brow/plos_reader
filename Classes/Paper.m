@@ -12,7 +12,7 @@
 #import "ASIHTTPRequest.h"
 #import "Paper+Saving.h"
 
-@interface Paper()
+@interface Paper() <ASIProgressDelegate>
 
 - (void)setDownloadStatus:(Status)value;
 - (void) parsePaperXML:(NSData *)xmlData;
@@ -33,11 +33,10 @@ NSString *temporaryPath();
 - (id) init
 {
 	if (self = [super init]) {
-		xmlDownloaded = NO;
-		pdfDownloaded = NO;
+		downloadProgress = 0;
 		downloadStatus = StatusNotDownloaded;
 		metadata = [[NSMutableDictionary alloc] init];
-		requests = [[NSMutableArray alloc] init];
+		requestsQueue = [[ASINetworkQueue alloc] init];
 		localPDFPath = [temporaryPath() retain];
 		localXMLPath = [temporaryPath() retain];
 	}
@@ -69,12 +68,12 @@ NSString *temporaryPath();
 	[localPDFPath release];
 	[localXMLPath release];
 	[metadata release];
-	[requests release];
+	[requestsQueue release];
 	[super dealloc];
 }
 
 - (void) load {	
-	if (self.downloadStatus == StatusDownloaded || requests.count > 0)
+	if (self.downloadStatus == StatusDownloaded || requestsQueue.isNetworkActive)
 		return;
 	else
 		self.downloadStatus = StatusNotDownloaded;
@@ -82,28 +81,30 @@ NSString *temporaryPath();
 	if ([self saved])
 		[self restore];
 	
-	if (!pdfDownloaded) {
-		ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
-		[pdfRequest setDelegate:self];
-		[pdfRequest setDownloadDestinationPath:localPDFPath];
-		[pdfRequest startAsynchronous];
-		NSLog(@"[REQUEST %@]", remotePDFUrl);
-		[requests addObject:pdfRequest];
-	}
+	[requestsQueue reset];
+	requestsQueue.delegate = self;
+	requestsQueue.downloadProgressDelegate = self;
+	requestsQueue.showAccurateProgress = YES;
+	requestsQueue.requestDidFinishSelector = @selector(requestFinished:);
+	requestsQueue.requestDidFailSelector = @selector(requestFailed:);
+	requestsQueue.queueDidFinishSelector = @selector(queueDidFinish:);
 	
-	if (!xmlDownloaded) {	
-		ASIHTTPRequest *xmlRequest = [ASIHTTPRequest requestWithURL:remoteXMLUrl];
-		[xmlRequest setDelegate:self];
-		[xmlRequest setDownloadDestinationPath:localXMLPath];
-		[xmlRequest startAsynchronous];
-		[requests addObject:xmlRequest];
-		NSLog(@"[REQUEST %@]", remoteXMLUrl);
-	}
+	ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
+	pdfRequest.downloadDestinationPath = localPDFPath;	
+	pdfRequest.showAccurateProgress = YES;
+	[requestsQueue addOperation:pdfRequest];
+	NSLog(@"[REQUEST %@]", remotePDFUrl);
+
+	ASIHTTPRequest *xmlRequest = [ASIHTTPRequest requestWithURL:remoteXMLUrl];
+	xmlRequest.downloadDestinationPath = localXMLPath;
+	[requestsQueue addOperation:xmlRequest];
+	NSLog(@"[REQUEST %@]", remoteXMLUrl);
+	
+	[requestsQueue go];
 }
 
 - (void) cancelLoad {
-	for (ASIHTTPRequest *request in [NSArray arrayWithArray:requests])
-		[request cancel];
+	[requestsQueue cancelAllOperations];
 }
 
 - (void) parseAtomXMLNode:(id)node {
@@ -320,33 +321,43 @@ NSString *temporaryPath();
     downloadStatus = value;
 }
 
+- (float)downloadProgress {
+    return downloadProgress;
+}
+
+- (void)setDownloadProgress:(float)value {
+    if (downloadProgress != value) {
+        downloadProgress = value;
+    }
+}
+
+#pragma mark ASIProgressDelegate methods
+
+//- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes {
+//	NSLog(@"hai");
+//}
+//
+//- (void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength {
+//	NSLog(@"hello");
+//}
+
+- (void)setProgress:(float)newProgress {
+	NSLog(@"%.2f", newProgress);
+	[self setDownloadProgress:newProgress];
+}
+
 #pragma mark ASIHTTPRequest delegate methods
 
 - (void)requestFinished:(ASIHTTPRequest *)request
-{	
-	[requests removeObject:request];
-	
-	if ([request.url isEqual:remoteXMLUrl]) {
-		[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
-		xmlDownloaded = YES;
-	} else {
-		pdfDownloaded = YES;
-	}
-	
-	if (pdfDownloaded && xmlDownloaded)
-		self.downloadStatus = StatusDownloaded;
-	
+{		
 	NSLog(@"[LOADED %@]", request.url);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
-{
-	[requests removeObject:request];
-	
+{	
 	if (request.error.code == ASIRequestCancelledErrorType)
 		NSLog(@"[CANCELLED %@]", request.url);
 	else {
-		[self cancelLoad];
 		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Download Failed" 
 														 message:@"This paper could not be downloaded. Please check your internet connection and try again." 
 														delegate:nil 
@@ -356,6 +367,17 @@ NSString *temporaryPath();
 		self.downloadStatus = StatusFailed;
 		NSLog(@"[FAILED %@]", request.url);
 	}
+}
+
+- (void) queueDidFinish:(ASINetworkQueue *)queue {
+	for (ASIHTTPRequest *request in requestsQueue.operations)
+		if (request.error) {
+			self.downloadStatus = StatusFailed;
+			return;
+		}
+			
+	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
+	self.downloadStatus = StatusDownloaded;
 }
 
 #pragma mark NSObject methods

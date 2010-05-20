@@ -95,8 +95,6 @@ static SavedPapersManager *savedPapersManager;
 	
 	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 	
-	pdfDownloaded = YES;
-	xmlDownloaded = YES;
 	[self setValue:[NSNumber numberWithInt:StatusDownloaded] 
 			forKey:@"downloadStatus"];
 }
@@ -133,8 +131,6 @@ static SavedPapersManager *savedPapersManager;
 												toPath:paper->localXMLPath 
 												 error:nil];
 		
-		paper->pdfDownloaded = YES;
-		paper->xmlDownloaded = YES;
 		[paper setValue:[NSNumber numberWithInt:StatusDownloaded] 
 				 forKey:@"downloadStatus"];
 		

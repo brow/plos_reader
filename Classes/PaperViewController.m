@@ -20,8 +20,8 @@
 
 @implementation PaperViewController
 
-@synthesize toolbar, popoverController, paper, leavesView, activityIndicator, pageLabel, 
-citationButton, citationLabel, scrollView, innerShadowView;
+@synthesize toolbar, popoverController, paper, leavesView, downloadingView, pageLabel, 
+citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, downloadingTitleLabel;
 
 - (void)dealloc {
     [popoverController release];
@@ -34,6 +34,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 - (void)setPaper:(id)newDetailItem {
     if (paper != newDetailItem) {	
 		[paper removeObserver:self forKeyPath:@"downloadStatus"];
+		[paper removeObserver:self forKeyPath:@"downloadProgress"];
 		[paper cancelLoad];
 		
         [paper release];
@@ -41,6 +42,10 @@ citationButton, citationLabel, scrollView, innerShadowView;
 				
 		[paper addObserver:self 
 				forKeyPath:@"downloadStatus" 
+				   options:NSKeyValueObservingOptionNew 
+				   context:nil];
+		[paper addObserver:self 
+				forKeyPath:@"downloadProgress" 
 				   options:NSKeyValueObservingOptionNew 
 				   context:nil];
 		
@@ -70,7 +75,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 
 - (void)configureView {
 	if (!paper || paper.downloadStatus == StatusFailed) {
-		activityIndicator.hidden = YES;
+		downloadingView.hidden = YES;
 		leavesView.hidden = YES;
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
@@ -78,7 +83,7 @@ citationButton, citationLabel, scrollView, innerShadowView;
 	}
 	else if (paper.downloadStatus == StatusDownloaded) {
 		leavesView.hidden = NO;
-		activityIndicator.hidden = YES;
+		downloadingView.hidden = YES;
 		
 		[UIView beginAnimations:@"" context:nil];
 		[UIView setAnimationDuration:0.4];
@@ -91,10 +96,20 @@ citationButton, citationLabel, scrollView, innerShadowView;
 		citationLabel.text = paper.runningHead;
 	} else {
 		leavesView.hidden = YES;
-		activityIndicator.hidden = NO;
+		downloadingView.hidden = NO;
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
+		downloadingTitleLabel.text = paper.title;
+		
+		CGSize titleLabelSize = [downloadingTitleLabel.text sizeWithFont:downloadingTitleLabel.font
+													   constrainedToSize:CGSizeMake(downloadingTitleLabel.frame.size.width,
+																					 HUGE_VALF)
+														   lineBreakMode:downloadingTitleLabel.lineBreakMode];
+		downloadingTitleLabel.frame = CGRectMake(downloadingTitleLabel.frame.origin.x, 
+												 downloadingTitleLabel.frame.origin.y, 
+												 titleLabelSize.width, 
+												 titleLabelSize.height);
 	}
 	
 	[self configureMasterButton];
@@ -202,7 +217,10 @@ citationButton, citationLabel, scrollView, innerShadowView;
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	[self configureView];
+	if ([keyPath isEqualToString:@"downloadStatus"])
+		[self configureView];
+	else if ([keyPath isEqualToString:@"downloadProgress"])
+		progressIndicator.progress = paper.downloadProgress;
 }
 
 #pragma mark  LeavesViewDelegate methods
@@ -299,6 +317,8 @@ citationButton, citationLabel, scrollView, innerShadowView;
 	scrollView.canCancelContentTouches = NO;
 	scrollView.delaysContentTouches = NO;
 	scrollView.leavesView = leavesView;
+	
+	downloadingView.layer.cornerRadius = 16.0;
 	
 	[self configureForInterfaceOrientation:self.interfaceOrientation];
 }
