@@ -74,7 +74,7 @@
 					<object class="IBUILabel" id="487157392">
 						<reference key="NSNextResponder" ref="268056095"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{34, 108}, {500, 109}}</string>
+						<string key="NSFrame">{{34, 108}, {471, 109}}</string>
 						<reference key="NSSuperview" ref="268056095"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -109,16 +109,16 @@
 							<string key="NSResourceName">About_NTD.png</string>
 						</object>
 					</object>
-					<object class="IBUIView" id="741309971">
+					<object class="IBUIView" id="605877659">
 						<reference key="NSNextResponder" ref="268056095"/>
 						<int key="NSvFlags">292</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBUILabel" id="468884525">
-								<reference key="NSNextResponder" ref="741309971"/>
+								<reference key="NSNextResponder" ref="605877659"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{34, 60}, {500, 188}}</string>
-								<reference key="NSSuperview" ref="741309971"/>
+								<string key="NSFrame">{{34, 60}, {472, 188}}</string>
+								<reference key="NSSuperview" ref="605877659"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -137,10 +137,10 @@
 								<int key="IBUINumberOfLines">100</int>
 							</object>
 							<object class="IBUIImageView" id="90320835">
-								<reference key="NSNextResponder" ref="741309971"/>
+								<reference key="NSNextResponder" ref="605877659"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{22, 20}, {390, 32}}</string>
-								<reference key="NSSuperview" ref="741309971"/>
+								<reference key="NSSuperview" ref="605877659"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<int key="IBUIContentMode">1</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -4596,7 +4596,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">aboutPLoSView</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="741309971"/>
+						<reference key="destination" ref="605877659"/>
 					</object>
 					<int key="connectionID">30</int>
 				</object>
@@ -4637,7 +4637,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="902424109"/>
 							<reference ref="487157392"/>
 							<reference ref="746376611"/>
-							<reference ref="741309971"/>
+							<reference ref="605877659"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4658,7 +4658,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
-						<reference key="object" ref="741309971"/>
+						<reference key="object" ref="605877659"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="468884525"/>
@@ -4669,12 +4669,12 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBObjectRecord">
 						<int key="objectID">23</int>
 						<reference key="object" ref="468884525"/>
-						<reference key="parent" ref="741309971"/>
+						<reference key="parent" ref="605877659"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">20</int>
 						<reference key="object" ref="90320835"/>
-						<reference key="parent" ref="741309971"/>
+						<reference key="parent" ref="605877659"/>
 					</object>
 				</object>
 			</object>
