@@ -13,7 +13,7 @@
 
 @implementation Feed
 
-@synthesize papers, title;
+@synthesize papers, title, url;
 
 + (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName {
 	return [[[[self class] alloc] initWithTitle:title URL:urlString imageName:aImageName] autorelease];

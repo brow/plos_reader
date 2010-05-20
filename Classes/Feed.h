@@ -18,6 +18,7 @@
 }
 
 @property (readonly) NSString *title;
+@property (readonly) NSURL *url;
 @property (readonly) NSArray *papers;
 @property (readonly) UIImage *image;
 @property (readonly) BOOL downloaded;

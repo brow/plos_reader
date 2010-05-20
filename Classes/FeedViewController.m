@@ -85,10 +85,10 @@
 }
 
 - (IBAction) showAbout:(id)sender {
-	UIViewController *vc = [[[AboutViewController alloc] init] autorelease];
+	UIViewController *vc = [[[AboutViewController alloc] initWithFeed:feed] autorelease];
 	vc.modalPresentationStyle = UIModalPresentationFormSheet;
 	vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
- 	[self presentModalViewController:vc animated:YES];
+ 	[self.splitViewController presentModalViewController:vc animated:YES];
 }
 
 #pragma mark UIActionSheetDelegate methods
