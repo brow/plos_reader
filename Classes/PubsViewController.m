@@ -23,7 +23,12 @@ enum {SectionFolders, SectionJournals, NumSections};
 - (void) awakeFromNib
 {
 	[super awakeFromNib];
-	self.title = @"Journals";
+	self.navigationItem.title = @"";
+	self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Journals" 
+																			  style:UIBarButtonItemStyleBordered 
+																			 target:nil 
+																			 action:nil] autorelease];
+	
 	feeds = [[NSArray alloc] initWithObjects:
 			 [Feed feedWithTitle:@"PLoS Biology" 
 							 URL:@"http://www.plosbiology.org/article/feed" 
@@ -108,11 +113,28 @@ enum {SectionFolders, SectionJournals, NumSections};
 	}
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	if (section == SectionJournals && [Paper savedPapersManager].savedPapers.count > 0)
-		return @"Journals";
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//	if (section == SectionJournals && [Paper savedPapersManager].savedPapers.count > 0)
+//		return @"Journals";
+//	else
+//		return nil;
+//}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if (section == SectionJournals /*&& [Paper savedPapersManager].savedPapers.count > 0*/) {
+		UIImageView *imageView = [[[UIImageView alloc] init] autorelease];
+		imageView.image =[UIImage imageNamed:@"PLoS_Header.png"];
+		imageView.contentMode = UIViewContentModeLeft;
+		imageView.backgroundColor = [UIColor darkGrayColor];
+		imageView.bounds = CGRectMake(0, 0, 320, 36);
+		return imageView;
+	}
 	else
 		return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 30;
 }
 
 #pragma mark UITableViewDelegate methods
