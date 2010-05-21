@@ -104,7 +104,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 		
 		CGSize titleLabelSize = [downloadingTitleLabel.text sizeWithFont:downloadingTitleLabel.font
 													   constrainedToSize:CGSizeMake(downloadingTitleLabel.frame.size.width,
-																					 HUGE_VALF)
+																					75)
 														   lineBreakMode:downloadingTitleLabel.lineBreakMode];
 		downloadingTitleLabel.frame = CGRectMake(downloadingTitleLabel.frame.origin.x, 
 												 downloadingTitleLabel.frame.origin.y, 
