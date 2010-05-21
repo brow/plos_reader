@@ -108,7 +108,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 														   lineBreakMode:downloadingTitleLabel.lineBreakMode];
 		downloadingTitleLabel.frame = CGRectMake(downloadingTitleLabel.frame.origin.x, 
 												 downloadingTitleLabel.frame.origin.y, 
-												 titleLabelSize.width, 
+												 downloadingTitleLabel.frame.size.width, 
 												 titleLabelSize.height);
 	}
 	

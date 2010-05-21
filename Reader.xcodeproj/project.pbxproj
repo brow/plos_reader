@@ -59,6 +59,8 @@
 		D3DCD87E11A4C11900ECAC8E /* About_Medicine.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87811A4C11900ECAC8E /* About_Medicine.png */; };
 		D3DCD87F11A4C11900ECAC8E /* About_One.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87911A4C11900ECAC8E /* About_One.png */; };
 		D3DCD88011A4C11900ECAC8E /* About_Pathogens.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87A11A4C11900ECAC8E /* About_Pathogens.png */; };
+		D3DCDAF111A5FFA800ECAC8E /* PLoS_Header.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCDAF011A5FFA800ECAC8E /* PLoS_Header.png */; };
+		D3DCDBBF11A71E0900ECAC8E /* SpecialHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DCDBBE11A71E0900ECAC8E /* SpecialHTTPRequest.m */; };
 		D3E11564119DD3D100AA148E /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E11562119DD3D100AA148E /* AboutViewController.m */; };
 		D3E11565119DD3D100AA148E /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3E11563119DD3D100AA148E /* AboutViewController.xib */; };
 		D3E115C6119DE36200AA148E /* FeedActions.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E115C5119DE36200AA148E /* FeedActions.png */; };
@@ -180,6 +182,9 @@
 		D3DCD87811A4C11900ECAC8E /* About_Medicine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Medicine.png; sourceTree = "<group>"; };
 		D3DCD87911A4C11900ECAC8E /* About_One.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_One.png; sourceTree = "<group>"; };
 		D3DCD87A11A4C11900ECAC8E /* About_Pathogens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Pathogens.png; sourceTree = "<group>"; };
+		D3DCDAF011A5FFA800ECAC8E /* PLoS_Header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLoS_Header.png; sourceTree = "<group>"; };
+		D3DCDBBD11A71E0900ECAC8E /* SpecialHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecialHTTPRequest.h; sourceTree = "<group>"; };
+		D3DCDBBE11A71E0900ECAC8E /* SpecialHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecialHTTPRequest.m; sourceTree = "<group>"; };
 		D3E11561119DD3D100AA148E /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		D3E11562119DD3D100AA148E /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		D3E11563119DD3D100AA148E /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AboutViewController.xib; path = Classes/AboutViewController.xib; sourceTree = "<group>"; };
@@ -279,6 +284,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3DCDAF011A5FFA800ECAC8E /* PLoS_Header.png */,
 				D3E115C5119DE36200AA148E /* FeedActions.png */,
 				D3AEC8B61194BFD6009BE344 /* Folder.png */,
 				D3FB43B4118E83DA00AC0932 /* Icon.png */,
@@ -364,6 +370,8 @@
 				D3FB3B5D11861CD600AC0932 /* NSString+Extras.m */,
 				D33D3C2E119A1F960083A058 /* UIColor+Extras.h */,
 				D33D3C2F119A1F960083A058 /* UIColor+Extras.m */,
+				D3DCDBBD11A71E0900ECAC8E /* SpecialHTTPRequest.h */,
+				D3DCDBBE11A71E0900ECAC8E /* SpecialHTTPRequest.m */,
 			);
 			name = Extras;
 			sourceTree = "<group>";
@@ -583,6 +591,7 @@
 				D3DCD87E11A4C11900ECAC8E /* About_Medicine.png in Resources */,
 				D3DCD87F11A4C11900ECAC8E /* About_One.png in Resources */,
 				D3DCD88011A4C11900ECAC8E /* About_Pathogens.png in Resources */,
+				D3DCDAF111A5FFA800ECAC8E /* PLoS_Header.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +642,7 @@
 				D33D3C30119A1F960083A058 /* UIColor+Extras.m in Sources */,
 				D337E1F4119B4CDF003E5728 /* LeavesCache.m in Sources */,
 				D3E11564119DD3D100AA148E /* AboutViewController.m in Sources */,
+				D3DCDBBF11A71E0900ECAC8E /* SpecialHTTPRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

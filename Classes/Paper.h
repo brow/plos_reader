@@ -17,6 +17,7 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 	NSString *title, *authors, *identifier;
 	NSMutableDictionary *metadata;
 	ASINetworkQueue *requestsQueue;
+	NSMutableArray *errors;
 	
 	Status downloadStatus;
 	float downloadProgress;

@@ -9,7 +9,7 @@
 #import "Paper.h"
 #import "TouchXML+Extras.h"
 #import "NSString+Extras.h"
-#import "ASIHTTPRequest.h"
+#import "SpecialHTTPRequest.h"
 #import "Paper+Saving.h"
 
 @interface Paper() <ASIProgressDelegate>
@@ -39,6 +39,7 @@ NSString *temporaryPath();
 		requestsQueue = [[ASINetworkQueue alloc] init];
 		localPDFPath = [temporaryPath() retain];
 		localXMLPath = [temporaryPath() retain];
+		errors = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -69,18 +70,24 @@ NSString *temporaryPath();
 	[localXMLPath release];
 	[metadata release];
 	[requestsQueue release];
+	[errors release];
 	[super dealloc];
 }
 
-- (void) load {	
+- (void) load {
+	/* Do nothing if this paper is already downloading or downloaded.*/
 	if (self.downloadStatus == StatusDownloaded || requestsQueue.isNetworkActive)
 		return;
 	else
 		self.downloadStatus = StatusNotDownloaded;
 
-	if ([self saved])
+	/* Simply restore the paper if it has been saved permanently. */
+	if ([self saved]) {
 		[self restore];
+		return;
+	}
 	
+	[errors removeAllObjects];
 	[requestsQueue reset];
 	requestsQueue.delegate = self;
 	requestsQueue.downloadProgressDelegate = self;
@@ -89,9 +96,8 @@ NSString *temporaryPath();
 	requestsQueue.requestDidFailSelector = @selector(requestFailed:);
 	requestsQueue.queueDidFinishSelector = @selector(queueDidFinish:);
 	
-	ASIHTTPRequest *pdfRequest = [ASIHTTPRequest requestWithURL:remotePDFUrl];
+	SpecialHTTPRequest *pdfRequest = [SpecialHTTPRequest requestWithURL:remotePDFUrl];
 	pdfRequest.downloadDestinationPath = localPDFPath;	
-	pdfRequest.showAccurateProgress = YES;
 	[requestsQueue addOperation:pdfRequest];
 	NSLog(@"[REQUEST %@]", remotePDFUrl);
 
@@ -333,14 +339,6 @@ NSString *temporaryPath();
 
 #pragma mark ASIProgressDelegate methods
 
-//- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes {
-//	NSLog(@"hai");
-//}
-//
-//- (void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength {
-//	NSLog(@"hello");
-//}
-
 - (void)setProgress:(float)newProgress {
 	NSLog(@"%.2f", newProgress);
 	[self setDownloadProgress:newProgress];
@@ -355,6 +353,8 @@ NSString *temporaryPath();
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {	
+	[errors addObject:request.error];
+	
 	if (request.error.code == ASIRequestCancelledErrorType)
 		NSLog(@"[CANCELLED %@]", request.url);
 	else {
@@ -370,14 +370,12 @@ NSString *temporaryPath();
 }
 
 - (void) queueDidFinish:(ASINetworkQueue *)queue {
-	for (ASIHTTPRequest *request in requestsQueue.operations)
-		if (request.error) {
-			self.downloadStatus = StatusFailed;
-			return;
-		}
-			
-	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
-	self.downloadStatus = StatusDownloaded;
+	if (errors.count > 0)
+		self.downloadStatus = StatusFailed;
+	else {
+		[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
+		self.downloadStatus = StatusDownloaded;
+	}
 }
 
 #pragma mark NSObject methods
