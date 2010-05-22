@@ -146,7 +146,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 							   self.layer.bounds.origin.y, 
 							   leafEdge * self.bounds.size.width, 
 							   self.layer.bounds.size.height);
-	topPageReverse.frame = CGRectMake(self.layer.bounds.origin.x + (2*leafEdge-1) * self.bounds.size.width, 
+	topPageReverse.frame = CGRectMake(self.layer.bounds.origin.x + (2*leafEdge-1) * self.bounds.size.width + 3, 
 									  self.layer.bounds.origin.y, 
 									  (1-leafEdge) * self.bounds.size.width, 
 									  self.layer.bounds.size.height);
