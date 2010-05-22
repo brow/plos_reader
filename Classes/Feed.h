@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ASINetworkQueue.h"
 
 @interface Feed : NSObject {
 	NSString *title;
@@ -15,6 +16,7 @@
 	NSMutableArray *papers;
 	NSString *imageName;
 	BOOL downloaded;
+	ASINetworkQueue *requestsQueue;
 }
 
 @property (readonly) NSString *title;

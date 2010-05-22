@@ -91,12 +91,17 @@
  	[self.splitViewController presentModalViewController:vc animated:YES];
 }
 
+- (IBAction) reloadFeed:(id)sender {
+	[feed load];
+}
+
 #pragma mark UIActionSheetDelegate methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
 	switch (buttonIndex) {
 		case 0:
+			[self reloadFeed:self];
 			break;
 		case 1:
 			[self showAbout:self];

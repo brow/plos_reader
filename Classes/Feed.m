@@ -26,8 +26,11 @@
 		url = [[NSURL alloc] initWithString:urlString];
 		papers = [[NSMutableArray alloc] init];
 		imageName = [aImageName retain];
-		localXMLPath = nil;
 		downloaded = NO;
+		requestsQueue = [[ASINetworkQueue alloc] init];
+		
+		NSString *localFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
+		localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:localFile] retain];
 	}
 	return self;
 }
@@ -39,21 +42,26 @@
 	[url release];
 	[papers release];
 	[imageName release];
+	[requestsQueue release];
 	[super dealloc];
 }
 
 - (void) load {
-	if (!localXMLPath) {
-		NSString *localFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
-		localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:localFile] retain];
-		
-		ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-		[request setDelegate:self];
-		[request setDownloadDestinationPath:localXMLPath];
-		[request startAsynchronous];
-		[self setValue:[NSNumber numberWithBool:NO] forKey:@"downloaded"];
-		NSLog(@"[REQUEST %@]", url);
-	}
+	if (requestsQueue.isNetworkActive)
+		return;
+	
+	[requestsQueue reset];
+	requestsQueue.delegate = self;
+	requestsQueue.requestDidFinishSelector = @selector(requestFinished:);
+	requestsQueue.requestDidFailSelector = @selector(requestFailed:);
+	
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	[request setDownloadDestinationPath:localXMLPath];
+	[requestsQueue addOperation:request];
+	[self setValue:[NSNumber numberWithBool:NO] forKey:@"downloaded"];
+	NSLog(@"[REQUEST %@]", url);
+	
+	[requestsQueue go];
 }
 
 - (void) parseFeedXML:(NSData *)data {
@@ -123,7 +131,7 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	[self setValue:[NSNumber numberWithBool:YES] forKey:@"downloaded"];
+	self.downloaded = YES;
 	[self parseFeedXML:[NSData dataWithContentsOfFile:localXMLPath]];
 	NSLog(@"[LOADED %@]", url);
 }
