@@ -21,7 +21,7 @@
 		self.title = @"PLoS ONE";
 		feeds = [[NSArray alloc] initWithObjects:
 				 [Feed feedWithTitle:@"All Subjects"
-								 URL:@"http://www.plosone.org/article/feed?category=Anesthesiology%20and%20Pain%20Management"
+								 URL:@"http://feeds.plos.org/plosone/PLoSONE"
 						   imageName:nil],
 				 [Feed feedWithTitle:@"Anesthesiology and Pain Management"
 								 URL:@"http://www.plosone.org/article/feed?category=Anesthesiology%20and%20Pain%20Management"
