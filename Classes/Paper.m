@@ -12,6 +12,7 @@
 #import "SpecialHTTPRequest.h"
 #import "Paper+Saving.h"
 
+
 @interface Paper() <ASIProgressDelegate>
 
 - (void)setDownloadStatus:(Status)value;
@@ -96,13 +97,15 @@ NSString *temporaryPath();
 	requestsQueue.requestDidFailSelector = @selector(requestFailed:);
 	requestsQueue.queueDidFinishSelector = @selector(queueDidFinish:);
 	
-	SpecialHTTPRequest *pdfRequest = [SpecialHTTPRequest requestWithURL:remotePDFUrl];
+	ASIHTTPRequest *pdfRequest = [SpecialHTTPRequest requestWithURL:remotePDFUrl];
 	pdfRequest.downloadDestinationPath = localPDFPath;	
+	[pdfRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:pdfRequest];
 	NSLog(@"[REQUEST %@]", remotePDFUrl);
 
-	ASIHTTPRequest *xmlRequest = [ASIHTTPRequest requestWithURL:remoteXMLUrl];
+	ASIHTTPRequest *xmlRequest = [SpecialHTTPRequest requestWithURL:remoteXMLUrl];
 	xmlRequest.downloadDestinationPath = localXMLPath;
+	[xmlRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:xmlRequest];
 	NSLog(@"[REQUEST %@]", remoteXMLUrl);
 	
@@ -353,17 +356,22 @@ NSString *temporaryPath();
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {	
-	[errors addObject:request.error];
+	NSLog(@"timed out");
 	
-	if (request.error.code == ASIRequestCancelledErrorType)
-		NSLog(@"[CANCELLED %@]", request.url);
-	else {
+	if (errors.count == 0) {
 		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Download Failed" 
 														 message:@"This paper could not be downloaded. Please check your internet connection and try again." 
 														delegate:nil 
 											   cancelButtonTitle:@"OK" 
 											   otherButtonTitles:nil] autorelease];
 		[alert show];
+	}
+	
+	[errors addObject:request.error];
+	
+	if (request.error.code == ASIRequestCancelledErrorType)
+		NSLog(@"[CANCELLED %@]", request.url);
+	else {
 		self.downloadStatus = StatusFailed;
 		NSLog(@"[FAILED %@]", request.url);
 	}

@@ -19,6 +19,8 @@
 	return self;
 }
 
+#pragma mark ASIHTTPRequest methods
+
 - (unsigned long long) contentLength {
 	if (super.contentLength)
 		return super.contentLength;
@@ -30,6 +32,14 @@
 	[(id)super setContentLength:value];
 	if (value)
 		defaultContentLength = value;
+}
+
+- (ASIHTTPRequest *)HEADRequest
+{
+	
+	ASIHTTPRequest *headRequest = [super HEADRequest];
+	headRequest.timeOutSeconds = self.timeOutSeconds;
+	return headRequest;
 }
 
 @end
