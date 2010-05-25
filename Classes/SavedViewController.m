@@ -41,14 +41,20 @@ NSInteger dateSort(Paper *a, Paper *b, void *context) { return [b.date compare:a
 - (void) reload {
 	NSArray *unsortedPapers = [[[Paper savedPapersManager] savedPapers] allObjects];
 	[papers setArray:[unsortedPapers sortedArrayUsingFunction:dateSort context:nil]];
-	[self.tableView reloadData];
 }
 
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeInsertion) {
+		[self reload];
 		
+		/* We assume that only one object was inserted (as only one paper can be saved at a time). */
+		id insertedObject = [[change objectForKey:NSKeyValueChangeNewKey] anyObject];
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[papers indexOfObject:insertedObject] 
+													inSection:0];
+		[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+							  withRowAnimation:UITableViewRowAnimationTop];
 	}
 }
 
@@ -110,6 +116,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 	[self reload];
+	[self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
