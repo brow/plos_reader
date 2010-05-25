@@ -363,25 +363,21 @@ NSString *temporaryPath();
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
-{	
-	NSLog(@"timed out");
-	
-	if (errors.count == 0) {
-		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Download Failed" 
-														 message:@"This paper could not be downloaded. Please check your internet connection and try again." 
-														delegate:nil 
-											   cancelButtonTitle:@"OK" 
-											   otherButtonTitles:nil] autorelease];
-		[alert show];
-	}
-	
+{		
 	[errors addObject:request.error];
-	
 	if (request.error.code == ASIRequestCancelledErrorType)
 		NSLog(@"[CANCELLED %@]", request.url);
 	else {
 		self.downloadStatus = StatusFailed;
 		NSLog(@"[FAILED %@]", request.url);
+		if (errors.count == 1) {
+			UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Download Failed" 
+															 message:@"This paper could not be downloaded. Please check your internet connection and try again." 
+															delegate:nil 
+												   cancelButtonTitle:@"OK" 
+												   otherButtonTitles:nil] autorelease];
+			[alert show];
+		}
 	}
 }
 
