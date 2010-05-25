@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "PaperViewController.h"
 
-@interface SubjectsViewController : UITableViewController {
+@interface SubjectsViewController : UITableViewController <UIActionSheetDelegate> {
     PaperViewController *detailViewController;
 	NSArray *feeds;
+	UIBarButtonItem *actionsButton;
 }
 
 @property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;

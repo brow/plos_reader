@@ -10,6 +10,7 @@
 #import "FeedViewController.h"
 #import "Feed.h"
 #import "UIColor+Extras.h"
+#import "AboutViewController.h"
 
 @implementation SubjectsViewController
 
@@ -180,14 +181,61 @@
 								 URL:@"http://www.plosone.org/article/feed?category=Womens%20Health"
 						   imageName:nil],
 				 nil];
+		actionsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"FeedActions.png"] 
+														 style:UIBarButtonItemStylePlain
+														target:self 
+														action:@selector(showActions:)];
+		self.navigationItem.rightBarButtonItem = actionsButton;
+		
 	}
 	return self;
 }
 
 - (void)dealloc {
+	[actionsButton release];
 	[feeds release];
     [detailViewController release];
     [super dealloc];
+}
+
+#pragma mark actions
+
+- (IBAction) showAbout:(id)sender {
+	UIViewController *vc = [[[AboutViewController alloc] initWithFeed:nil] autorelease];
+	vc.modalPresentationStyle = UIModalPresentationFormSheet;
+	vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+ 	[self.splitViewController presentModalViewController:vc animated:YES];
+}
+
+- (IBAction) showActions:(id)sender {
+	UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:nil 
+															  delegate:self 
+													 cancelButtonTitle:nil  
+												destructiveButtonTitle:nil 
+													 otherButtonTitles:@"About This Journal",nil] autorelease];
+	
+	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+		[actionSheet addButtonWithTitle:@"Cancel"];
+		actionSheet.cancelButtonIndex = 1;
+	}
+	
+	[actionSheet showFromBarButtonItem:actionsButton animated:YES];
+	
+	/* Nav bar buttons still receive touches for some reason. */
+	self.navigationController.navigationBar.userInteractionEnabled = NO;
+}
+
+#pragma mark UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	self.navigationController.navigationBar.userInteractionEnabled = YES;
+	switch (buttonIndex) {
+		case 0:
+			[self showAbout:self];
+			break;
+		default:
+			break;
+	}
 }
 
 #pragma mark UITableViewDataSource methods
