@@ -756,7 +756,7 @@
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = armv7;
 				"ARCHS[sdk=iphonesimulator*]" = i386;
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tom Brow";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -781,7 +781,6 @@
 				GCC_PREFIX_HEADER = Reader_Prefix.pch;
 				INFOPLIST_FILE = "Reader-Info.plist";
 				PRODUCT_NAME = Reader;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "14E17887-2161-444E-A3A7-7B5D8C2D9C5B";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "App Store Distribution";
