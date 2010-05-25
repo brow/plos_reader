@@ -209,6 +209,17 @@ NSString *temporaryPath();
 	[metadata setValue:authorsMetadata forKey:@"authors"];
 }
 
++ (NSString *)shortenedTitleForJournalTitle:(NSString*)journalTitle {
+	NSDictionary *shortenedTitles = [NSDictionary dictionaryWithObjectsAndKeys:
+									 @"PLoS Comp Bio", @"PLoS Computational Biology",
+									 @"PLoS NTD", @"PLoS Neglected Tropical Diseases",
+									 nil];
+	if ([shortenedTitles objectForKey:journalTitle])
+		return [shortenedTitles objectForKey:journalTitle];
+	else
+		return journalTitle;
+}
+
 #pragma mark accessors
 
 - (NSString *) feedTitle {
@@ -221,11 +232,8 @@ NSString *temporaryPath();
 }
 
 - (NSString *) shortJournalTitle {
-	NSString *fullName = [metadata objectForKey:@"journal-title"];
-	if (fullName && fullName.length < 20)
-		return fullName;
-	else if ([metadata objectForKey:@"journal-id"])
-		return [metadata objectForKey:@"journal-id"];
+	if ([metadata objectForKey:@"journal-title"])
+		return [[self class] shortenedTitleForJournalTitle:[metadata objectForKey:@"journal-title"]];
 	else
 		return self.feedTitle;
 }

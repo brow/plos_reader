@@ -42,10 +42,10 @@ enum {SectionFolders, SectionJournals, NumSections};
 			 [Feed feedWithTitle:@"PLoS Pathogens" 
 							 URL:@"http://www.plospathogens.org/article/feed" 
 					   imageName:@"PLoS_Pathogens.png"],
-			 [Feed feedWithTitle:@"PLoS Comput Biol" 
+			 [Feed feedWithTitle:@"PLoS Comp Bio" 
 							 URL:@"http://www.ploscompbiol.org/article/feed" 
 					   imageName:@"PLoS_CompBio.png"], 
-			 [Feed feedWithTitle:@"PLoS Negl Trop Dis" 
+			 [Feed feedWithTitle:@"PLoS NTD" 
 							 URL:@"http://www.plosntds.org/article/feed" 
 					   imageName:@"PLoS_NTD.png"],
 			 [Feed feedWithTitle:@"PLoS ONE" 
