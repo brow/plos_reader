@@ -164,7 +164,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 - (IBAction) emailPDF:(id)sender {
 	MFMailComposeViewController *mailController = [[[MFMailComposeViewController alloc] init] autorelease];
 	[mailController setSubject:paper.title];
-	[mailController setMessageBody:[NSString stringWithFormat:@"%@\n\n%@",
+	[mailController setMessageBody:[NSString stringWithFormat:@"%@\n\nView online at: %@",
 									paper.citation,
 									paper.doiLink]
 							isHTML:NO];
