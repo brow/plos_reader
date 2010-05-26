@@ -32,6 +32,7 @@ UINavigationControllerDelegate> {
 	UIBarButtonItem *masterButton;
     
     Paper *paper;
+	NSUInteger currentPage;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
@@ -48,6 +49,7 @@ UINavigationControllerDelegate> {
 @property (nonatomic, retain) Paper *paper;
 @property (assign) NSUInteger page;
 
+- (IBAction) toggleMagnification:(id)sender;
 - (IBAction) showCitationActions:(id)sender;
 - (void) showMasterPopover;
 

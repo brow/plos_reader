@@ -10,6 +10,7 @@
 #import "FeedViewController.h"
 #import "Utilities.h"
 #import "Paper+Saving.h"
+#import "MagnifierViewController.h"
 
 @interface PaperViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -39,6 +40,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 		
         [paper release];
         paper = [newDetailItem retain];
+		currentPage = 0;
 				
 		[paper addObserver:self 
 				forKeyPath:@"downloadStatus" 
@@ -141,11 +143,21 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 }
 
 - (void)setPage:(NSUInteger)value {
+	currentPage = value;
     leavesView.currentPageIndex = value;
 	[self displayPageNumber:value+1];
 }
 
 #pragma mark actions
+
+- (IBAction) toggleMagnification:(id)sender {
+	MagnifierViewController *vc = [[[MagnifierViewController alloc] initWithPaper:self.paper] autorelease];
+	[vc view];
+	vc.delegate = self;
+	vc.page = self.page;
+	vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+	[self presentModalViewController:vc animated:YES];
+}
 
 - (IBAction) showCitationActions:(id)sender {
 	citationActionSheet = [[[UIActionSheet alloc] initWithTitle:paper.citation 
@@ -225,8 +237,14 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 
 #pragma mark  LeavesViewDelegate methods
 
-- (void) leavesView:(LeavesView *)leavesView willTurnToPageAtIndex:(NSUInteger)pageIndex {
+- (void) leavesView:(LeavesView *)aLeavesView willTurnToPageAtIndex:(NSUInteger)pageIndex {
 	[self displayPageNumber:pageIndex + 1];
+	if (pageIndex == currentPage + 1)
+		[scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
+- (void) leavesView:(LeavesView *)aLeavesView didTurnToPageAtIndex:(NSUInteger)pageIndex {
+	currentPage = pageIndex;
 }
 
 #pragma mark LeavesViewDataSource methods
@@ -268,23 +286,27 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 #pragma mark UISplitViewControllerDelegate methods
 
 - (void)splitViewController: (UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
-    NSMutableArray *items = [[toolbar items] mutableCopy];
-    [items insertObject:barButtonItem atIndex:0];
-    [toolbar setItems:items animated:YES];
-    [items release];
+    if (!masterButton) {
+		NSMutableArray *items = [[toolbar items] mutableCopy];
+		[items insertObject:barButtonItem atIndex:0];
+		[toolbar setItems:items animated:YES];
+		[items release];
+		masterButton = barButtonItem;
+	}
     self.popoverController = pc;
-	masterButton = barButtonItem;
 	[self configureMasterButton];
 }
 
 
 - (void)splitViewController: (UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
-    NSMutableArray *items = [[toolbar items] mutableCopy];
-    [items removeObjectAtIndex:0];
-    [toolbar setItems:items animated:NO];
-    [items release];
+    if (masterButton) {
+		NSMutableArray *items = [[toolbar items] mutableCopy];
+		[items removeObjectAtIndex:0];
+		[toolbar setItems:items animated:NO];
+		[items release];
+		masterButton = nil;
+	}
     self.popoverController = nil;
-	masterButton = nil;
 }
 
 #pragma mark UIViewController methods
