@@ -56,6 +56,7 @@
 		D3B6580011AC80E600EF9BCA /* MagnifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B657FF11AC80E600EF9BCA /* MagnifierViewController.m */; };
 		D3B6581B11AC822E00EF9BCA /* MagnifierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B6581A11AC822E00EF9BCA /* MagnifierViewController.xib */; };
 		D3B6586011AC866E00EF9BCA /* Magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B6585F11AC866E00EF9BCA /* Magnify.png */; };
+		D3B659F011ADDA5F00EF9BCA /* Unmagnify.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */; };
 		D3DCD87B11A4C11900ECAC8E /* About_Biology.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87511A4C11900ECAC8E /* About_Biology.png */; };
 		D3DCD87C11A4C11900ECAC8E /* About_CompBio.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87611A4C11900ECAC8E /* About_CompBio.png */; };
 		D3DCD87D11A4C11900ECAC8E /* About_Genetics.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87711A4C11900ECAC8E /* About_Genetics.png */; };
@@ -184,6 +185,7 @@
 		D3B657FF11AC80E600EF9BCA /* MagnifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagnifierViewController.m; sourceTree = "<group>"; };
 		D3B6581A11AC822E00EF9BCA /* MagnifierViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MagnifierViewController.xib; sourceTree = "<group>"; };
 		D3B6585F11AC866E00EF9BCA /* Magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Magnify.png; sourceTree = "<group>"; };
+		D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Unmagnify.png; sourceTree = "<group>"; };
 		D3DCD87511A4C11900ECAC8E /* About_Biology.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Biology.png; sourceTree = "<group>"; };
 		D3DCD87611A4C11900ECAC8E /* About_CompBio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_CompBio.png; sourceTree = "<group>"; };
 		D3DCD87711A4C11900ECAC8E /* About_Genetics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Genetics.png; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */,
 				D3B6585F11AC866E00EF9BCA /* Magnify.png */,
 				D3DCDAF011A5FFA800ECAC8E /* PLoS_Header.png */,
 				D3E115C5119DE36200AA148E /* FeedActions.png */,
@@ -609,6 +612,7 @@
 				D3DCDD1211A87F5A00ECAC8E /* Entitlements.plist in Resources */,
 				D3B6581B11AC822E00EF9BCA /* MagnifierViewController.xib in Resources */,
 				D3B6586011AC866E00EF9BCA /* Magnify.png in Resources */,
+				D3B659F011ADDA5F00EF9BCA /* Unmagnify.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

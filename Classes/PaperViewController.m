@@ -22,7 +22,8 @@
 @implementation PaperViewController
 
 @synthesize toolbar, popoverController, paper, leavesView, downloadingView, pageLabel, 
-citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, downloadingTitleLabel;
+citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, downloadingTitleLabel,
+magnifyButton;
 
 - (void)dealloc {
     [popoverController release];
@@ -82,6 +83,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
+		magnifyButton.alpha = 0;
 	}
 	else if (paper.downloadStatus == StatusDownloaded) {
 		leavesView.hidden = NO;
@@ -92,6 +94,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 		citationButton.alpha = 1;
 		citationLabel.alpha = 1;
 		pageLabel.alpha = 1;
+		magnifyButton.alpha = 1;
 		[UIView commitAnimations];
 		[leavesView reloadData];
 		[self displayPageNumber:leavesView.currentPageIndex+1];
@@ -102,6 +105,7 @@ citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, d
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
+		magnifyButton.alpha = 0;
 		downloadingTitleLabel.text = paper.title;
 		
 		CGSize titleLabelSize = [downloadingTitleLabel.text sizeWithFont:downloadingTitleLabel.font

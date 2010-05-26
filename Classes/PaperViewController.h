@@ -30,6 +30,7 @@ UINavigationControllerDelegate> {
 	UIActionSheet *citationActionSheet;
 	UIImageView *innerShadowView;
 	UIBarButtonItem *masterButton;
+	UIButton *magnifyButton;
     
     Paper *paper;
 	NSUInteger currentPage;
@@ -45,6 +46,7 @@ UINavigationControllerDelegate> {
 @property (assign) IBOutlet PageScrollView *scrollView;
 @property (assign) IBOutlet UIImageView *innerShadowView;
 @property (assign) IBOutlet UILabel *downloadingTitleLabel;
+@property (assign) IBOutlet UIButton *magnifyButton;
 
 @property (nonatomic, retain) Paper *paper;
 @property (assign) NSUInteger page;
