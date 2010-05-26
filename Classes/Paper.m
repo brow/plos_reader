@@ -99,12 +99,14 @@ NSString *temporaryPath();
 	
 	ASIHTTPRequest *pdfRequest = [SpecialHTTPRequest requestWithURL:remotePDFUrl];
 	pdfRequest.downloadDestinationPath = localPDFPath;	
+	pdfRequest.allowCompressedResponse = NO;
 	[pdfRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:pdfRequest];
 	NSLog(@"[REQUEST %@]", remotePDFUrl);
 
 	ASIHTTPRequest *xmlRequest = [SpecialHTTPRequest requestWithURL:remoteXMLUrl];
 	xmlRequest.downloadDestinationPath = localXMLPath;
+	pdfRequest.allowCompressedResponse = NO;
 	[xmlRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:xmlRequest];
 	NSLog(@"[REQUEST %@]", remoteXMLUrl);

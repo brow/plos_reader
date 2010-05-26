@@ -10,7 +10,6 @@
 
 
 @interface SpecialHTTPRequest : ASIHTTPRequest {
-	unsigned long long defaultContentLength;
 }
 
 @end
