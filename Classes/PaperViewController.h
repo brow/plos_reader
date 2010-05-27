@@ -11,11 +11,12 @@
 #import "LeavesView.h"
 #import "PageScrollView.h"
 #import "Paper.h"
+#import "ThumbnailsViewController.h"
 
 @interface PaperViewController : UIViewController 
 <UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, 
 LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
-UINavigationControllerDelegate> {
+UINavigationControllerDelegate, ThumbnailsViewControllerDelegate> {
     
 	PageScrollView *scrollView;
     UIPopoverController *popoverController;

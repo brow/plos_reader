@@ -11,11 +11,12 @@
 
 @implementation ThumbnailsViewController
 
-@synthesize thumbnailCell;
+@synthesize thumbnailCell, delegate;
 
-- (id)initWithPaper:(Paper *)aPaper {
+- (id)initWithPaper:(Paper *)aPaper selectedPageIndex:(NSUInteger)pageIndex {
     if (self = [super initWithStyle:UITableViewStyleGrouped]) {
 		paper = [aPaper retain];
+		selectedPageIndex = pageIndex;
 		thumbnails = [[NSMutableArray alloc] init];
     }
     return self;
@@ -131,9 +132,10 @@
 	return 150.0;
 }
 
-//- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    detailViewController.paper = [feed.papers objectAtIndex:indexPath.row];
-//}
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [delegate thumbnailsViewController:self didSelectPageIndex:indexPath.row];
+	selectedPageIndex = indexPath.row;
+}
 
 #pragma mark UIViewController methods
 
@@ -145,6 +147,14 @@
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	
 	[self performSelectorInBackground:@selector(renderThumbnails) withObject:nil];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[self.tableView reloadData];
+	[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectedPageIndex inSection:0] 
+								animated:NO 
+						  scrollPosition:UITableViewScrollPositionMiddle];
 }
 
 @end

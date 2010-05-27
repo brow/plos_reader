@@ -11,7 +11,6 @@
 #import "Utilities.h"
 #import "Paper+Saving.h"
 #import "MagnifierViewController.h"
-#import "ThumbnailsViewController.h"
 
 @interface PaperViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -202,7 +201,9 @@ magnifyButton, thumbnailsButton;
 }
 
 - (IBAction) toggleThumbnails:(id)sender {
-	ThumbnailsViewController *vc = [[[ThumbnailsViewController alloc] initWithPaper:self.paper] autorelease];
+	ThumbnailsViewController *vc = [[[ThumbnailsViewController alloc] initWithPaper:self.paper 
+																  selectedPageIndex:self.page] autorelease];
+	vc.delegate = self;
 	
 	if (self.popoverController)
 		[self.popoverController dismissPopoverAnimated:YES];
@@ -213,6 +214,12 @@ magnifyButton, thumbnailsButton;
 											inView:thumbnailsButton.superview 
 						  permittedArrowDirections:UIPopoverArrowDirectionAny 
 										  animated:YES];
+}
+
+#pragma mark ThumbnailsViewControllerDelegate methods
+
+- (void) thumbnailsViewController:(ThumbnailsViewController *)viewController didSelectPageIndex:(NSUInteger)pageIndex {
+	self.page = pageIndex;
 }
 
 #pragma mark MFMailComposeViewControllerDelegate methods

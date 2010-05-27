@@ -7,7 +7,7 @@
 //
 
 #import "ThumbnailCell.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @implementation ThumbnailCell
 
@@ -15,7 +15,19 @@
 
 - (void) awakeFromNib {
 	[super awakeFromNib];
-	self.selectionStyle = UITableViewCellSelectionStyleNone;
+	self.selectionStyle = UITableViewCellSelectionStyleGray;
+	
+	UIView *selectedBackground = [[[UIView alloc] init] autorelease];
+	selectedBackground.backgroundColor = [UIColor whiteColor];
+	selectedBackground.layer.cornerRadius = 8;
+	self.selectedBackgroundView = selectedBackground;
+	
+	pageNumberLabel.highlightedTextColor = [UIColor blackColor];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+	[super setSelected:selected animated:animated];
+	thumbImageView.backgroundColor = [UIColor whiteColor];
 }
 
 @end
