@@ -31,6 +31,7 @@ UINavigationControllerDelegate> {
 	UIImageView *innerShadowView;
 	UIBarButtonItem *masterButton;
 	UIButton *magnifyButton;
+	UIButton *thumbnailsButton;
     
     Paper *paper;
 	NSUInteger currentPage;
@@ -47,6 +48,7 @@ UINavigationControllerDelegate> {
 @property (assign) IBOutlet UIImageView *innerShadowView;
 @property (assign) IBOutlet UILabel *downloadingTitleLabel;
 @property (assign) IBOutlet UIButton *magnifyButton;
+@property (assign) IBOutlet UIButton *thumbnailsButton;
 
 @property (nonatomic, retain) Paper *paper;
 @property (assign) NSUInteger page;
@@ -54,5 +56,6 @@ UINavigationControllerDelegate> {
 - (IBAction) toggleMagnification:(id)sender;
 - (IBAction) showCitationActions:(id)sender;
 - (void) showMasterPopover;
+- (IBAction) toggleThumbnails:(id)sender;
 
 @end

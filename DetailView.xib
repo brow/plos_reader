@@ -203,6 +203,23 @@
 							<string key="NSResourceName">Magnify.png</string>
 						</object>
 					</object>
+					<object class="IBUIButton" id="506497794">
+						<reference key="NSNextResponder" ref="647120888"/>
+						<int key="NSvFlags">289</int>
+						<string key="NSFrame">{{692, 3}, {60, 37}}</string>
+						<reference key="NSSuperview" ref="647120888"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIFont" ref="945819063"/>
+						<reference key="IBUIHighlightedTitleColor" ref="957565450"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="527867341"/>
+					</object>
 					<object class="IBUIScrollView" id="837530096">
 						<reference key="NSNextResponder" ref="647120888"/>
 						<int key="NSvFlags">274</int>
@@ -444,6 +461,23 @@
 					</object>
 					<int key="connectionID">125</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleThumbnails:</string>
+						<reference key="source" ref="506497794"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">128</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">thumbnailsButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="506497794"/>
+					</object>
+					<int key="connectionID">129</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -479,6 +513,7 @@
 							<reference ref="123422797"/>
 							<reference ref="837530096"/>
 							<reference ref="299774983"/>
+							<reference ref="506497794"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -564,6 +599,13 @@
 						<int key="objectID">122</int>
 						<reference key="object" ref="299774983"/>
 						<reference key="parent" ref="647120888"/>
+						<string key="objectName">Magnify Button</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">127</int>
+						<reference key="object" ref="506497794"/>
+						<reference key="parent" ref="647120888"/>
+						<string key="objectName">Thumbnails Button</string>
 					</object>
 				</object>
 			</object>
@@ -581,6 +623,7 @@
 					<string>110.IBPluginDependency</string>
 					<string>113.IBPluginDependency</string>
 					<string>122.IBPluginDependency</string>
+					<string>127.IBPluginDependency</string>
 					<string>63.IBPluginDependency</string>
 					<string>67.CustomClassName</string>
 					<string>67.IBPluginDependency</string>
@@ -595,6 +638,7 @@
 					<string>PaperViewController</string>
 					<string>UIResponder</string>
 					<string>PageScrollView</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -628,7 +672,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">125</int>
+			<int key="maxID">129</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -662,9 +706,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>showCitationActions:</string>
 							<string>toggleMagnification:</string>
+							<string>toggleThumbnails:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -683,6 +729,7 @@
 							<string>pageLabel</string>
 							<string>progressIndicator</string>
 							<string>scrollView</string>
+							<string>thumbnailsButton</string>
 							<string>toolbar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -697,6 +744,7 @@
 							<string>UILabel</string>
 							<string>UIProgressView</string>
 							<string>PageScrollView</string>
+							<string>UIButton</string>
 							<string>UIToolbar</string>
 						</object>
 					</object>

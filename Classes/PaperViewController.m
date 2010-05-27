@@ -11,6 +11,7 @@
 #import "Utilities.h"
 #import "Paper+Saving.h"
 #import "MagnifierViewController.h"
+#import "ThumbnailsViewController.h"
 
 @interface PaperViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -23,7 +24,7 @@
 
 @synthesize toolbar, popoverController, paper, leavesView, downloadingView, pageLabel, 
 citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, downloadingTitleLabel,
-magnifyButton;
+magnifyButton, thumbnailsButton;
 
 - (void)dealloc {
     [popoverController release];
@@ -198,6 +199,20 @@ magnifyButton;
 
 - (IBAction) saveOffline:(id)sender {
 	[paper save];
+}
+
+- (IBAction) toggleThumbnails:(id)sender {
+	ThumbnailsViewController *vc = [[[ThumbnailsViewController alloc] initWithPaper:self.paper] autorelease];
+	
+	if (self.popoverController)
+		[self.popoverController dismissPopoverAnimated:YES];
+	
+	self.popoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+	self.popoverController.popoverContentSize = CGSizeMake(150, 600);
+	[self.popoverController presentPopoverFromRect:thumbnailsButton.frame 
+											inView:thumbnailsButton.superview 
+						  permittedArrowDirections:UIPopoverArrowDirectionAny 
+										  animated:YES];
 }
 
 #pragma mark MFMailComposeViewControllerDelegate methods

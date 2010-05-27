@@ -57,6 +57,9 @@
 		D3B6581B11AC822E00EF9BCA /* MagnifierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B6581A11AC822E00EF9BCA /* MagnifierViewController.xib */; };
 		D3B6586011AC866E00EF9BCA /* Magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B6585F11AC866E00EF9BCA /* Magnify.png */; };
 		D3B659F011ADDA5F00EF9BCA /* Unmagnify.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */; };
+		D3B65A1511AE3E3500EF9BCA /* ThumbnailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B65A1411AE3E3500EF9BCA /* ThumbnailsViewController.m */; };
+		D3B65A8011AE473000EF9BCA /* ThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B65A7F11AE473000EF9BCA /* ThumbnailCell.m */; };
+		D3B65A9811AE485A00EF9BCA /* ThumbnailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */; };
 		D3DCD87B11A4C11900ECAC8E /* About_Biology.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87511A4C11900ECAC8E /* About_Biology.png */; };
 		D3DCD87C11A4C11900ECAC8E /* About_CompBio.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87611A4C11900ECAC8E /* About_CompBio.png */; };
 		D3DCD87D11A4C11900ECAC8E /* About_Genetics.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87711A4C11900ECAC8E /* About_Genetics.png */; };
@@ -186,6 +189,11 @@
 		D3B6581A11AC822E00EF9BCA /* MagnifierViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MagnifierViewController.xib; sourceTree = "<group>"; };
 		D3B6585F11AC866E00EF9BCA /* Magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Magnify.png; sourceTree = "<group>"; };
 		D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Unmagnify.png; sourceTree = "<group>"; };
+		D3B65A1311AE3E3500EF9BCA /* ThumbnailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailsViewController.h; sourceTree = "<group>"; };
+		D3B65A1411AE3E3500EF9BCA /* ThumbnailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailsViewController.m; sourceTree = "<group>"; };
+		D3B65A7E11AE473000EF9BCA /* ThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailCell.h; sourceTree = "<group>"; };
+		D3B65A7F11AE473000EF9BCA /* ThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailCell.m; sourceTree = "<group>"; };
+		D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThumbnailCell.xib; sourceTree = "<group>"; };
 		D3DCD87511A4C11900ECAC8E /* About_Biology.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Biology.png; sourceTree = "<group>"; };
 		D3DCD87611A4C11900ECAC8E /* About_CompBio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_CompBio.png; sourceTree = "<group>"; };
 		D3DCD87711A4C11900ECAC8E /* About_Genetics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Genetics.png; sourceTree = "<group>"; };
@@ -308,6 +316,7 @@
 				D3FB3EF411890D4100AC0932 /* Journal Images */,
 				D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */,
 				D3FB39BB11815B0900AC0932 /* CitationButton.png */,
+				D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */,
 				D3E11563119DD3D100AA148E /* AboutViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				2804203B108E9BAB000629CD /* DetailView.xib */,
@@ -347,6 +356,8 @@
 		D33D3BB3119A0E130083A058 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D3B65A7E11AE473000EF9BCA /* ThumbnailCell.h */,
+				D3B65A7F11AE473000EF9BCA /* ThumbnailCell.m */,
 				D3FB386B1180F48C00AC0932 /* PaperCell.h */,
 				D3FB386C1180F48C00AC0932 /* PaperCell.m */,
 				D3FB3E971189059100AC0932 /* JournalCell.h */,
@@ -374,6 +385,8 @@
 				D3E11562119DD3D100AA148E /* AboutViewController.m */,
 				D3B657FE11AC80E600EF9BCA /* MagnifierViewController.h */,
 				D3B657FF11AC80E600EF9BCA /* MagnifierViewController.m */,
+				D3B65A1311AE3E3500EF9BCA /* ThumbnailsViewController.h */,
+				D3B65A1411AE3E3500EF9BCA /* ThumbnailsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -613,6 +626,7 @@
 				D3B6581B11AC822E00EF9BCA /* MagnifierViewController.xib in Resources */,
 				D3B6586011AC866E00EF9BCA /* Magnify.png in Resources */,
 				D3B659F011ADDA5F00EF9BCA /* Unmagnify.png in Resources */,
+				D3B65A9811AE485A00EF9BCA /* ThumbnailCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +679,8 @@
 				D3E11564119DD3D100AA148E /* AboutViewController.m in Sources */,
 				D3DCDBBF11A71E0900ECAC8E /* SpecialHTTPRequest.m in Sources */,
 				D3B6580011AC80E600EF9BCA /* MagnifierViewController.m in Sources */,
+				D3B65A1511AE3E3500EF9BCA /* ThumbnailsViewController.m in Sources */,
+				D3B65A8011AE473000EF9BCA /* ThumbnailCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
