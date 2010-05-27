@@ -209,10 +209,10 @@ magnifyButton, thumbnailsButton;
 		[self.popoverController dismissPopoverAnimated:YES];
 	
 	self.popoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-	self.popoverController.popoverContentSize = CGSizeMake(150, 600);
+	self.popoverController.popoverContentSize = CGSizeMake(150, 1000);
 	[self.popoverController presentPopoverFromRect:thumbnailsButton.frame 
 											inView:thumbnailsButton.superview 
-						  permittedArrowDirections:UIPopoverArrowDirectionAny 
+						  permittedArrowDirections:UIPopoverArrowDirectionUp 
 										  animated:YES];
 }
 
