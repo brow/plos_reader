@@ -220,6 +220,8 @@ magnifyButton, thumbnailsButton;
 
 - (void) thumbnailsViewController:(ThumbnailsViewController *)viewController didSelectPageIndex:(NSUInteger)pageIndex {
 	self.page = pageIndex;
+	[self.popoverController dismissPopoverAnimated:YES];
+	self.popoverController = nil;
 }
 
 #pragma mark MFMailComposeViewControllerDelegate methods
