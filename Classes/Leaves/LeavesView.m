@@ -86,7 +86,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 - (void) initialize {
 	backgroundRendering = NO;
-	pageCache = [[LeavesCache alloc] initWithPageSize:self.bounds.size];
+	pageCache = [[LeavesCache alloc] initWithPageSize:CGSizeZero];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -327,9 +327,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[super layoutSubviews];
 	
 	
-	if (!CGSizeEqualToSize(pageSize, self.bounds.size)) {
-		pageSize = self.bounds.size;
-		
+	if (!CGSizeEqualToSize(pageCache.pageSize, self.bounds.size)) {		
 		[CATransaction begin];
 		[CATransaction setValue:(id)kCFBooleanTrue
 						 forKey:kCATransactionDisableActions];
@@ -338,7 +336,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 		pageCache.pageSize = self.bounds.size;
 		[self getImages];
 		
-		CGFloat touchRectsWidth = self.bounds.size.width / 7;
+		CGFloat touchRectsWidth = [self targetWidth];
 		nextPageRect = CGRectMake(self.bounds.size.width - touchRectsWidth,
 								  0,
 								  touchRectsWidth,

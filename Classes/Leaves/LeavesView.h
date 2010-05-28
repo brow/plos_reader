@@ -31,7 +31,6 @@
 	NSUInteger numberOfPages;
 	id<LeavesViewDelegate> delegate;
 	
-	CGSize pageSize;
 	LeavesCache *pageCache;
 	BOOL backgroundRendering;
 	
