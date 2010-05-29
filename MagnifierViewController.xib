@@ -228,7 +228,7 @@
 							<object class="IBUIView" id="960009778">
 								<reference key="NSNextResponder" ref="837530096"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{1024, 1280}</string>
+								<string key="NSFrameSize">{1024, 1384}</string>
 								<reference key="NSSuperview" ref="837530096"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>

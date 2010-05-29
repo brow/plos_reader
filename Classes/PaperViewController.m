@@ -303,6 +303,8 @@ magnifyButton, thumbnailsButton;
 		
 		CGContextSaveGState(ctx);
 		CGContextClipToRect(ctx, clipRect);
+//		CGContextSetFillColorWithColor(ctx, [[UIColor purpleColor] CGColor]);
+//		CGContextFillRect(ctx, clipRect);
 		CGContextConcatCTM(ctx, transform);
 		CGContextDrawPDFPage(ctx, page);
 		CGContextRestoreGState(ctx);
@@ -345,6 +347,7 @@ magnifyButton, thumbnailsButton;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[citationActionSheet dismissWithClickedButtonIndex:2 animated:YES];
+//	leavesView.frame = CGRectMake(0, 0, scrollView.bounds.size.width, 1.25 * scrollView.bounds.size.width);
 	scrollView.contentSize = leavesView.frame.size;
 	[self configureForInterfaceOrientation:interfaceOrientation];
 }
@@ -355,6 +358,7 @@ magnifyButton, thumbnailsButton;
 	leavesView.dataSource = self;
 	leavesView.delegate = self;
 	leavesView.backgroundRendering = YES;
+	leavesView.pageResolution = CGSizeMake(1024, 1384);
 	[self configureView];
 	
 	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 

@@ -15,6 +15,7 @@
 
 @interface LeavesView : UIView {
 	CALayer *topPage;
+	CALayer *topPageImage;
 	CALayer *topPageOverlay;
 	CAGradientLayer *topPageShadow;
 	
@@ -24,6 +25,7 @@
 	CAGradientLayer *topPageReverseShading;
 	
 	CALayer *bottomPage;
+	CALayer *bottomPageImage;
 	CAGradientLayer *bottomPageShadow;
 	
 	CGFloat leafEdge;
@@ -31,6 +33,7 @@
 	NSUInteger numberOfPages;
 	id<LeavesViewDelegate> delegate;
 	
+	CGSize pageResolution;
 	LeavesCache *pageCache;
 	BOOL backgroundRendering;
 	
@@ -52,6 +55,8 @@
 // If backgroundRendering is YES, some pages not currently being displayed will be pre-rendered in background threads.
 // The default value is NO.  Only set this to YES if your implementation of the data source methods is thread-safe.
 @property (assign) BOOL backgroundRendering;
+
+@property (assign) CGSize pageResolution;
 
 // clears all caches and pulls new data via the data source methods, much like -[UITableView reloadData]
 - (void) reloadData;

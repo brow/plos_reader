@@ -98,8 +98,10 @@
 #pragma mark accessors
 
 - (void) setPageSize:(CGSize)value {
-	pageSize = value;
-	[self flush];
+	if (!CGSizeEqualToSize(pageSize, value)) {
+		pageSize = value;
+		[self flush];
+	}
 }
 
 @end
