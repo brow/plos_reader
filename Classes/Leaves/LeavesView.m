@@ -7,6 +7,7 @@
 //
 
 #import "LeavesView.h"
+#import "LeavesCache.h"
 
 @interface LeavesView () 
 
@@ -18,7 +19,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 @implementation LeavesView
 
-@synthesize delegate;
+@synthesize delegate, dataSource, cache;
 @synthesize leafEdge, currentPageIndex, backgroundRendering, pageResolution;
 
 - (void) setUpLayers {
@@ -96,8 +97,8 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 - (void) initialize {
 	backgroundRendering = NO;
-	pageCache = [[LeavesCache alloc] initWithPageSize:
-				 CGSizeEqualToSize(pageResolution, CGSizeZero) ? self.bounds.size : pageResolution];
+	cache = defaultCache = [[LeavesCache alloc] initWithPageSize:
+							CGSizeEqualToSize(pageResolution, CGSizeZero) ? self.bounds.size : pageResolution];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -127,26 +128,40 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[bottomPageImage release];
 	[bottomPageShadow release];
 	
-	[pageCache release];
+	[defaultCache release];
 	
     [super dealloc];
 }
 
 - (void) reloadData {
-	[pageCache flush];
-	numberOfPages = [pageCache.dataSource numberOfPagesInLeavesView:self];
+	[cache flush];
+	numberOfPages = [dataSource numberOfPagesInLeavesView:self];
 	self.currentPageIndex = 0;
+}
+
+- (void) precacheImageForPageIndex:(NSUInteger)pageIndex {
+	if ([cache respondsToSelector:@selector(precacheImageForPageIndex:fromDataSource:)])
+		[cache precacheImageForPageIndex:pageIndex fromDataSource:dataSource];
+}
+
+- (CGImageRef) cachedImageForPageIndex:(NSUInteger)pageIndex {
+	return [cache imageForPageAtIndex:pageIndex fromDataSource:dataSource];
+}
+
+- (void) minimizeCacheToPageIndex:(NSUInteger)pageIndex {
+	if ([cache respondsToSelector:@selector(minimizeToPageIndex:)])
+		[cache minimizeToPageIndex:pageIndex];
 }
 
 - (void) getImages {
 	if (currentPageIndex < numberOfPages) {
 		if (currentPageIndex > 0 && backgroundRendering)
-			[pageCache precacheImageForPageIndex:currentPageIndex-1];
-		topPageImage.contents = (id)[pageCache cachedImageForPageIndex:currentPageIndex];
-		topPageReverseImage.contents = (id)[pageCache cachedImageForPageIndex:currentPageIndex];
+			[self precacheImageForPageIndex:currentPageIndex-1];
+		topPageImage.contents = (id)[self cachedImageForPageIndex:currentPageIndex];
+		topPageReverseImage.contents = (id)[self cachedImageForPageIndex:currentPageIndex];
 		if (currentPageIndex < numberOfPages - 1)
-			bottomPageImage.contents = (id)[pageCache cachedImageForPageIndex:currentPageIndex + 1];
-		[pageCache minimizeToPageIndex:currentPageIndex];
+			bottomPageImage.contents = (id)[self cachedImageForPageIndex:currentPageIndex + 1];
+		[self minimizeCacheToPageIndex:currentPageIndex];
 	} else {
 		topPageImage.contents = nil;
 		topPageReverseImage.contents = nil;
@@ -260,14 +275,6 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 #pragma mark accessors
 
-- (id<LeavesViewDataSource>) dataSource {
-	return pageCache.dataSource;
-}
-
-- (void) setDataSource:(id<LeavesViewDataSource>)value {
-	pageCache.dataSource = value;
-}
-
 - (void) setLeafEdge:(CGFloat)aLeafEdge {
 	leafEdge = aLeafEdge;
 	topPageShadow.opacity = MIN(1.0, 4*(1-leafEdge));
@@ -292,7 +299,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 - (void) setPageResolution:(CGSize)aPageResolution {
 	pageResolution = aPageResolution;
-	pageCache.pageSize = CGSizeEqualToSize(pageResolution, CGSizeZero) ? self.bounds.size : pageResolution;
+	cache.pageSize = CGSizeEqualToSize(pageResolution, CGSizeZero) ? self.bounds.size : pageResolution;
 	
 	[CATransaction begin];
 	[CATransaction setValue:(id)kCFBooleanTrue
@@ -357,7 +364,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 		duration = leafEdge;
 		interactionLocked = YES;
 		if (currentPageIndex+2 < numberOfPages && backgroundRendering)
-			[pageCache precacheImageForPageIndex:currentPageIndex+2];
+			[self precacheImageForPageIndex:currentPageIndex+2];
 		[self performSelector:@selector(didTurnPageForward)
 				   withObject:nil 
 				   afterDelay:duration + 0.25];
@@ -380,8 +387,8 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[super layoutSubviews];
 		
 	CGSize pageSize = CGSizeEqualToSize(pageResolution, CGSizeZero) ? self.bounds.size : pageResolution;
-	if (!CGSizeEqualToSize(pageCache.pageSize, pageSize)) { 
-		pageCache.pageSize = pageSize;
+	if (!CGSizeEqualToSize(cache.pageSize, pageSize)) { 
+		cache.pageSize = pageSize;
 		[self getImages];
 	}
 	

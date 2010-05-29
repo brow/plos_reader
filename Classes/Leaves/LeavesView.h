@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "LeavesCache.h"
+
+@class LeavesCache;
 
 @protocol LeavesViewDataSource;
 @protocol LeavesViewDelegate;
+@protocol LeavesViewCache;
 
 @interface LeavesView : UIView {
 	CALayer *topPage;
@@ -31,10 +33,13 @@
 	CGFloat leafEdge;
 	NSUInteger currentPageIndex;
 	NSUInteger numberOfPages;
+	
+	id<LeavesViewDataSource> dataSource;
 	id<LeavesViewDelegate> delegate;
+	id<LeavesViewCache> cache;
 	
 	CGSize pageResolution;
-	LeavesCache *pageCache;
+	LeavesCache *defaultCache;
 	BOOL backgroundRendering;
 	
 	CGPoint touchBeganPoint;
@@ -43,6 +48,7 @@
 	BOOL interactionLocked;
 }
 
+@property (assign) id<LeavesViewCache> cache;
 @property (assign) id<LeavesViewDataSource> dataSource;
 @property (assign) id<LeavesViewDelegate> delegate;
 
@@ -58,7 +64,7 @@
 
 @property (assign) CGSize pageResolution;
 
-// clears all caches and pulls new data via the data source methods, much like -[UITableView reloadData]
+// refreshes the contents of all pages via the data source methods, much like -[UITableView reloadData]
 - (void) reloadData;
 
 @end
@@ -71,6 +77,7 @@
 
 @end
 
+
 @protocol LeavesViewDelegate <NSObject>
 
 @optional
@@ -78,8 +85,21 @@
 // called when the user touches up on the left or right side of the page, or finishes dragging the page
 - (void) leavesView:(LeavesView *)leavesView willTurnToPageAtIndex:(NSUInteger)pageIndex;
 
-// called when the page-turn animation following a touch-up completes 
+// called when the page-turn animation (following a touch-up or drag) completes 
 - (void) leavesView:(LeavesView *)leavesView didTurnToPageAtIndex:(NSUInteger)pageIndex;
 
 @end
 
+
+@protocol LeavesViewCache <NSObject>
+
+@property (assign) CGSize pageSize;
+- (CGImageRef) imageForPageAtIndex:(NSUInteger)index fromDataSource:(id<LeavesViewDataSource>)dataSource;
+- (void) flush;
+
+@optional
+
+- (void) precacheImageForPageIndex:(NSUInteger)index fromDataSource:(id<LeavesViewDataSource>)dataSource;
+- (void) minimizeToPageIndex:(NSUInteger)index;
+
+@end

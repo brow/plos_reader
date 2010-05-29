@@ -11,7 +11,7 @@
 
 @implementation LeavesCache
 
-@synthesize dataSource, pageSize;
+@synthesize pageSize;
 
 - (id) initWithPageSize:(CGSize)aPageSize
 {
@@ -28,9 +28,7 @@
 	[super dealloc];
 }
 
-
-
-- (CGImageRef) imageForPageIndex:(NSUInteger)pageIndex {
+- (CGImageRef) freshImageForPageIndex:(NSUInteger)pageIndex fromDataSource:(id<LeavesViewDataSource>)dataSource {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = CGBitmapContextCreate(NULL, 
 												 pageSize.width, 
@@ -53,46 +51,12 @@
 	return image;
 }
 
-- (CGImageRef) cachedImageForPageIndex:(NSUInteger)pageIndex {
-	NSNumber *pageIndexNumber = [NSNumber numberWithInt:pageIndex];
-	UIImage *pageImage;
-	@synchronized (pageCache) {
-		pageImage = [pageCache objectForKey:pageIndexNumber];
-	}
-	if (!pageImage) {
-		CGImageRef pageCGImage = [self imageForPageIndex:pageIndex];
-		pageImage = [UIImage imageWithCGImage:pageCGImage];
-		@synchronized (pageCache) {
-			[pageCache setObject:pageImage forKey:pageIndexNumber];
-		}
-	}
-	return pageImage.CGImage;
-}
-
-- (void) precacheImageForPageIndexNumber:(NSNumber *)pageIndexNumber {
+- (void) precacheImageFor:(NSDictionary *)info {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	[self cachedImageForPageIndex:[pageIndexNumber intValue]];
+	[self imageForPageAtIndex:[[info objectForKey:@"pageIndex"] intValue]
+			   fromDataSource:[info objectForKey:@"dataSource"]
+	 ];
 	[pool release];
-}
-
-- (void) precacheImageForPageIndex:(NSUInteger)pageIndex {
-	[self performSelectorInBackground:@selector(precacheImageForPageIndexNumber:)
-						   withObject:[NSNumber numberWithInt:pageIndex]];
-}
-
-- (void) minimizeToPageIndex:(NSUInteger)pageIndex {
-	/* Uncache all pages except previous, current, and next. */
-	@synchronized (pageCache) {
-		for (NSNumber *key in [pageCache allKeys])
-			if (ABS([key intValue] - (int)pageIndex) > 2)
-				[pageCache removeObjectForKey:key];
-	}
-}
-
-- (void) flush {
-	@synchronized (pageCache) {
-		[pageCache removeAllObjects];
-	}
 }
 
 #pragma mark accessors
@@ -101,6 +65,54 @@
 	if (!CGSizeEqualToSize(pageSize, value)) {
 		pageSize = value;
 		[self flush];
+	}
+}
+
+#pragma mark LeavesViewCache methods
+
+- (CGImageRef) imageForPageAtIndex:(NSUInteger)pageIndex fromDataSource:(id<LeavesViewDataSource>)dataSource {
+	NSNumber *pageIndexNumber = [NSNumber numberWithInt:pageIndex];
+	UIImage *pageImage;
+	@synchronized (pageCache) {
+		pageImage = [pageCache objectForKey:pageIndexNumber];
+	}
+	if (!pageImage) {
+		CGImageRef pageCGImage = [self freshImageForPageIndex:pageIndex fromDataSource:dataSource];
+		pageImage = [UIImage imageWithCGImage:pageCGImage];
+		@synchronized (pageCache) {
+			[pageCache setObject:pageImage forKey:pageIndexNumber];
+		}
+		if ([NSThread isMainThread])
+			NSLog(@"%u miss", pageIndex+1);
+		else {
+			NSLog(@"%u precache", pageIndex+1);
+		}
+		
+	}
+	return pageImage.CGImage;
+}
+
+- (void) flush {
+	@synchronized (pageCache) {
+		[pageCache removeAllObjects];
+	}
+}
+
+- (void) precacheImageForPageIndex:(NSUInteger)pageIndex  fromDataSource:(id<LeavesViewDataSource>)dataSource {
+	NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
+						  [NSNumber numberWithInt:pageIndex], @"pageIndex",
+						  dataSource, @"dataSource",
+						  nil];
+	[self performSelectorInBackground:@selector(precacheImageFor:)
+						   withObject:info];
+}
+
+- (void) minimizeToPageIndex:(NSUInteger)pageIndex {
+	/* Uncache all pages except previous, current, and next. */
+	@synchronized (pageCache) {
+		for (NSNumber *key in [pageCache allKeys])
+			if (ABS([key intValue] - (int)pageIndex) > 2)
+				[pageCache removeObjectForKey:key];
 	}
 }
 
