@@ -13,13 +13,21 @@
 
 @synthesize delegate;
 
-- (id)initWithPaper:(Paper *)aPaper {
-    if ((self = [super initWithNibName:@"MagnifierViewController" bundle:nil])) {
+- (id)initWithPaper:(Paper *)aPaper cache:(LeavesCache *)aCache {
+    if (self = [super initWithNibName:@"MagnifierViewController" bundle:nil]) {
 		self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-		self.paper = aPaper;
+		paper = [aPaper retain];
+		pageCache = [aCache retain];
     }
     return self;
 }
+
+- (void) dealloc
+{
+	[pageCache release];
+	[super dealloc];
+}
+
 
 #pragma mark actions
 

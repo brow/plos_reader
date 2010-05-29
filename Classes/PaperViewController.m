@@ -14,10 +14,7 @@
 
 @interface PaperViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
-- (void)configureView;
 @end
-
-
 
 @implementation PaperViewController
 
@@ -31,35 +28,6 @@ magnifyButton, thumbnailsButton;
     
     [paper release];
     [super dealloc];
-}
-
-- (void)setPaper:(id)newDetailItem {
-    if (paper != newDetailItem) {	
-		[paper removeObserver:self forKeyPath:@"downloadStatus"];
-		[paper removeObserver:self forKeyPath:@"downloadProgress"];
-		[paper cancelLoad];
-		
-        [paper release];
-        paper = [newDetailItem retain];
-		currentPage = 0;
-				
-		[paper addObserver:self 
-				forKeyPath:@"downloadStatus" 
-				   options:NSKeyValueObservingOptionNew 
-				   context:nil];
-		[paper addObserver:self 
-				forKeyPath:@"downloadProgress" 
-				   options:NSKeyValueObservingOptionNew 
-				   context:nil];
-		
-		[self configureView];
-		if (paper.downloadStatus != StatusDownloaded)
-			[paper load];
-    }
-
-    if (popoverController != nil) {
-        [popoverController dismissPopoverAnimated:YES];
-    }        
 }
 
 - (void) displayPageNumber:(NSUInteger)pageNumber {
@@ -96,7 +64,6 @@ magnifyButton, thumbnailsButton;
 		pageLabel.alpha = 1;
 		magnifyButton.alpha = 1;
 		[UIView commitAnimations];
-		[leavesView reloadData];
 		[self displayPageNumber:leavesView.currentPageIndex+1];
 		citationLabel.text = paper.runningHead;
 	} else {
@@ -140,7 +107,7 @@ magnifyButton, thumbnailsButton;
 	[masterButton.target performSelector:masterButton.action];
 }
 
-#pragma mark properties
+#pragma mark accessors
 
 - (NSUInteger)page {
     return leavesView.currentPageIndex;
@@ -152,13 +119,44 @@ magnifyButton, thumbnailsButton;
 	[self displayPageNumber:value+1];
 }
 
+- (void)setPaper:(id)newDetailItem {
+    if (paper != newDetailItem) {	
+		[paper removeObserver:self forKeyPath:@"downloadStatus"];
+		[paper removeObserver:self forKeyPath:@"downloadProgress"];
+		[paper cancelLoad];
+		
+        [paper release];
+        paper = [newDetailItem retain];
+		currentPage = 0;
+		
+		[paper addObserver:self 
+				forKeyPath:@"downloadStatus" 
+				   options:NSKeyValueObservingOptionNew 
+				   context:nil];
+		[paper addObserver:self 
+				forKeyPath:@"downloadProgress" 
+				   options:NSKeyValueObservingOptionNew 
+				   context:nil];
+		
+		[self configureView];
+		[self.leavesView reloadData];
+		if (paper.downloadStatus != StatusDownloaded)
+			[paper load];
+    }
+	
+    if (popoverController != nil) {
+        [popoverController dismissPopoverAnimated:YES];
+    }        
+}
+
 #pragma mark actions
 
 - (IBAction) toggleMagnification:(id)sender {
-	MagnifierViewController *vc = [[[MagnifierViewController alloc] initWithPaper:self.paper] autorelease];
+	MagnifierViewController *vc = [[[MagnifierViewController alloc] initWithPaper:self.paper 
+																			cache:leavesView.cache] autorelease];
 	[vc view];
-	vc.delegate = self;
 	vc.page = self.page;
+	vc.delegate = self;
 	vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 	[self presentModalViewController:vc animated:YES];
 }
@@ -257,8 +255,11 @@ magnifyButton, thumbnailsButton;
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:@"downloadStatus"])
+	if ([keyPath isEqualToString:@"downloadStatus"]) {
 		[self configureView];
+		if (paper.downloadStatus == StatusDownloaded)
+			[self.leavesView reloadData];
+	}
 	else if ([keyPath isEqualToString:@"downloadProgress"])
 		progressIndicator.progress = paper.downloadProgress;
 }
@@ -359,6 +360,8 @@ magnifyButton, thumbnailsButton;
 	leavesView.delegate = self;
 	leavesView.backgroundRendering = YES;
 	leavesView.pageResolution = CGSizeMake(1024, 1384);
+	[leavesView reloadData];
+	
 	[self configureView];
 	
 	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 
