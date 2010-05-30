@@ -12,7 +12,7 @@
 #import "Paper+Saving.h"
 #import "MagnifierViewController.h"
 
-@interface PaperViewController ()
+@interface PaperViewController () <MagnifierViewControllerDelegate>
 @property (nonatomic, retain) UIPopoverController *popoverController;
 @end
 
@@ -25,6 +25,17 @@ magnifyButton, thumbnailsButton;
 - (void)dealloc {
     [popoverController release];
     [toolbar release];
+	[citationLabel release];
+	[pageLabel release];
+	[leavesView release];
+	[downloadingView release];
+	[progressIndicator release];
+	[citationButton release];
+	[scrollView release];
+	[innerShadowView release];
+	[downloadingTitleLabel release];
+	[magnifyButton release];
+	[thumbnailsButton release];
     
     [paper release];
     [super dealloc];
@@ -212,6 +223,15 @@ magnifyButton, thumbnailsButton;
 											inView:thumbnailsButton.superview 
 						  permittedArrowDirections:UIPopoverArrowDirectionUp 
 										  animated:YES];
+}
+
+#pragma mark MagnifierViewControllerDelegate methods
+
+- (void) magnifierViewControllerDidFinish:(MagnifierViewController *)magnifierViewController {
+	[self view];
+	self.leavesView.cache = magnifierViewController.pageCache;
+	self.page = magnifierViewController.page;
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark ThumbnailsViewControllerDelegate methods

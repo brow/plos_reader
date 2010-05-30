@@ -11,7 +11,7 @@
 
 @implementation MagnifierViewController
 
-@synthesize delegate;
+@synthesize delegate, pageCache;
 
 - (id)initWithPaper:(Paper *)aPaper cache:(id<LeavesViewCache>)aCache {
     if (self = [super initWithNibName:@"MagnifierViewController" bundle:nil]) {
@@ -33,8 +33,7 @@
 #pragma mark actions
 
 - (IBAction) toggleMagnification:(id)sender {
-	[delegate setPage:self.page];
-	[self.parentViewController dismissModalViewControllerAnimated:YES];
+	[delegate magnifierViewControllerDidFinish:self];
 }
 
 #pragma mark LeavesViewCache methods
