@@ -9,13 +9,14 @@
 #import "PaperViewController.h"
 #import "LeavesCache.h"
 
-@interface  MagnifierViewController : PaperViewController {
+@interface  MagnifierViewController : PaperViewController <LeavesViewCache> {
 	id delegate;
-	LeavesCache *pageCache;
+	id<LeavesViewCache> pageCache;
+	BOOL renderingEnabled;
 }
 
 @property (assign) id delegate;
 
-- (id)initWithPaper:(Paper *)aPaper cache:(LeavesCache *)aCache;
+- (id)initWithPaper:(Paper *)aPaper cache:(id<LeavesViewCache>)aCache;
 
 @end
