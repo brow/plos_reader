@@ -155,13 +155,13 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 - (void) getImages {
 	if (currentPageIndex < numberOfPages) {
+		[self minimizeCacheToPageIndex:currentPageIndex];
 		if (currentPageIndex > 0 && backgroundRendering)
 			[self precacheImageForPageIndex:currentPageIndex-1];
 		topPageImage.contents = (id)[self cachedImageForPageIndex:currentPageIndex];
 		topPageReverseImage.contents = (id)[self cachedImageForPageIndex:currentPageIndex];
 		if (currentPageIndex < numberOfPages - 1)
 			bottomPageImage.contents = (id)[self cachedImageForPageIndex:currentPageIndex + 1];
-		[self minimizeCacheToPageIndex:currentPageIndex];
 	} else {
 		topPageImage.contents = nil;
 		topPageReverseImage.contents = nil;
