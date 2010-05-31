@@ -53,6 +53,10 @@
 }
 
 - (void)dealloc {
+	[aboutJournalLabel release];
+	[aboutPLoSView release];
+	[journalLogoView release];
+	
 	[feed release];
 	[journalInfo release];
 	[journalLogos release];

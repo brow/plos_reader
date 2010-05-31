@@ -19,9 +19,9 @@
 	Feed *feed;
 }
 
-@property (assign) IBOutlet UILabel *aboutJournalLabel;
-@property (assign) IBOutlet UIView *aboutPLoSView;
-@property (assign) IBOutlet UIImageView *journalLogoView;
+@property (nonatomic, retain) IBOutlet UILabel *aboutJournalLabel;
+@property (nonatomic, retain) IBOutlet UIView *aboutPLoSView;
+@property (nonatomic, retain) IBOutlet UIImageView *journalLogoView;
 
 - (id)initWithFeed:(Feed *)aFeed;
 - (IBAction) dismiss:(id)sender;
