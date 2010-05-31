@@ -97,8 +97,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 - (void) initialize {
 	backgroundRendering = NO;
-	cache = defaultCache = [[LeavesCache alloc] initWithPageSize:
-							CGSizeEqualToSize(pageResolution, CGSizeZero) ? self.bounds.size : pageResolution];
+	self.cache = [[[LeavesCache alloc] init] autorelease];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -128,7 +127,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[bottomPageImage release];
 	[bottomPageShadow release];
 	
-	[defaultCache release];
+	[cache release];
 	
     [super dealloc];
 }
@@ -317,14 +316,18 @@ CGFloat distance(CGPoint a, CGPoint b);
 	UITouch *touch = [event.allTouches anyObject];
 	touchBeganPoint = [touch locationInView:self];
 	
-	if ([self touchedPrevPage] && [self hasPrevPage]) {		
+	if ([self touchedPrevPage] && [self hasPrevPage]) {
+		NSDate *beginDate = [NSDate date];
+		
 		[CATransaction begin];
 		[CATransaction setValue:(id)kCFBooleanTrue
 						 forKey:kCATransactionDisableActions];
 		self.currentPageIndex = self.currentPageIndex - 1;
 		self.leafEdge = 0.0;
 		[CATransaction commit];
-		touchIsActive = YES;		
+		touchIsActive = YES;	
+		
+		NSLog(@"%.3f", [[NSDate date] timeIntervalSinceDate:beginDate]);
 	} 
 	else if ([self touchedNextPage] && [self hasNextPage])
 		touchIsActive = YES;
@@ -363,8 +366,8 @@ CGFloat distance(CGPoint a, CGPoint b);
 		self.leafEdge = 0;
 		duration = leafEdge;
 		interactionLocked = YES;
-		if (currentPageIndex+2 < numberOfPages && backgroundRendering)
-			[self precacheImageForPageIndex:currentPageIndex+2];
+//		if (currentPageIndex+2 < numberOfPages && backgroundRendering)
+//			[self precacheImageForPageIndex:currentPageIndex+2];
 		[self performSelector:@selector(didTurnPageForward)
 				   withObject:nil 
 				   afterDelay:duration + 0.25];

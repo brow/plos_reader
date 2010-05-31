@@ -48,7 +48,7 @@
 	BOOL interactionLocked;
 }
 
-@property (assign) id<LeavesViewCache> cache;
+@property (retain) id<LeavesViewCache> cache;
 @property (assign) id<LeavesViewDataSource> dataSource;
 @property (assign) id<LeavesViewDelegate> delegate;
 

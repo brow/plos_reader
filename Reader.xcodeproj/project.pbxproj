@@ -60,6 +60,7 @@
 		D3B65A1511AE3E3500EF9BCA /* ThumbnailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B65A1411AE3E3500EF9BCA /* ThumbnailsViewController.m */; };
 		D3B65A8011AE473000EF9BCA /* ThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B65A7F11AE473000EF9BCA /* ThumbnailCell.m */; };
 		D3B65A9811AE485A00EF9BCA /* ThumbnailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */; };
+		D3B6637711B3510700EF9BCA /* LeavesTrivialCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B6637611B3510700EF9BCA /* LeavesTrivialCache.m */; };
 		D3DCD87B11A4C11900ECAC8E /* About_Biology.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87511A4C11900ECAC8E /* About_Biology.png */; };
 		D3DCD87C11A4C11900ECAC8E /* About_CompBio.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87611A4C11900ECAC8E /* About_CompBio.png */; };
 		D3DCD87D11A4C11900ECAC8E /* About_Genetics.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87711A4C11900ECAC8E /* About_Genetics.png */; };
@@ -194,6 +195,8 @@
 		D3B65A7E11AE473000EF9BCA /* ThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailCell.h; sourceTree = "<group>"; };
 		D3B65A7F11AE473000EF9BCA /* ThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailCell.m; sourceTree = "<group>"; };
 		D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThumbnailCell.xib; sourceTree = "<group>"; };
+		D3B6637511B3510700EF9BCA /* LeavesTrivialCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeavesTrivialCache.h; sourceTree = "<group>"; };
+		D3B6637611B3510700EF9BCA /* LeavesTrivialCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeavesTrivialCache.m; sourceTree = "<group>"; };
 		D3DCD87511A4C11900ECAC8E /* About_Biology.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Biology.png; sourceTree = "<group>"; };
 		D3DCD87611A4C11900ECAC8E /* About_CompBio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_CompBio.png; sourceTree = "<group>"; };
 		D3DCD87711A4C11900ECAC8E /* About_Genetics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Genetics.png; sourceTree = "<group>"; };
@@ -518,6 +521,8 @@
 				D33D56F9117FF39200BA7203 /* LeavesViewController.m */,
 				D337E1F2119B4CDF003E5728 /* LeavesCache.h */,
 				D337E1F3119B4CDF003E5728 /* LeavesCache.m */,
+				D3B6637511B3510700EF9BCA /* LeavesTrivialCache.h */,
+				D3B6637611B3510700EF9BCA /* LeavesTrivialCache.m */,
 			);
 			path = Leaves;
 			sourceTree = "<group>";
@@ -681,6 +686,7 @@
 				D3B6580011AC80E600EF9BCA /* MagnifierViewController.m in Sources */,
 				D3B65A1511AE3E3500EF9BCA /* ThumbnailsViewController.m in Sources */,
 				D3B65A8011AE473000EF9BCA /* ThumbnailCell.m in Sources */,
+				D3B6637711B3510700EF9BCA /* LeavesTrivialCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

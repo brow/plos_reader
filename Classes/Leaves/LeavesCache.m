@@ -11,12 +11,9 @@
 
 @implementation LeavesCache
 
-@synthesize pageSize;
-
-- (id) initWithPageSize:(CGSize)aPageSize
+- (id) init
 {
 	if ([super init]) {
-		pageSize = aPageSize;
 		pageCache = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -26,29 +23,6 @@
 {
 	[pageCache release];
 	[super dealloc];
-}
-
-- (CGImageRef) freshImageForPageIndex:(NSUInteger)pageIndex fromDataSource:(id<LeavesViewDataSource>)dataSource {
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGContextRef context = CGBitmapContextCreate(NULL, 
-												 pageSize.width, 
-												 pageSize.height, 
-												 8,						/* bits per component*/
-												 pageSize.width * 4, 	/* bytes per row */
-												 colorSpace, 
-												 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-	CGColorSpaceRelease(colorSpace);
-	CGContextClipToRect(context, CGRectMake(0, 0, pageSize.width, pageSize.height));
-	
-	[dataSource renderPageAtIndex:pageIndex inContext:context];
-	
-	CGImageRef image = CGBitmapContextCreateImage(context);
-	CGContextRelease(context);
-	
-	[UIImage imageWithCGImage:image];
-	CGImageRelease(image);
-	
-	return image;
 }
 
 - (void) precacheImageFor:(NSDictionary *)info {
@@ -77,17 +51,16 @@
 		pageImage = [pageCache objectForKey:pageIndexNumber];
 	}
 	if (!pageImage) {
-		CGImageRef pageCGImage = [self freshImageForPageIndex:pageIndex fromDataSource:dataSource];
+		CGImageRef pageCGImage = [super freshImageForPageIndex:pageIndex fromDataSource:dataSource];
 		pageImage = [UIImage imageWithCGImage:pageCGImage];
 		@synchronized (pageCache) {
 			[pageCache setObject:pageImage forKey:pageIndexNumber];
 		}
-		if ([NSThread isMainThread])
-			NSLog(@"%u miss", pageIndex+1);
-		else {
-			NSLog(@"%u precache", pageIndex+1);
-		}
-		
+//		if ([NSThread isMainThread])
+//			NSLog(@"%u miss", pageIndex+1);
+//		else {
+//			NSLog(@"%u precache", pageIndex+1);
+//		}
 	}
 	return pageImage.CGImage;
 }

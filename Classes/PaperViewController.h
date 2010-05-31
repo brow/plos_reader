@@ -33,7 +33,8 @@ UINavigationControllerDelegate, ThumbnailsViewControllerDelegate> {
 	UIBarButtonItem *masterButton;
 	UIButton *magnifyButton;
 	UIButton *thumbnailsButton;
-    
+	
+	CGPDFDocumentRef pdfDoc;
     Paper *paper;
 	NSUInteger currentPage;
 }

@@ -6,13 +6,10 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "LeavesView.h"
+#import "LeavesTrivialCache.h"
 
-@interface LeavesCache : NSObject <LeavesViewCache> {
+@interface LeavesCache : LeavesTrivialCache {
 	NSMutableDictionary *pageCache;
-	CGSize pageSize;
 }
-
-- (id) initWithPageSize:(CGSize)aPageSize;
 
 @end

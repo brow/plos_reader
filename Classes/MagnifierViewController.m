@@ -11,13 +11,13 @@
 
 @implementation MagnifierViewController
 
-@synthesize delegate, pageCache;
+@synthesize delegate;
 
-- (id)initWithPaper:(Paper *)aPaper cache:(id<LeavesViewCache>)aCache {
+- (id)initWithParentViewController:(PaperViewController *)aParent {
     if (self = [super initWithNibName:@"MagnifierViewController" bundle:nil]) {
 		self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-		paper = [aPaper retain];
-		pageCache = [aCache retain];
+		parent = [aParent retain];
+		paper = [parent.paper retain];
 		renderingEnabled = NO;
     }
     return self;
@@ -25,7 +25,7 @@
 
 - (void) dealloc
 {
-	[pageCache release];
+	[parent release];
 	[super dealloc];
 }
 
@@ -36,42 +36,14 @@
 	[delegate magnifierViewControllerDidFinish:self];
 }
 
-#pragma mark LeavesViewCache methods
+#pragma mark LeavesViewDataSource methods
 
-- (CGSize) pageSize {
-	return pageCache.pageSize;
+- (NSUInteger) numberOfPagesInLeavesView:(LeavesView*)aleavesView {
+	return [parent numberOfPagesInLeavesView:aleavesView];
 }
-
-- (void)setPageSize:(CGSize)aPageSize {
-	pageCache.pageSize = aPageSize;
-}
-
-- (CGImageRef) imageForPageAtIndex:(NSUInteger)index fromDataSource:(id<LeavesViewDataSource>)dataSource {
-	if (renderingEnabled)
-		return [pageCache imageForPageAtIndex:index fromDataSource:dataSource];
-	else
-		return nil;
-}
-
-- (void) flush {
-	// since we're borrowing another LeavesView's cache, we shouldn't flush it
-}
-
-- (void) precacheImageForPageIndex:(NSUInteger)index fromDataSource:(id<LeavesViewDataSource>)dataSource {
-	if (renderingEnabled)
-		[pageCache precacheImageForPageIndex:index fromDataSource:dataSource];
-}
-
-- (void) minimizeToPageIndex:(NSUInteger)index {
-	if (renderingEnabled)
-		[pageCache minimizeToPageIndex:index];
-}
-
-#pragma mark  LeavesViewDataSource methods
 
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
-	if (renderingEnabled)
-		[super renderPageAtIndex:index inContext:ctx];
+	[parent renderPageAtIndex:index inContext:ctx];
 }
 
 #pragma mark UIViewController methods
@@ -81,9 +53,10 @@
 }
 
 - (void) viewDidLoad {
-	self.leavesView.cache = self;
-	[super viewDidLoad];
+//	self.leavesView.cache = self;
 	renderingEnabled = YES;
+	[super viewDidLoad];
+	
 }
 
 @end

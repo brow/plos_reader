@@ -68,6 +68,9 @@ magnifyButton, thumbnailsButton;
 		leavesView.hidden = NO;
 		downloadingView.hidden = YES;
 		
+		CGPDFDocumentRelease(pdfDoc);
+		pdfDoc = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
+		
 		[UIView beginAnimations:@"" context:nil];
 		[UIView setAnimationDuration:0.4];
 		citationButton.alpha = 1;
@@ -163,8 +166,7 @@ magnifyButton, thumbnailsButton;
 #pragma mark actions
 
 - (IBAction) toggleMagnification:(id)sender {
-	MagnifierViewController *vc = [[[MagnifierViewController alloc] initWithPaper:self.paper 
-																			cache:leavesView.cache] autorelease];
+	MagnifierViewController *vc = [[[MagnifierViewController alloc] initWithParentViewController:self] autorelease];
 	[vc view];
 	vc.page = self.page;
 	vc.delegate = self;
@@ -229,7 +231,6 @@ magnifyButton, thumbnailsButton;
 
 - (void) magnifierViewControllerDidFinish:(MagnifierViewController *)magnifierViewController {
 	[self view];
-	self.leavesView.cache = magnifierViewController.pageCache;
 	self.page = magnifierViewController.page;
 	[self dismissModalViewControllerAnimated:YES];
 }
@@ -300,10 +301,7 @@ magnifyButton, thumbnailsButton;
 
 - (NSUInteger) numberOfPagesInLeavesView:(LeavesView*)leavesView {
 	if (paper && paper.downloadStatus == StatusDownloaded) {
-		CGPDFDocumentRef aPdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
-		NSUInteger ret = CGPDFDocumentGetNumberOfPages(aPdf);
-		CGPDFDocumentRelease(aPdf);
-		return ret;
+		return CGPDFDocumentGetNumberOfPages(pdfDoc);
 	} else {
 		return 0;
 	}
@@ -311,10 +309,8 @@ magnifyButton, thumbnailsButton;
 
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
 	if (paper && paper.downloadStatus == StatusDownloaded) {
-		
-		CGPDFDocumentRef aPdf = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
-		
-		CGPDFPageRef page = CGPDFDocumentGetPage(aPdf, index + 1);
+				
+		CGPDFPageRef page = CGPDFDocumentGetPage(pdfDoc, index + 1);
 		CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
 		CGRect croppedRect = CGRectInset(pageRect, 46, 44);
 		croppedRect.origin.y -= 2;
@@ -328,9 +324,7 @@ magnifyButton, thumbnailsButton;
 //		CGContextFillRect(ctx, clipRect);
 		CGContextConcatCTM(ctx, transform);
 		CGContextDrawPDFPage(ctx, page);
-		CGContextRestoreGState(ctx);
-		
-		CGPDFDocumentRelease(aPdf);
+		CGContextRestoreGState(ctx);		
 	}
 }
 
@@ -379,7 +373,7 @@ magnifyButton, thumbnailsButton;
 	leavesView.dataSource = self;
 	leavesView.delegate = self;
 	leavesView.backgroundRendering = YES;
-	leavesView.pageResolution = CGSizeMake(1024, 1384);
+//	leavesView.pageResolution = CGSizeMake(1024, 1384);
 	[leavesView reloadData];
 	
 	[self configureView];

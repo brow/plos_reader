@@ -11,16 +11,15 @@
 
 @protocol MagnifierViewControllerDelegate;
 
-@interface  MagnifierViewController : PaperViewController <LeavesViewCache> {
+@interface  MagnifierViewController : PaperViewController {
 	id<MagnifierViewControllerDelegate> delegate;
-	id<LeavesViewCache> pageCache;
+	PaperViewController *parent;
 	BOOL renderingEnabled;
 }
 
 @property (assign) id<MagnifierViewControllerDelegate> delegate;
-@property (readonly) id<LeavesViewCache> pageCache;
 
-- (id)initWithPaper:(Paper *)aPaper cache:(id<LeavesViewCache>)aCache;
+- (id)initWithParentViewController:(PaperViewController *)aParent;
 
 @end
 
