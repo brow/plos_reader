@@ -199,9 +199,9 @@ CGFloat distance(CGPoint a, CGPoint b);
 	topPageOverlay.frame = topPage.bounds;
 	
 	if (CGSizeEqualToSize(pageResolution, CGSizeZero)) {
-		topPageImage.frame = topPage.bounds;
-		bottomPageImage.frame = bottomPage.bounds;
-		topPageReverseImage.frame = topPageReverse.bounds;
+		topPageImage.frame = self.bounds;
+		bottomPageImage.frame = self.bounds;
+		topPageReverseImage.frame = self.bounds;
 	} else {
 		CGFloat pageAspect = pageResolution.width / pageResolution.height;
 		CGFloat viewAspect = self.bounds.size.width / self.bounds.size.height;
