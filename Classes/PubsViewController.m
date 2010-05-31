@@ -28,6 +28,8 @@ enum {SectionFolders, SectionJournals, NumSections};
 																			  style:UIBarButtonItemStyleBordered 
 																			 target:nil 
 																			 action:nil] autorelease];
+	self.clearsSelectionOnViewWillAppear = NO;
+    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 	
 	feeds = [[NSArray alloc] initWithObjects:
 			 [Feed feedWithTitle:@"PLoS Biology" 
@@ -57,6 +59,9 @@ enum {SectionFolders, SectionJournals, NumSections};
 								 forKeyPath:@"savedPapers" 
 									options:NSKeyValueObservingOptionNew
 									context:nil];
+	
+	for (Feed *feed in feeds)
+		[feed load];
 }
 
 
@@ -163,15 +168,6 @@ enum {SectionFolders, SectionJournals, NumSections};
 }
 
 #pragma mark UIViewController methods
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.clearsSelectionOnViewWillAppear = NO;
-    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-	
-	for (Feed *feed in feeds)
-		[feed load];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;

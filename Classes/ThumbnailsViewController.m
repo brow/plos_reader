@@ -142,10 +142,10 @@
 - (void) viewDidLoad {
 	[super viewDidLoad];
 	UIView *backgroundView = [[[UIView alloc] init] autorelease];
-//	backgroundView.backgroundColor = [UIColor viewFlipsideBackgroundColor];
 	self.tableView.backgroundView = backgroundView;
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	
+	[thumbnails removeAllObjects];
 	[self performSelectorInBackground:@selector(renderThumbnails) withObject:nil];
 }
 

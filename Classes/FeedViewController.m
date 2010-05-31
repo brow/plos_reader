@@ -34,6 +34,8 @@
 														action:@selector(showActions:)];
 		
 		self.navigationItem.title = feed.title;
+		self.clearsSelectionOnViewWillAppear = NO;
+		self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 	}
 	return self;
 }
@@ -161,8 +163,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.clearsSelectionOnViewWillAppear = NO;
-    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 	[self displayFeedStatus];
 }
 
