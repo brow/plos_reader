@@ -29,6 +29,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
         
     // Add the split view controller's view to the window and display.
+	window.backgroundColor = [UIColor blackColor];
     [window addSubview:splitViewController.view];
     [window makeKeyAndVisible];
 	
