@@ -159,9 +159,9 @@ magnifyButton, thumbnailsButton;
 				   options:NSKeyValueObservingOptionNew 
 				   context:nil];
 		
-		[self configureView];
 		[self loadPDF];
 		[self.leavesView reloadData];
+		[self configureView];
 		if (paper.downloadStatus != StatusDownloaded)
 			[paper load];
     }
@@ -286,9 +286,9 @@ magnifyButton, thumbnailsButton;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([keyPath isEqualToString:@"downloadStatus"]) {
 		[self loadPDF];
-		[self configureView];
 		if (paper.downloadStatus == StatusDownloaded)
 			[self.leavesView reloadData];
+		[self configureView];
 	}
 	else if ([keyPath isEqualToString:@"downloadProgress"])
 		progressIndicator.progress = paper.downloadProgress;
