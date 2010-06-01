@@ -45,6 +45,12 @@
 	[parent renderPageAtIndex:index inContext:ctx];
 }
 
+#pragma mark PaperViewController methods
+
+- (void) configureForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	self.leavesView.preferredTargetWidth = 90;
+}
+
 #pragma mark UIViewController methods
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

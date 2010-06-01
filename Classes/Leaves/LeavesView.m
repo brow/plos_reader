@@ -20,7 +20,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 @implementation LeavesView
 
 @synthesize delegate, dataSource, cache;
-@synthesize leafEdge, currentPageIndex, backgroundRendering, pageResolution;
+@synthesize leafEdge, currentPageIndex, backgroundRendering, pageResolution, preferredTargetWidth;
 
 - (void) setUpLayers {
 	self.clipsToBounds = YES;
@@ -269,7 +269,22 @@ CGFloat distance(CGPoint a, CGPoint b);
 
 - (CGFloat) targetWidth {
 	// Magic empirical formula
-	return MAX(28, self.bounds.size.width / 5);
+	if (preferredTargetWidth > 0 && preferredTargetWidth < self.bounds.size.width / 2)
+		return preferredTargetWidth;
+	else
+		return MAX(28, self.bounds.size.width / 5);
+}
+
+- (void) updateTargetRects {
+	CGFloat targetWidth = [self targetWidth];
+	nextPageRect = CGRectMake(self.bounds.size.width - targetWidth,
+							  0,
+							  targetWidth,
+							  self.bounds.size.height);
+	prevPageRect = CGRectMake(0,
+							  0,
+							  targetWidth,
+							  self.bounds.size.height);
 }
 
 #pragma mark accessors
@@ -307,7 +322,12 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[CATransaction commit];
 }
 
-#pragma mark UIView methods
+- (void) setPreferredTargetWidth:(CGFloat)value {
+	preferredTargetWidth = value;
+	[self updateTargetRects];
+}
+
+#pragma mark UIResponder methods
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	if (interactionLocked)
@@ -386,6 +406,8 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[CATransaction commit];
 }
 
+#pragma mark UIView methods
+
 - (void) layoutSubviews {
 	[super layoutSubviews];
 		
@@ -401,15 +423,7 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[self setLayerFrames];
 	[CATransaction commit];
 	
-	CGFloat touchRectsWidth = [self targetWidth];
-	nextPageRect = CGRectMake(self.bounds.size.width - touchRectsWidth,
-							  0,
-							  touchRectsWidth,
-							  self.bounds.size.height);
-	prevPageRect = CGRectMake(0,
-							  0,
-							  touchRectsWidth,
-							  self.bounds.size.height);
+	[self updateTargetRects];
 }
 
 @end

@@ -39,6 +39,7 @@
 	id<LeavesViewCache> cache;
 	
 	CGSize pageResolution;
+	CGFloat preferredTargetWidth;
 	LeavesCache *defaultCache;
 	BOOL backgroundRendering;
 	
@@ -54,6 +55,7 @@
 
 // the automatically determined width of the interactive areas on either side of the page
 @property (readonly) CGFloat targetWidth;
+@property (assign) CGFloat preferredTargetWidth;
 
 // the zero-based index of the page currently being displayed.
 @property (assign) NSUInteger currentPageIndex;
