@@ -14,7 +14,6 @@
 @interface  MagnifierViewController : PaperViewController {
 	id<MagnifierViewControllerDelegate> delegate;
 	PaperViewController *parent;
-	BOOL renderingEnabled;
 }
 
 @property (assign) id<MagnifierViewControllerDelegate> delegate;

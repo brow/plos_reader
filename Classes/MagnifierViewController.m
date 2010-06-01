@@ -18,7 +18,6 @@
 		self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 		parent = [aParent retain];
 		paper = [parent.paper retain];
-		renderingEnabled = NO;
     }
     return self;
 }
@@ -50,13 +49,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-
-- (void) viewDidLoad {
-//	self.leavesView.cache = self;
-	renderingEnabled = YES;
-	[super viewDidLoad];
-	
 }
 
 @end
