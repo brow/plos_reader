@@ -125,7 +125,8 @@ magnifyButton, thumbnailsButton;
 }
 
 - (void) showMasterPopover {
-	[masterButton.target performSelector:masterButton.action];
+	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+		[masterButton.target performSelector:masterButton.action];
 }
 
 #pragma mark accessors
@@ -386,9 +387,13 @@ magnifyButton, thumbnailsButton;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
 	[citationActionSheet dismissWithClickedButtonIndex:2 animated:YES];
-//	leavesView.frame = CGRectMake(0, 0, scrollView.bounds.size.width, 1.25 * scrollView.bounds.size.width);
 	scrollView.contentSize = leavesView.frame.size;
 	[self configureForInterfaceOrientation:interfaceOrientation];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	if (!self.paper)
+		[self showMasterPopover];
 }
 
 - (void)viewDidLoad {
