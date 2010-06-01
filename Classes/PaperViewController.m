@@ -37,6 +37,8 @@ magnifyButton, thumbnailsButton;
 	[magnifyButton release];
 	[thumbnailsButton release];
     
+	
+	CGPDFDocumentRelease(pdfDoc);
     [paper release];
     [super dealloc];
 }
@@ -55,6 +57,15 @@ magnifyButton, thumbnailsButton;
 		masterButton.title = @"Journals";
 }
 
+- (void) loadPDF {
+	if (paper.downloadStatus == StatusDownloaded) {
+		@synchronized (self) {
+			CGPDFDocumentRelease(pdfDoc);
+			pdfDoc = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
+		}
+	}
+}
+
 - (void)configureView {
 	if (!paper || paper.downloadStatus == StatusFailed) {
 		downloadingView.hidden = YES;
@@ -67,10 +78,6 @@ magnifyButton, thumbnailsButton;
 	else if (paper.downloadStatus == StatusDownloaded) {
 		leavesView.hidden = NO;
 		downloadingView.hidden = YES;
-		
-		CGPDFDocumentRelease(pdfDoc);
-		pdfDoc = CGPDFDocumentCreateWithURL((CFURLRef)[NSURL fileURLWithPath:paper.localPDFPath]);
-		
 		[UIView beginAnimations:@"" context:nil];
 		[UIView setAnimationDuration:0.4];
 		citationButton.alpha = 1;
@@ -153,6 +160,7 @@ magnifyButton, thumbnailsButton;
 				   context:nil];
 		
 		[self configureView];
+		[self loadPDF];
 		[self.leavesView reloadData];
 		if (paper.downloadStatus != StatusDownloaded)
 			[paper load];
@@ -277,6 +285,7 @@ magnifyButton, thumbnailsButton;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([keyPath isEqualToString:@"downloadStatus"]) {
+		[self loadPDF];
 		[self configureView];
 		if (paper.downloadStatus == StatusDownloaded)
 			[self.leavesView reloadData];
@@ -301,7 +310,11 @@ magnifyButton, thumbnailsButton;
 
 - (NSUInteger) numberOfPagesInLeavesView:(LeavesView*)leavesView {
 	if (paper && paper.downloadStatus == StatusDownloaded) {
-		return CGPDFDocumentGetNumberOfPages(pdfDoc);
+		NSUInteger numPages;
+		@synchronized (self) {
+			numPages = CGPDFDocumentGetNumberOfPages(pdfDoc);
+		}
+		return numPages;
 	} else {
 		return 0;
 	}
@@ -309,22 +322,21 @@ magnifyButton, thumbnailsButton;
 
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
 	if (paper && paper.downloadStatus == StatusDownloaded) {
-				
-		CGPDFPageRef page = CGPDFDocumentGetPage(pdfDoc, index + 1);
-		CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
-		CGRect croppedRect = CGRectInset(pageRect, 46, 44);
-		croppedRect.origin.y -= 2;
-		CGAffineTransform transform = aspectFit(croppedRect,
-												CGContextGetClipBoundingBox(ctx));
-		CGRect clipRect = CGRectApplyAffineTransform(croppedRect, transform);
-		
-		CGContextSaveGState(ctx);
-		CGContextClipToRect(ctx, clipRect);
-//		CGContextSetFillColorWithColor(ctx, [[UIColor purpleColor] CGColor]);
-//		CGContextFillRect(ctx, clipRect);
-		CGContextConcatCTM(ctx, transform);
-		CGContextDrawPDFPage(ctx, page);
-		CGContextRestoreGState(ctx);		
+		@synchronized (self) {
+			CGPDFPageRef page = CGPDFDocumentGetPage(pdfDoc, index + 1);
+			CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
+			CGRect croppedRect = CGRectInset(pageRect, 46, 44);
+			croppedRect.origin.y -= 2;
+			CGAffineTransform transform = aspectFit(croppedRect,
+													CGContextGetClipBoundingBox(ctx));
+			CGRect clipRect = CGRectApplyAffineTransform(croppedRect, transform);
+			
+			CGContextSaveGState(ctx);
+			CGContextClipToRect(ctx, clipRect);
+			CGContextConcatCTM(ctx, transform);
+			CGContextDrawPDFPage(ctx, page);
+			CGContextRestoreGState(ctx);
+		}
 	}
 }
 
@@ -355,6 +367,14 @@ magnifyButton, thumbnailsButton;
 }
 
 #pragma mark UIViewController methods
+
+- (void)didReceiveMemoryWarning {
+	[super didReceiveMemoryWarning];
+	[self.leavesView.cache flush];
+	
+	/* Release and re-create the CGPDFDocument to flush its cache. */
+	[self loadPDF];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
