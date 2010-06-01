@@ -298,8 +298,12 @@ magnifyButton, thumbnailsButton;
 
 - (void) leavesView:(LeavesView *)aLeavesView willTurnToPageAtIndex:(NSUInteger)pageIndex {
 	[self displayPageNumber:pageIndex + 1];
-	if (pageIndex == currentPage + 1)
-		[scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+	if (pageIndex == currentPage + 1) {
+		[UIView beginAnimations:@"scrollToTop" context:nil];
+		[UIView setAnimationDuration:0.5];
+		scrollView.contentOffset = CGPointMake(0, 0);
+		[UIView commitAnimations];
+	}
 }
 
 - (void) leavesView:(LeavesView *)aLeavesView didTurnToPageAtIndex:(NSUInteger)pageIndex {
