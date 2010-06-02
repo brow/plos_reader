@@ -74,6 +74,7 @@ magnifyButton, thumbnailsButton;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
 		magnifyButton.alpha = 0;
+		thumbnailsButton.alpha = 0;
 	}
 	else if (paper.downloadStatus == StatusDownloaded) {
 		leavesView.hidden = NO;
@@ -84,6 +85,7 @@ magnifyButton, thumbnailsButton;
 		citationLabel.alpha = 1;
 		pageLabel.alpha = 1;
 		magnifyButton.alpha = 1;
+		thumbnailsButton.alpha = 1;
 		[UIView commitAnimations];
 		[self displayPageNumber:leavesView.currentPageIndex+1];
 		citationLabel.text = paper.runningHead;
@@ -94,6 +96,7 @@ magnifyButton, thumbnailsButton;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
 		magnifyButton.alpha = 0;
+		thumbnailsButton.alpha = 0;
 		downloadingTitleLabel.text = paper.title;
 		
 		CGSize titleLabelSize = [downloadingTitleLabel.text sizeWithFont:downloadingTitleLabel.font
@@ -408,12 +411,19 @@ magnifyButton, thumbnailsButton;
 	
 	[self configureView];
 	
-	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 
-																									   topCapHeight:10]
+	
+	UIImage *buttonBackground = [[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 
+																								topCapHeight:10];
+	UIImage *buttonHighlightedBackground = [[UIImage imageNamed:@"CitationButtonHighlighted.png"] stretchableImageWithLeftCapWidth:10 
+																													  topCapHeight:10];
+	[citationButton setBackgroundImage:buttonBackground
 							  forState:UIControlStateNormal];
-	[citationButton setBackgroundImage:[[UIImage imageNamed:@"CitationButtonHighlighted.png"] stretchableImageWithLeftCapWidth:10 
-																												  topCapHeight:10]
+	[citationButton setBackgroundImage:buttonHighlightedBackground
 							  forState:UIControlStateHighlighted];
+	[thumbnailsButton setBackgroundImage:buttonBackground
+								forState:UIControlStateNormal];
+	[thumbnailsButton setBackgroundImage:buttonHighlightedBackground
+								forState:UIControlStateHighlighted];
 	
 	scrollView.canCancelContentTouches = NO;
 	scrollView.delaysContentTouches = NO;
