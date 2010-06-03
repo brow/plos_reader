@@ -60,7 +60,7 @@
 - (void)viewDidLoad {
 	leavesView.cache = [[[LeavesNullCache alloc] init] autorelease];
 	[super viewDidLoad];
-	leavesView.cache = [[[LeavesTrivialCache alloc] init] autorelease];
+	leavesView.cache = [[[LeavesCache alloc] init] autorelease];
 }
 
 @end
