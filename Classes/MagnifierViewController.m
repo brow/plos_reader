@@ -58,9 +58,9 @@
 }
 
 - (void)viewDidLoad {
-	self.leavesView.cache = [[[LeavesNullCache alloc] init] autorelease];
+	leavesView.cache = [[[LeavesNullCache alloc] init] autorelease];
 	[super viewDidLoad];
-	self.leavesView.cache = [[[LeavesCache alloc] init] autorelease];
+	leavesView.cache = [[[LeavesTrivialCache alloc] init] autorelease];
 }
 
 @end

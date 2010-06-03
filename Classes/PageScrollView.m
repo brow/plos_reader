@@ -13,6 +13,11 @@
 
 @synthesize leavesView;
 
+- (void) dealloc {
+	[leavesView release];
+	[super dealloc];
+}
+
 - (BOOL)touchesShouldBegin:(NSSet *)touches withEvent:(UIEvent *)event inContentView:(UIView *)view {
 	CGPoint touchPoint = [[touches anyObject] locationInView:leavesView];
 	if (touchPoint.x < leavesView.targetWidth || 
