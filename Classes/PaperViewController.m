@@ -406,8 +406,8 @@ magnifyButton, thumbnailsButton;
 	leavesView.dataSource = self;
 	leavesView.delegate = self;
 	leavesView.backgroundRendering = YES;
-//	leavesView.pageResolution = CGSizeMake(1024, 1384);
-	[leavesView reloadData];
+	if (paper && paper.downloadStatus == StatusDownloaded)
+		[leavesView reloadData];
 	
 	[self configureView];
 	
