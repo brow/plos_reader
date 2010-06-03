@@ -327,6 +327,12 @@ CGFloat distance(CGPoint a, CGPoint b);
 	[self updateTargetRects];
 }
 
+- (void) setCache:(id<LeavesViewCache>)value {
+	[cache autorelease];
+	cache = [value retain];
+	cache.pageSize = self.bounds.size;
+}
+
 #pragma mark UIResponder methods
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

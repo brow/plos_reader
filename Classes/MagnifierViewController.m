@@ -7,7 +7,7 @@
 //
 
 #import "MagnifierViewController.h"
-
+#import "LeavesNullCache.h"
 
 @implementation MagnifierViewController
 
@@ -55,6 +55,12 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+- (void)viewDidLoad {
+	self.leavesView.cache = [[[LeavesNullCache alloc] init] autorelease];
+	[super viewDidLoad];
+	self.leavesView.cache = [[[LeavesCache alloc] init] autorelease];
 }
 
 @end
