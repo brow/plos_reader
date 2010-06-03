@@ -343,8 +343,6 @@ CGFloat distance(CGPoint a, CGPoint b);
 	touchBeganPoint = [touch locationInView:self];
 	
 	if ([self touchedPrevPage] && [self hasPrevPage]) {
-		NSDate *beginDate = [NSDate date];
-		
 		[CATransaction begin];
 		[CATransaction setValue:(id)kCFBooleanTrue
 						 forKey:kCATransactionDisableActions];
@@ -352,8 +350,6 @@ CGFloat distance(CGPoint a, CGPoint b);
 		self.leafEdge = 0.0;
 		[CATransaction commit];
 		touchIsActive = YES;	
-		
-		NSLog(@"%.3f", [[NSDate date] timeIntervalSinceDate:beginDate]);
 	} 
 	else if ([self touchedNextPage] && [self hasNextPage])
 		touchIsActive = YES;
