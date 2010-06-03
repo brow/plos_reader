@@ -10,6 +10,7 @@
 #import "ASIHTTPRequest.h"
 #import "TouchXML+Extras.h"
 #import "Paper.h"
+#import "XMLParsingException.h"
 
 @implementation Feed
 
@@ -130,9 +131,13 @@
 #pragma mark ASIHTTPRequest delegate methods
 
 - (void)requestFinished:(ASIHTTPRequest *)request
-{
+{	@try {
+		[self parseFeedXML:[NSData dataWithContentsOfFile:localXMLPath]];
+	}
+	@catch (XMLParsingException *e) {
+	}
 	self.downloaded = YES;
-	[self parseFeedXML:[NSData dataWithContentsOfFile:localXMLPath]];
+		
 	NSLog(@"[LOADED %@]", url);
 }
 

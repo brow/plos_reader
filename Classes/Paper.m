@@ -11,6 +11,7 @@
 #import "NSString+Extras.h"
 #import "SpecialHTTPRequest.h"
 #import "Paper+Saving.h"
+#import "XMLParsingException.h"
 
 
 @interface Paper() <ASIProgressDelegate>
@@ -394,7 +395,7 @@ NSString *temporaryPath();
 			[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
 			self.downloadStatus = StatusDownloaded;
 		}
-		@catch (NSException * e) {
+		@catch (XMLParsingException * e) {
 			[self showDownloadAlert];
 			self.downloadStatus = StatusFailed;
 		}
