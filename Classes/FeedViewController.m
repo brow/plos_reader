@@ -13,7 +13,7 @@
 
 @implementation FeedViewController
 
-@synthesize detailViewController, paperCell;
+@synthesize detailViewController, paperCell, headerView;
 
 - (id) initWithFeed:(Feed *)aFeed
 {
@@ -116,8 +116,18 @@
 #pragma mark NSKeyValueObserving methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:@"downloaded"])
+	if ([keyPath isEqualToString:@"downloaded"]) {
 		[self displayFeedStatus];
+		if (feed.downloaded && feed.papers.count == 0) {
+			[[NSBundle mainBundle] loadNibNamed:@"FeedHeader" 
+										  owner:self 
+										options:nil];
+			self.tableView.tableHeaderView = self.headerView;
+		}
+		else
+			self.tableView.tableHeaderView = nil;
+			
+	}
 	else
 		[self.tableView reloadData];
 }

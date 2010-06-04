@@ -17,11 +17,14 @@
     PaperViewController *detailViewController;
 	PaperCell *paperCell;
 	UIBarButtonItem *actionsButton;
+	UIView *headerView;
 }
 
 @property (nonatomic, retain) IBOutlet PaperViewController *detailViewController;
 @property (assign) IBOutlet PaperCell *paperCell;
+@property (assign) IBOutlet UIView *headerView;
 
 - (id) initWithFeed:(Feed *)aFeed;
+- (IBAction) reloadFeed:(id)sender;
 
 @end
