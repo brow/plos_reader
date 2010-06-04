@@ -33,14 +33,14 @@
     [window addSubview:splitViewController.view];
     [window makeKeyAndVisible];
 	
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
-		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Offline Mode" 
-														 message:@"Only saved articles will be available. To download new articles, check your internet connection and reopen PLoS Reader." 
-														delegate:nil 
-											   cancelButtonTitle:@"OK" 
-											   otherButtonTitles:nil] autorelease];
-		[alert show];
-	}
+//	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
+//		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Offline Mode" 
+//														 message:@"Only saved articles will be available. To download new articles, check your internet connection and reopen PLoS Reader." 
+//														delegate:nil 
+//											   cancelButtonTitle:@"OK" 
+//											   otherButtonTitles:nil] autorelease];
+//		[alert show];
+//	}
 	
 	if ([Paper autosavedPaper]) {
 		paperViewController.paper = [Paper autosavedPaper];
