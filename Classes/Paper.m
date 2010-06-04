@@ -103,14 +103,14 @@ NSString *temporaryPath();
 	pdfRequest.allowCompressedResponse = NO;
 	[pdfRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:pdfRequest];
-	NSLog(@"[REQUEST %@]", remotePDFUrl);
+//	NSLog(@"[REQUEST %@]", remotePDFUrl);
 
 	ASIHTTPRequest *xmlRequest = [SpecialHTTPRequest requestWithURL:remoteXMLUrl];
 	xmlRequest.downloadDestinationPath = localXMLPath;
 	pdfRequest.allowCompressedResponse = NO;
 	[xmlRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:xmlRequest];
-	NSLog(@"[REQUEST %@]", remoteXMLUrl);
+//	NSLog(@"[REQUEST %@]", remoteXMLUrl);
 	
 	[requestsQueue go];
 }
@@ -363,7 +363,6 @@ NSString *temporaryPath();
 #pragma mark ASIProgressDelegate methods
 
 - (void)setProgress:(float)newProgress {
-	NSLog(@"%.2f", newProgress);
 	[self setDownloadProgress:newProgress];
 }
 
@@ -371,17 +370,17 @@ NSString *temporaryPath();
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {		
-	NSLog(@"[LOADED %@]", request.url);
+//	NSLog(@"[LOADED %@]", request.url);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {		
 	[errors addObject:request.error];
 	if (request.error.code == ASIRequestCancelledErrorType)
-		NSLog(@"[CANCELLED %@]", request.url);
+		;//NSLog(@"[CANCELLED %@]", request.url);
 	else {
 		self.downloadStatus = StatusFailed;
-		NSLog(@"[FAILED %@]", request.url);
+//		NSLog(@"[FAILED %@]", request.url);
 		if (errors.count == 1)
 			[self showDownloadAlert];
 	}

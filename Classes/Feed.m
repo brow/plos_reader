@@ -90,7 +90,7 @@
 	[request setDownloadDestinationPath:localXMLPath];
 	[requestsQueue addOperation:request];
 	[self setValue:[NSNumber numberWithBool:NO] forKey:@"downloaded"];
-	NSLog(@"[REQUEST %@]", url);
+//	NSLog(@"[REQUEST %@]", url);
 	
 	[requestsQueue go];
 }
@@ -178,13 +178,13 @@
 	}
 	self.downloaded = YES;
 		
-	NSLog(@"[LOADED %@]", url);
+//	NSLog(@"[LOADED %@]", url);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
 	self.downloaded = YES;
-	NSLog(@"[FAILED %@]", url);
+//	NSLog(@"[FAILED %@]", url);
 }
 
 
