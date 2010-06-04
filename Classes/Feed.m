@@ -12,12 +12,27 @@
 #import "Paper.h"
 #import "XMLParsingException.h"
 
+
+@interface Feed ()
+- (NSString *) feedPath;
+- (void) parseFeedXML:(NSData *)data;
+@end
+
+
 @implementation Feed
 
 @synthesize papers, title, url;
 
 + (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName {
 	return [[[[self class] alloc] initWithTitle:title URL:urlString imageName:aImageName] autorelease];
+}
+
++ (NSString *) documentsDirectory {
+	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+}
+
++ (NSString *) feedsDirectory {
+	return [[self documentsDirectory] stringByAppendingPathComponent:@"feeds"];
 }
 
 - (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString imageName:(NSString *)aImageName;
@@ -32,6 +47,14 @@
 		
 		NSString *localFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
 		localXMLPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:localFile] retain];
+		
+		if ([[NSFileManager defaultManager] fileExistsAtPath:[self feedPath]]) {
+			@try {
+				[self parseFeedXML:[NSData dataWithContentsOfFile:[self feedPath]]];
+			}
+			@catch (XMLParsingException *e) {
+			}
+		}
 	}
 	return self;
 }
@@ -45,6 +68,13 @@
 	[imageName release];
 	[requestsQueue release];
 	[super dealloc];
+}
+
+- (NSString *) feedPath {
+	NSCharacterSet *unsafeChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+	NSString *filename = [[self.url.absoluteString componentsSeparatedByCharactersInSet:unsafeChars] 
+						  componentsJoinedByString:@"_"];
+	return [[self.class feedsDirectory] stringByAppendingPathComponent:filename];
 }
 
 - (void) load {
@@ -133,6 +163,16 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {	@try {
 		[self parseFeedXML:[NSData dataWithContentsOfFile:localXMLPath]];
+	
+		/* Save XML to non-temporary file. */
+		if (![[NSFileManager defaultManager] fileExistsAtPath:[self.class feedsDirectory]])
+			[[NSFileManager defaultManager] createDirectoryAtPath:[self.class feedsDirectory]
+													   attributes:nil];
+		if ([[NSFileManager defaultManager] fileExistsAtPath:self.feedPath])
+			[[NSFileManager defaultManager] removeItemAtPath:self.feedPath error:nil];
+		[[NSFileManager defaultManager] copyItemAtPath:localXMLPath 
+												toPath:self.feedPath
+												 error:nil];
 	}
 	@catch (XMLParsingException *e) {
 	}
