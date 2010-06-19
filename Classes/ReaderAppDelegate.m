@@ -14,6 +14,8 @@
 #import "Reachability.h"
 #import "Paper+Saving.h"
 
+#import "SearchController.h"
+
 @implementation ReaderAppDelegate
 
 @synthesize window, splitViewController, rootViewController, paperViewController;
@@ -32,7 +34,7 @@
 	window.backgroundColor = [UIColor blackColor];
     [window addSubview:splitViewController.view];
     [window makeKeyAndVisible];
-	
+		
 //	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
 //		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Offline Mode" 
 //														 message:@"Only saved articles will be available. To download new articles, check your internet connection and reopen PLoS Reader." 

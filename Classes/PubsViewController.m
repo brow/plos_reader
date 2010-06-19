@@ -70,6 +70,7 @@ enum {SectionFolders, SectionJournals, NumSections};
 									forKeyPath:@"savedPapers"];
 	[feeds release];
     [detailViewController release];
+	[searchController release];
     [super dealloc];
 }
 
@@ -171,6 +172,22 @@ enum {SectionFolders, SectionJournals, NumSections};
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	
+	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)] autorelease];
+	searchBar.placeholder = @"Title, Author, or DOI";
+	self.tableView.tableHeaderView = searchBar;
+	
+	searchController = [[SearchController alloc] initWithSearchBar:searchBar contentsController:self];
+}
+
+- (void) viewDidUnload {
+	[super viewDidUnload];
+	[searchController release];
+	searchController = nil;
 }
 
 @end

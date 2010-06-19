@@ -77,6 +77,9 @@
 		D3E115C6119DE36200AA148E /* FeedActions.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E115C5119DE36200AA148E /* FeedActions.png */; };
 		D3E1161A119DFFC200AA148E /* About_NTD.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E11619119DFFC200AA148E /* About_NTD.png */; };
 		D3E1161D119E032700AA148E /* About_PLoS.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E1161C119E032700AA148E /* About_PLoS.png */; };
+		D3F166E411CCA72C004838C8 /* SearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F166E311CCA72C004838C8 /* SearchController.m */; };
+		D3F1699011CCD165004838C8 /* Paper+DeepDyve.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */; };
+		D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
@@ -218,6 +221,12 @@
 		D3E115C5119DE36200AA148E /* FeedActions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FeedActions.png; sourceTree = "<group>"; };
 		D3E11619119DFFC200AA148E /* About_NTD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_NTD.png; sourceTree = "<group>"; };
 		D3E1161C119E032700AA148E /* About_PLoS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_PLoS.png; sourceTree = "<group>"; };
+		D3F166E211CCA72C004838C8 /* SearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchController.h; sourceTree = "<group>"; };
+		D3F166E311CCA72C004838C8 /* SearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchController.m; sourceTree = "<group>"; };
+		D3F1698E11CCD165004838C8 /* Paper+DeepDyve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Paper+DeepDyve.h"; sourceTree = "<group>"; };
+		D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Paper+DeepDyve.m"; sourceTree = "<group>"; };
+		D3F16AA811CD8FC2004838C8 /* SearchArchiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchArchiveCell.h; sourceTree = "<group>"; };
+		D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchArchiveCell.m; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -373,6 +382,8 @@
 				D3FB3E981189059100AC0932 /* JournalCell.m */,
 				D3FB4033118A04CD00AC0932 /* PageScrollView.h */,
 				D3FB4034118A04CD00AC0932 /* PageScrollView.m */,
+				D3F16AA811CD8FC2004838C8 /* SearchArchiveCell.h */,
+				D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -380,6 +391,8 @@
 		D33D3BB4119A0E210083A058 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D3F166E211CCA72C004838C8 /* SearchController.h */,
+				D3F166E311CCA72C004838C8 /* SearchController.m */,
 				D33D3BC3119A0FAA0083A058 /* SubjectsViewController.h */,
 				D33D3BC4119A0FAA0083A058 /* SubjectsViewController.m */,
 				28042007108E984D000629CD /* FeedViewController.h */,
@@ -424,6 +437,8 @@
 				D33D5253117FB3A200BA7203 /* Feed.m */,
 				D33D537E117FBD5D00BA7203 /* Paper.h */,
 				D33D537F117FBD5D00BA7203 /* Paper.m */,
+				D3F1698E11CCD165004838C8 /* Paper+DeepDyve.h */,
+				D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */,
 				D3AEC53B11934B8F009BE344 /* Paper+Saving.h */,
 				D3AEC53C11934B8F009BE344 /* Paper+Saving.m */,
 			);
@@ -697,6 +712,9 @@
 				D3B65A8011AE473000EF9BCA /* ThumbnailCell.m in Sources */,
 				D3B6637711B3510700EF9BCA /* LeavesTrivialCache.m in Sources */,
 				D3B666DE11B72B3A00EF9BCA /* LeavesNullCache.m in Sources */,
+				D3F166E411CCA72C004838C8 /* SearchController.m in Sources */,
+				D3F1699011CCD165004838C8 /* Paper+DeepDyve.m in Sources */,
+				D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

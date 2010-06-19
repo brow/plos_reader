@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "PaperViewController.h"
+#import "SearchController.h"
 
 @interface PubsViewController : UITableViewController {
     PaperViewController *detailViewController;
+	SearchController *searchController;
 	NSArray *feeds;
 }
 
