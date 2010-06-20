@@ -80,6 +80,7 @@
 		D3F166E411CCA72C004838C8 /* SearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F166E311CCA72C004838C8 /* SearchController.m */; };
 		D3F1699011CCD165004838C8 /* Paper+DeepDyve.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */; };
 		D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */; };
+		D3F16B0B11CD9396004838C8 /* SearchArchiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F16B0A11CD9396004838C8 /* SearchArchiveCell.xib */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
@@ -227,6 +228,7 @@
 		D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Paper+DeepDyve.m"; sourceTree = "<group>"; };
 		D3F16AA811CD8FC2004838C8 /* SearchArchiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchArchiveCell.h; sourceTree = "<group>"; };
 		D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchArchiveCell.m; sourceTree = "<group>"; };
+		D3F16B0A11CD9396004838C8 /* SearchArchiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchArchiveCell.xib; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -320,28 +322,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */,
-				D3B6585F11AC866E00EF9BCA /* Magnify.png */,
-				D3DCDAF011A5FFA800ECAC8E /* PLoS_Header.png */,
-				D3E115C5119DE36200AA148E /* FeedActions.png */,
-				D3AEC8B61194BFD6009BE344 /* Folder.png */,
-				D3FB43B4118E83DA00AC0932 /* Icon.png */,
-				D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */,
-				D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */,
-				D3FB3F391189342000AC0932 /* InnerShadow.png */,
-				D3FB3F2211891A0100AC0932 /* Background.png */,
+				D3F16AE511CD928F004838C8 /* Nibs */,
+				D3F16AE411CD9279004838C8 /* Images */,
 				D3FB3EF411890D4100AC0932 /* Journal Images */,
-				D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */,
-				D3FB39BB11815B0900AC0932 /* CitationButton.png */,
-				D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */,
-				D3E11563119DD3D100AA148E /* AboutViewController.xib */,
-				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
-				2804203B108E9BAB000629CD /* DetailView.xib */,
-				D3B6581A11AC822E00EF9BCA /* MagnifierViewController.xib */,
-				D3FB38681180F3DB00AC0932 /* PaperCell.xib */,
 				8D1107310486CEB800E47090 /* Reader-Info.plist */,
 				D3DCDD1111A87F5A00ECAC8E /* Entitlements.plist */,
-				D3B6694D11B883E100EF9BCA /* FeedHeader.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -550,6 +535,40 @@
 			path = Leaves;
 			sourceTree = "<group>";
 		};
+		D3F16AE411CD9279004838C8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */,
+				D3FB39BB11815B0900AC0932 /* CitationButton.png */,
+				D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */,
+				D3B6585F11AC866E00EF9BCA /* Magnify.png */,
+				D3DCDAF011A5FFA800ECAC8E /* PLoS_Header.png */,
+				D3E115C5119DE36200AA148E /* FeedActions.png */,
+				D3AEC8B61194BFD6009BE344 /* Folder.png */,
+				D3FB43B4118E83DA00AC0932 /* Icon.png */,
+				D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */,
+				D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */,
+				D3FB3F391189342000AC0932 /* InnerShadow.png */,
+				D3FB3F2211891A0100AC0932 /* Background.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		D3F16AE511CD928F004838C8 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				D3F16B0A11CD9396004838C8 /* SearchArchiveCell.xib */,
+				D3B6694D11B883E100EF9BCA /* FeedHeader.xib */,
+				D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */,
+				D3E11563119DD3D100AA148E /* AboutViewController.xib */,
+				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
+				2804203B108E9BAB000629CD /* DetailView.xib */,
+				D3B6581A11AC822E00EF9BCA /* MagnifierViewController.xib */,
+				D3FB38681180F3DB00AC0932 /* PaperCell.xib */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
 		D3FB3EF411890D4100AC0932 /* Journal Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,6 +675,7 @@
 				D3B659F011ADDA5F00EF9BCA /* Unmagnify.png in Resources */,
 				D3B65A9811AE485A00EF9BCA /* ThumbnailCell.xib in Resources */,
 				D3B6694E11B883E100EF9BCA /* FeedHeader.xib in Resources */,
+				D3F16B0B11CD9396004838C8 /* SearchArchiveCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

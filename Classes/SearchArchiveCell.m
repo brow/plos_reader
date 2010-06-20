@@ -11,12 +11,33 @@
 
 @implementation SearchArchiveCell
 
-- (void) awakeFromNib {
+@synthesize label, activityIndicator, active;
 
+- (void) awakeFromNib {
+	self.active = NO;
+	label.highlightedTextColor = [UIColor whiteColor];
 }
 
 - (void)dealloc {
+	[label release];
+	[activityIndicator release];
     [super dealloc];
+}
+
+#pragma mark accessors
+
+- (void) setActive:(BOOL)value {
+	active = value;
+	
+	if (active) {
+		activityIndicator.hidden = NO;
+		label.text = @"Searching in Archive...";
+		label.textColor = [UIColor grayColor];
+	} else {
+		activityIndicator.hidden = YES;
+		label.text = @"Continue Search in Archive...";
+		label.textColor = [UIColor blueColor]; 
+	}
 }
 
 @end

@@ -11,9 +11,11 @@
 #import "TouchXML+Extras.h"
 #import "Paper+DeepDyve.h"
 
+enum  {kSectionResults, kSectionControls, kNumSections};
+
 @implementation SearchController
 
-@synthesize paperCell;
+@synthesize paperCell, searchArchiveCell;
 
 - (NSString *)sanitize:(NSString *)str {
 	NSString *spacesPlussed = [str stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -29,8 +31,11 @@
 - (id)initWithSearchBar:(UISearchBar *)searchBar contentsController:(UIViewController *)viewController
 {
 	if (self = [super initWithSearchBar:searchBar contentsController:viewController]) {
-		responsePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"search_response.xml"] retain];
+		NSString *responseFile = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
+		responsePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:responseFile] retain];
+		networkQueue = [[ASINetworkQueue alloc] init];
 		results = [[NSMutableArray alloc] init];
+		didSearchOnServer = NO;
 		
 		super.delegate = self;
 		super.searchResultsDataSource = self;
@@ -41,8 +46,9 @@
 }
 
 - (void) dealloc
-{
+{	
 	[responsePath release];
+	[networkQueue release];
 	[results release];
 	[super dealloc];
 }
@@ -76,43 +82,7 @@
 					 error:nil];
 }
 
-#pragma mark UITableViewDataSource methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return results.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *cellIdentifier = @"PaperCell";
-    
-    PaperCell *cell = (PaperCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-		[[NSBundle mainBundle] loadNibNamed:@"PaperCell" 
-									  owner:self 
-									options:nil];
-        cell = self.paperCell;
-    }
-	
-	cell.paper = [results objectAtIndex:indexPath.row];
-    return cell;
-}
-
-#pragma mark UITableViewDelegate methods
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 100.0;
-}
-
-- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-}
-
-#pragma mark UISearchBarDelegate methods
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+- (void)searchOnServer {
 	NSString *baseUrl = @"http://plosjournal.deepdyve.com/search?";		
 	NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
 						   [self sanitize:self.searchBar.text], @"query",
@@ -125,13 +95,87 @@
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:fullUrl]];
 	request.downloadDestinationPath = responsePath;
 	request.delegate = self;
-	[request startAsynchronous];
+	[networkQueue addOperation:request];
+	
+	[networkQueue go];
+}
+
+#pragma mark UISearchBarDelegate methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller 
+	shouldReloadTableForSearchString:(NSString *)searchString {
+	[results removeAllObjects];
+	[networkQueue cancelAllOperations];
+	didSearchOnServer = NO;
+	return YES;
+}
+
+#pragma mark UITableViewDataSource methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	if (didSearchOnServer)
+		return kNumSections - 1;
+	else
+		return kNumSections;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	switch (section) {
+		case kSectionResults: return results.count;
+		case kSectionControls: return 1;
+		default: return 0;
+	}
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == kSectionResults) {		
+		PaperCell *cell = (PaperCell *)[tableView dequeueReusableCellWithIdentifier:@"PaperCell"];
+		if (cell == nil) {
+			[[NSBundle mainBundle] loadNibNamed:@"PaperCell" 
+										  owner:self 
+										options:nil];
+			cell = self.paperCell;
+		}
+		
+		cell.paper = [results objectAtIndex:indexPath.row];
+		return cell;
+	} else {
+		SearchArchiveCell *cell = (SearchArchiveCell *)[tableView dequeueReusableCellWithIdentifier:@"SearchArchiveCell"];
+		if (cell == nil) {
+			[[NSBundle mainBundle] loadNibNamed:@"SearchArchiveCell" 
+										  owner:self 
+										options:nil];
+			cell = self.searchArchiveCell;
+		}
+		
+		cell.active = [networkQueue isNetworkActive];
+		return cell;
+	}
+}
+
+#pragma mark UITableViewDelegate methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 100.0;
+}
+
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[self.searchBar resignFirstResponder];
+	
+	if (indexPath.section == kSectionControls) {
+		SearchArchiveCell *cell = (SearchArchiveCell *)[self.searchResultsTableView cellForRowAtIndexPath:indexPath];
+		if (!cell.active)
+			[self searchOnServer];
+		[self.searchResultsTableView reloadData];
+	}
 }
 
 #pragma mark ASIHTTPRequest delegate methods
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
+	NSLog(@"[FINISHED]");
+	
 	[self cleanUpResponseFile];
 	NSDictionary *ns = [NSDictionary dictionaryWithObject:@"http://www.w3.org/1999/xhtml" 
 												   forKey:@"x"];
@@ -140,17 +184,21 @@
 													options:CXMLDocumentTidyHTML
 													  error:&error] autorelease];
 	
-	
-	
 	for (CXMLNode *node in [doc nodesForXPath:@"//x:ul[@id='resultList']/x:li" namespaceMappings:ns error:&error]) {
-		[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease];
+		[results addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
 	}
-	
+	didSearchOnServer = YES;
+	[self.searchResultsTableView reloadData];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
-{		
-	NSLog(@"[FAILED]");
+{	
+	if (request.error.code == ASIRequestCancelledErrorType)
+		NSLog(@"[CANCELLED]");
+	else {
+		NSLog(@"[FAILED]");
+	}
+
 }
 
 @end
