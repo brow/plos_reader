@@ -10,6 +10,7 @@
 #import "ASIHTTPRequest.h"
 #import "TouchXML+Extras.h"
 #import "Paper+DeepDyve.h"
+#import "XMLParsingException.h"
 
 enum  {kSectionResults, kSectionControls, kNumSections};
 
@@ -100,6 +101,16 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 	[networkQueue go];
 }
 
+- (void) showErrorAlert {
+	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Search Failed" 
+													 message:@"This search could not be completed. Please try again later." 
+													delegate:nil 
+										   cancelButtonTitle:@"OK" 
+										   otherButtonTitles:nil] autorelease];
+	[alert show];
+}
+
+
 #pragma mark UISearchBarDelegate methods
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller 
@@ -183,10 +194,16 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 	CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:[NSData dataWithContentsOfFile:responsePath] 
 													options:CXMLDocumentTidyHTML
 													  error:&error] autorelease];
-	
-	for (CXMLNode *node in [doc nodesForXPath:@"//x:ul[@id='resultList']/x:li" namespaceMappings:ns error:&error]) {
-		[results addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
+	@try {
+		for (CXMLNode *node in [doc nodesForXPath:@"//x:ul[@id='resultList']/x:li" namespaceMappings:ns error:&error]) {
+			[results addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
+		}
 	}
+	@catch (XMLParsingException * e) {
+		[results removeAllObjects];
+		[self showErrorAlert];
+	}
+	
 	didSearchOnServer = YES;
 	[self.searchResultsTableView reloadData];
 }
