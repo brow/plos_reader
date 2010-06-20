@@ -196,6 +196,8 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 													  error:&error] autorelease];
 	@try {
 		for (CXMLNode *node in [doc nodesForXPath:@"//x:ul[@id='resultList']/x:li" namespaceMappings:ns error:&error]) {
+			if ([node hasValueForXPath:@"@class" namespaceMappings:ns])
+				break;
 			[results addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
 		}
 	}
@@ -214,8 +216,8 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 		NSLog(@"[CANCELLED]");
 	else {
 		NSLog(@"[FAILED]");
+		[self.searchResultsTableView reloadData];
 	}
-
 }
 
 @end
