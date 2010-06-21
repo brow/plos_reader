@@ -19,7 +19,8 @@
 	NSString *url = [node flatStringForXPath:@"./x:p[@class='externalUrl']" namespaceMappings:ns];
 	NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	NSRange doiRange = [trimmedUrl rangeOfString:@"[\\d\\.]*/journal\\..*" options:NSRegularExpressionSearch];
-	[metadata setValue:[trimmedUrl substringWithRange:doiRange] forKey:@"doi"];
+	if (doiRange.location != NSNotFound)
+		[metadata setValue:[trimmedUrl substringWithRange:doiRange] forKey:@"doi"];
 	
 	[metadata setValue:[node flatStringForXPath:@"./x:h2/x:a" namespaceMappings:ns] 
 				forKey:@"title"];
