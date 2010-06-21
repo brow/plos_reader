@@ -16,7 +16,7 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 
 @implementation SearchController
 
-@synthesize paperCell, searchArchiveCell;
+@synthesize paperCell, searchArchiveCell, detailViewController;
 
 - (NSString *)sanitize:(NSString *)str {
 	NSString *spacesPlussed = [str stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -48,6 +48,7 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 
 - (void) dealloc
 {	
+	[detailViewController release];
 	[responsePath release];
 	[networkQueue release];
 	[results release];
@@ -178,6 +179,8 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 		if (!cell.active)
 			[self searchOnServer];
 		[self.searchResultsTableView reloadData];
+	} else {
+		detailViewController.paper = [results objectAtIndex:indexPath.row];
 	}
 }
 

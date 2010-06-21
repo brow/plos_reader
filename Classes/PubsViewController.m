@@ -178,10 +178,11 @@ enum {SectionFolders, SectionJournals, NumSections};
     [super viewDidLoad];
 	
 	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)] autorelease];
-	searchBar.placeholder = @"Title, Author, or DOI";
+	searchBar.placeholder = @"Search PLoS Articles";
 	self.tableView.tableHeaderView = searchBar;
 	
 	searchController = [[SearchController alloc] initWithSearchBar:searchBar contentsController:self];
+	searchController.detailViewController = self.detailViewController;
 }
 
 - (void) viewDidUnload {

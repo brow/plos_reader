@@ -22,6 +22,19 @@
 	if (doiRange.location != NSNotFound)
 		[metadata setValue:[trimmedUrl substringWithRange:doiRange] forKey:@"doi"];
 	
+	NSString *escapedUrl = [node flatStringForXPath:@"./x:h2/x:a/@href" namespaceMappings:ns];
+	NSRange baseRange = [escapedUrl rangeOfString:@"http://.*/article/" options:NSRegularExpressionSearch];
+	if (baseRange.location != NSNotFound) {
+		NSString *base = [escapedUrl substringWithRange:baseRange];
+		NSString *infoDoi = [escapedUrl substringFromIndex:(baseRange.location+baseRange.length)];
+		NSString *resourceURL = [NSString stringWithFormat:@"%@fetchObjectAttachment.action?uri=%@&representation=",
+								 base,
+								 infoDoi];
+		self.remotePDFUrl = [NSURL URLWithString:[resourceURL stringByAppendingString:@"PDF"]];
+		self.remoteXMLUrl = [NSURL URLWithString:[resourceURL stringByAppendingString:@"XML"]];
+	}
+		
+	
 	[metadata setValue:[node flatStringForXPath:@"./x:h2/x:a" namespaceMappings:ns] 
 				forKey:@"title"];
 	
