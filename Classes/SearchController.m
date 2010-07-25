@@ -12,7 +12,16 @@
 #import "Paper+DeepDyve.h"
 #import "XMLParsingException.h"
 
+#define RESULTS_PER_PAGE 25
+
 enum  {kSectionResults, kSectionControls, kNumSections};
+
+@interface SearchController ()
+
+- (void) resetResults;
+
+@end
+
 
 @implementation SearchController
 
@@ -36,7 +45,8 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 		responsePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:responseFile] retain];
 		networkQueue = [[ASINetworkQueue alloc] init];
 		results = [[NSMutableArray alloc] init];
-		didSearchOnServer = NO;
+		
+		[self resetResults];
 		
 		super.delegate = self;
 		super.searchResultsDataSource = self;
@@ -88,6 +98,8 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 	NSString *baseUrl = @"http://plosjournal.deepdyve.com/search?";		
 	NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
 						   [self sanitize:self.searchBar.text], @"titlewords",
+						   [NSNumber numberWithInt:serverResultsPage+1], @"page",
+						   [NSNumber numberWithInt:RESULTS_PER_PAGE],@"numPerPage",
 						   nil];
 	
 	NSMutableString *fullUrl = [NSMutableString stringWithString:baseUrl];
@@ -111,21 +123,26 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 	[alert show];
 }
 
+- (void) resetResults {
+	[results removeAllObjects];
+	[networkQueue cancelAllOperations];
+	didSearchOnServer = NO;
+	serverResultsPage = 0;
+	didLoadAllResultsPages = NO;
+}
 
 #pragma mark UISearchBarDelegate methods
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller 
 	shouldReloadTableForSearchString:(NSString *)searchString {
-	[results removeAllObjects];
-	[networkQueue cancelAllOperations];
-	didSearchOnServer = NO;
+	[self resetResults];
 	return YES;
 }
 
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	if (didSearchOnServer)
+	if (didSearchOnServer && didLoadAllResultsPages)
 		return kNumSections - 1;
 	else
 		return kNumSections;
@@ -161,6 +178,7 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 		}
 		
 		cell.active = [networkQueue isNetworkActive];
+		cell.paging = didSearchOnServer;
 		return cell;
 	}
 }
@@ -198,18 +216,23 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 													options:CXMLDocumentTidyHTML
 													  error:&error] autorelease];
 	@try {
+		NSMutableArray *newResults = [NSMutableArray array];
 		for (CXMLNode *node in [doc nodesForXPath:@"//x:ul[@id='resultList']/x:li" namespaceMappings:ns error:&error]) {
 			if ([node hasValueForXPath:@"@class" namespaceMappings:ns])
 				break;
-			[results addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
+			[newResults addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
 		}
+		[results addObjectsFromArray:newResults];
+		if (newResults.count < RESULTS_PER_PAGE)
+			didLoadAllResultsPages = YES;
 	}
 	@catch (XMLParsingException * e) {
-		[results removeAllObjects];
+		[self resetResults];
 		[self showErrorAlert];
 	}
 	
 	didSearchOnServer = YES;
+	serverResultsPage += 1;
 	[self.searchResultsTableView reloadData];
 }
 

@@ -11,10 +11,11 @@
 
 @implementation SearchArchiveCell
 
-@synthesize label, activityIndicator, active;
+@synthesize label, activityIndicator, active, paging;
 
 - (void) awakeFromNib {
 	self.active = NO;
+	self.paging = NO;
 	label.highlightedTextColor = [UIColor whiteColor];
 }
 
@@ -24,20 +25,40 @@
     [super dealloc];
 }
 
+- (void) updateElements {
+	if (paging) {
+		if (active) {
+			activityIndicator.hidden = NO;
+			label.text = @"Loading...";
+			label.textColor = [UIColor grayColor];
+		} else {
+			activityIndicator.hidden = YES;
+			label.text = @"Load more results...";
+			label.textColor = [UIColor blueColor]; 
+		}
+	} else {
+		if (active) {
+			activityIndicator.hidden = NO;
+			label.text = @"Searching in Archive...";
+			label.textColor = [UIColor grayColor];
+		} else {
+			activityIndicator.hidden = YES;
+			label.text = @"Continue Search in Archive...";
+			label.textColor = [UIColor blueColor]; 
+		}
+	}
+}
+
 #pragma mark accessors
 
 - (void) setActive:(BOOL)value {
 	active = value;
-	
-	if (active) {
-		activityIndicator.hidden = NO;
-		label.text = @"Searching in Archive...";
-		label.textColor = [UIColor grayColor];
-	} else {
-		activityIndicator.hidden = YES;
-		label.text = @"Continue Search in Archive...";
-		label.textColor = [UIColor blueColor]; 
-	}
+	[self updateElements];
+}
+
+- (void) setPaging:(BOOL)value {
+	paging = value;
+	[self updateElements];
 }
 
 @end

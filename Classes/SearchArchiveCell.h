@@ -12,11 +12,12 @@
 @interface SearchArchiveCell : UITableViewCell {
 	UILabel *label;
 	UIActivityIndicatorView *activityIndicator;
-	BOOL active;
+	BOOL active, paging;
 }
 
 @property (retain, nonatomic) IBOutlet UILabel *label;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (assign) BOOL active;
+@property (assign) BOOL paging;
 
 @end

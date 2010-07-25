@@ -22,6 +22,8 @@
 	ASINetworkQueue *networkQueue;
 	NSMutableArray *results;
 	BOOL didSearchOnServer;
+	NSUInteger serverResultsPage;
+	BOOL didLoadAllResultsPages;
 	NSString *responsePath;
 }
 
