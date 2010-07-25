@@ -87,7 +87,7 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 - (void)searchOnServer {
 	NSString *baseUrl = @"http://plosjournal.deepdyve.com/search?";		
 	NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
-						   [self sanitize:self.searchBar.text], @"query",
+						   [self sanitize:self.searchBar.text], @"titlewords",
 						   nil];
 	
 	NSMutableString *fullUrl = [NSMutableString stringWithString:baseUrl];
