@@ -12,5 +12,7 @@
 @interface NSString(Extras) 
 
 - (NSString *) initials;
+- (BOOL) containsString:(NSString *)string;
+- (BOOL) containsStrings:(NSArray *)strings;
 
 @end

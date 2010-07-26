@@ -9,8 +9,7 @@
 #import "SavedViewController.h"
 #import "Paper+Saving.h"
 #import "PaperCell.h"
-
-NSInteger dateSort(Paper *a, Paper *b, void *context) { return [b.date compare:a.date]; }
+#import "Utilities.h"
 
 @implementation SavedViewController
 

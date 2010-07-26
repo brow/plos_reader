@@ -31,29 +31,7 @@ enum {SectionFolders, SectionJournals, NumSections};
 	self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 	
-	feeds = [[NSArray alloc] initWithObjects:
-			 [Feed feedWithTitle:@"PLoS Biology" 
-							 URL:@"http://www.plosbiology.org/article/feed" 
-					   imageName:@"PLoS_Biology.png"], 
-			 [Feed feedWithTitle:@"PLoS Medicine" 
-							 URL:@"http://www.plosmedicine.org/article/feed" 
-					   imageName:@"PLoS_Medicine.png"], 
-			 [Feed feedWithTitle:@"PLoS Genetics" 
-							 URL:@"http://www.plosgenetics.org/article/feed" 
-					   imageName:@"PLoS_Genetics.png"], 
-			 [Feed feedWithTitle:@"PLoS Pathogens" 
-							 URL:@"http://www.plospathogens.org/article/feed" 
-					   imageName:@"PLoS_Pathogens.png"],
-			 [Feed feedWithTitle:@"PLoS Comp Bio" 
-							 URL:@"http://www.ploscompbiol.org/article/feed" 
-					   imageName:@"PLoS_CompBio.png"], 
-			 [Feed feedWithTitle:@"PLoS NTD" 
-							 URL:@"http://www.plosntds.org/article/feed" 
-					   imageName:@"PLoS_NTD.png"],
-			 [Feed feedWithTitle:@"PLoS ONE" 
-							 URL:@"http://feeds.plos.org/plosone/PLoSONE" 
-					   imageName:@"PLoS_One.png"],
-			 nil];
+	feeds = [[Feed journalFeeds] retain];
 	
 	[[Paper savedPapersManager] addObserver:self 
 								 forKeyPath:@"savedPapers" 

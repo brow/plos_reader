@@ -30,4 +30,15 @@
 	return ret;
 }
 
+- (BOOL) containsString:(NSString *)string {
+	return [self rangeOfString:string options:NSCaseInsensitiveSearch].location != NSNotFound;
+}
+
+- (BOOL) containsStrings:(NSArray *)strings {
+	for (NSString *str in strings)
+		if (![self containsString:str])
+			return NO;
+	return YES;
+}
+
 @end

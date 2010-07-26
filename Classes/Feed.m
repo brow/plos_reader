@@ -12,16 +12,45 @@
 #import "Paper.h"
 #import "XMLParsingException.h"
 
-
 @interface Feed ()
 - (NSString *) feedPath;
 - (void) parseFeedXML:(NSData *)data;
 @end
 
+static NSArray *journalFeeds;
 
 @implementation Feed
 
 @synthesize papers, title, url;
+
++ (NSArray *) journalFeeds {
+	if (!journalFeeds) {
+		journalFeeds = [[NSArray alloc] initWithObjects:
+						 [Feed feedWithTitle:@"PLoS Biology" 
+										 URL:@"http://www.plosbiology.org/article/feed" 
+								   imageName:@"PLoS_Biology.png"], 
+						 [Feed feedWithTitle:@"PLoS Medicine" 
+										 URL:@"http://www.plosmedicine.org/article/feed" 
+								   imageName:@"PLoS_Medicine.png"], 
+						 [Feed feedWithTitle:@"PLoS Genetics" 
+										 URL:@"http://www.plosgenetics.org/article/feed" 
+								   imageName:@"PLoS_Genetics.png"], 
+						 [Feed feedWithTitle:@"PLoS Pathogens" 
+										 URL:@"http://www.plospathogens.org/article/feed" 
+								   imageName:@"PLoS_Pathogens.png"],
+						 [Feed feedWithTitle:@"PLoS Comp Bio" 
+										 URL:@"http://www.ploscompbiol.org/article/feed" 
+								   imageName:@"PLoS_CompBio.png"], 
+						 [Feed feedWithTitle:@"PLoS NTD" 
+										 URL:@"http://www.plosntds.org/article/feed" 
+								   imageName:@"PLoS_NTD.png"],
+						 [Feed feedWithTitle:@"PLoS ONE" 
+										 URL:@"http://feeds.plos.org/plosone/PLoSONE" 
+								   imageName:@"PLoS_One.png"],
+						 nil];
+	}
+	return journalFeeds;
+}
 
 + (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName {
 	return [[[[self class] alloc] initWithTitle:title URL:urlString imageName:aImageName] autorelease];

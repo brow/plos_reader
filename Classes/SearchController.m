@@ -11,6 +11,10 @@
 #import "TouchXML+Extras.h"
 #import "Paper+DeepDyve.h"
 #import "XMLParsingException.h"
+#import "Feed.h"
+#import "NSString+Extras.h"
+#import "Utilities.h"
+#import "NSArray+Merge.h"
 
 #define RESULTS_PER_PAGE 25
 
@@ -131,11 +135,22 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 	didLoadAllResultsPages = NO;
 }
 
+- (NSArray *) localResultsForQuery:(NSString *)query {	
+	NSMutableSet *localResults = [NSMutableSet set];
+	for (Feed *feed in [Feed journalFeeds])
+		for (Paper *paper in feed.papers)
+			if ([paper.title containsString:query])
+				[localResults addObject:paper];
+
+	return [[localResults allObjects] sortedArrayUsingFunction:dateSort context:nil];
+}
+
 #pragma mark UISearchBarDelegate methods
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller 
 	shouldReloadTableForSearchString:(NSString *)searchString {
 	[self resetResults];
+	[results addObjectsFromArray:[self localResultsForQuery:searchString]];
 	return YES;
 }
 
@@ -222,7 +237,12 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 				break;
 			[newResults addObject:[[[Paper alloc] initWithDeepDyveHTMLNode:node] autorelease]];
 		}
-		[results addObjectsFromArray:newResults];
+		
+		NSSet *resultsSet = [NSSet setWithArray:results];
+		for (id result in newResults)
+			if (![resultsSet containsObject:result])
+				[results addObject:result];
+		
 		if (newResults.count < RESULTS_PER_PAGE)
 			didLoadAllResultsPages = YES;
 	}

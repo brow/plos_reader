@@ -15,3 +15,7 @@ CGAffineTransform aspectFit(CGRect innerRect, CGRect outerRect) {
 									 (outerRect.size.height - scaledInnerRect.size.height) / 2 - scaledInnerRect.origin.y);
 	return CGAffineTransformConcat(scale, translation);
 }
+
+NSInteger dateSort(id a, id b, void *context) { 
+	return [[b date] compare:[a date]]; 
+}

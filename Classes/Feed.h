@@ -25,6 +25,7 @@
 @property (readonly) UIImage *image;
 @property (readonly) BOOL downloaded;
 
++ (NSArray *) journalFeeds;
 + (id) feedWithTitle:(NSString *)title URL:(NSString *)urlString imageName:(NSString *)aImageName;
 - (id) initWithTitle:(NSString *)aTitle URL:(NSString *)urlString imageName:(NSString *)aImageName;
 - (void) load;
