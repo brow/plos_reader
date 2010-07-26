@@ -251,25 +251,29 @@ NSString *temporaryPath();
 }
 
 - (NSDate *) date {
-	if ([metadata objectForKey:@"published"]) {
-		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-		dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-		dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-		return [dateFormatter dateFromString:[metadata objectForKey:@"published"]];
+	if (![metadata objectForKey:@"date"]) {
+		if ([metadata objectForKey:@"published"]) {
+			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+			dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+			dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+			[metadata setObject:[dateFormatter dateFromString:[metadata objectForKey:@"published"]] 
+						 forKey:@"date"];
+		}
+		else if ([metadata objectForKey:@"pub-day"] && 
+				 [metadata objectForKey:@"pub-month"] &&
+				 [metadata objectForKey:@"pub-year"]) {
+			NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+			components.year = [[metadata objectForKey:@"pub-year"] intValue];
+			components.month = [[metadata objectForKey:@"pub-month"] intValue];
+			components.day = [[metadata objectForKey:@"pub-day"] intValue];
+			components.hour = 7;
+			NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+			calendar.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+			[metadata setObject:[calendar dateFromComponents:components] 
+						 forKey:@"date"];
+		}
 	}
-	else if ([metadata objectForKey:@"pub-day"] && 
-			 [metadata objectForKey:@"pub-month"] &&
-			 [metadata objectForKey:@"pub-year"]) {
-		NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
-		components.year = [[metadata objectForKey:@"pub-year"] intValue];
-		components.month = [[metadata objectForKey:@"pub-month"] intValue];
-		components.day = [[metadata objectForKey:@"pub-day"] intValue];
-		components.hour = 7;
-		NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-		calendar.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-		return [calendar dateFromComponents:components];
-	}
-		return nil;
+	return [metadata objectForKey:@"date"];
 }
 
 - (NSString *) title {
