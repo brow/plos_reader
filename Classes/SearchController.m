@@ -14,7 +14,6 @@
 #import "Feed.h"
 #import "NSString+Extras.h"
 #import "Utilities.h"
-#import "NSArray+Merge.h"
 
 #define RESULTS_PER_PAGE 25
 
