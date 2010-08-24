@@ -18,6 +18,7 @@
 	PaperCell *paperCell;
 	SearchArchiveCell *searchArchiveCell;
 	PaperViewController *detailViewController;
+	NSSet *savedPapers;
 	
 	ASINetworkQueue *networkQueue;
 	NSMutableArray *results;

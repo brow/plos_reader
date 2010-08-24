@@ -14,6 +14,7 @@
 #import "Feed.h"
 #import "NSString+Extras.h"
 #import "Utilities.h"
+#import "Paper+Saving.h"
 
 #define RESULTS_PER_PAGE 25
 
@@ -65,6 +66,7 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 	[responsePath release];
 	[networkQueue release];
 	[results release];
+	[savedPapers release];
 	[super dealloc];
 }
 
@@ -136,15 +138,25 @@ enum  {kSectionResults, kSectionControls, kNumSections};
 
 - (NSArray *) localResultsForQuery:(NSString *)query {	
 	NSMutableSet *localResults = [NSMutableSet set];
+	
 	for (Feed *feed in [Feed journalFeeds])
 		for (Paper *paper in feed.papers)
 			if ([paper.title containsString:query])
 				[localResults addObject:paper];
+	
+	for (Paper *paper in savedPapers)
+		if ([paper.title containsString:query])
+			[localResults addObject:paper];
 
 	return [[localResults allObjects] sortedArrayUsingFunction:dateSort context:nil];
 }
 
 #pragma mark UISearchBarDelegate methods
+
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+	[savedPapers release];
+	savedPapers = [[[Paper savedPapersManager] savedPapers] retain];
+}
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller 
 	shouldReloadTableForSearchString:(NSString *)searchString {
