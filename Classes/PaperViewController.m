@@ -335,7 +335,7 @@ magnifyButton, thumbnailsButton;
 			
 			CGPDFPageRef page = CGPDFDocumentGetPage(pdfDoc, index + 1);
 			CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
-			CGRect croppedRect = CGRectInset(pageRect, 46, 44); 
+			CGRect croppedRect = CGRectInset(pageRect, 44, 44); 
 			croppedRect.origin.y += 1;
 			CGAffineTransform transform = aspectFit(croppedRect,
 													CGContextGetClipBoundingBox(ctx));
