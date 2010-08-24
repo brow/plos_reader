@@ -332,10 +332,11 @@ magnifyButton, thumbnailsButton;
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
 	if (paper && paper.downloadStatus == StatusDownloaded) {
 		@synchronized (self) {
+			
 			CGPDFPageRef page = CGPDFDocumentGetPage(pdfDoc, index + 1);
 			CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);		
-			CGRect croppedRect = CGRectInset(pageRect, 46, 44);
-			croppedRect.origin.y -= 2;
+			CGRect croppedRect = CGRectInset(pageRect, 46, 44); 
+			croppedRect.origin.y += 1;
 			CGAffineTransform transform = aspectFit(croppedRect,
 													CGContextGetClipBoundingBox(ctx));
 			CGRect clipRect = CGRectApplyAffineTransform(croppedRect, transform);
