@@ -38,6 +38,15 @@
 	[metadata setValue:[node flatStringForXPath:@"./x:h2/x:a" namespaceMappings:ns] 
 				forKey:@"title"];
 	
+	NSString *datePath = @"./x:dl/x:dd/x:span[contains(@id,'R_InternalDate')]";
+	if ([node hasValueForXPath:datePath namespaceMappings:ns]) {
+		NSString *dateString = [node flatStringForXPath:datePath namespaceMappings:ns];
+		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+		formatter.dateFormat = @"MMM d, yyyy";
+		[metadata setValue:[formatter dateFromString:dateString] 
+					forKey:@"date"];
+	}
+		
 	NSMutableArray *authorsMetadata = [NSMutableArray array];
 	for (CXMLNode *authorNode in [node nodesForXPath:@"./x:dl[@class='meta1']/x:dd/x:a" namespaceMappings:ns error:nil]) {
 		NSString *fullName = [authorNode flatStringForXPath:@"." namespaceMappings:ns];
