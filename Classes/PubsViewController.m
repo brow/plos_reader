@@ -56,6 +56,7 @@ enum {SectionFolders, SectionJournals, NumSections};
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	[self.tableView reloadData];
+	[searchController setActive:NO animated:YES];
 }
 
 #pragma mark UITableViewDataSource methods
