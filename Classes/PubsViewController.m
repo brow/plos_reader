@@ -156,7 +156,7 @@ enum {SectionFolders, SectionJournals, NumSections};
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)] autorelease];
+	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)] autorelease];
 	searchBar.placeholder = @"Search articles by title";
 	self.tableView.tableHeaderView = searchBar;
 	
