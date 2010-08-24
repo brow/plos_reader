@@ -9,12 +9,9 @@
 #import "ReaderAppDelegate.h"
 
 
-#import "FeedViewController.h"
 #import "PaperViewController.h"
 #import "Reachability.h"
 #import "Paper+Saving.h"
-
-#import "SearchController.h"
 
 @implementation ReaderAppDelegate
 
