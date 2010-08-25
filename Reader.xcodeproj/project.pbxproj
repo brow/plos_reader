@@ -77,6 +77,9 @@
 		D3E115C6119DE36200AA148E /* FeedActions.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E115C5119DE36200AA148E /* FeedActions.png */; };
 		D3E1161A119DFFC200AA148E /* About_NTD.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E11619119DFFC200AA148E /* About_NTD.png */; };
 		D3E1161D119E032700AA148E /* About_PLoS.png in Resources */ = {isa = PBXBuildFile; fileRef = D3E1161C119E032700AA148E /* About_PLoS.png */; };
+		D3E15EF51224D18D00C8524F /* PaperHypertextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E15EF41224D18D00C8524F /* PaperHypertextView.m */; };
+		D3E160AA1224D7C700C8524F /* plos.xsl in Resources */ = {isa = PBXBuildFile; fileRef = D3E160A91224D7C700C8524F /* plos.xsl */; };
+		D3EF60781225B37B00855344 /* NSMutableString+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EF60771225B37B00855344 /* NSMutableString+Extras.m */; };
 		D3F166E411CCA72C004838C8 /* SearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F166E311CCA72C004838C8 /* SearchController.m */; };
 		D3F1699011CCD165004838C8 /* Paper+DeepDyve.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */; };
 		D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */; };
@@ -222,6 +225,11 @@
 		D3E115C5119DE36200AA148E /* FeedActions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FeedActions.png; sourceTree = "<group>"; };
 		D3E11619119DFFC200AA148E /* About_NTD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_NTD.png; sourceTree = "<group>"; };
 		D3E1161C119E032700AA148E /* About_PLoS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_PLoS.png; sourceTree = "<group>"; };
+		D3E15EF31224D18D00C8524F /* PaperHypertextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperHypertextView.h; sourceTree = "<group>"; };
+		D3E15EF41224D18D00C8524F /* PaperHypertextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperHypertextView.m; sourceTree = "<group>"; };
+		D3E160A91224D7C700C8524F /* plos.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = plos.xsl; sourceTree = "<group>"; };
+		D3EF60761225B37B00855344 /* NSMutableString+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Extras.h"; sourceTree = "<group>"; };
+		D3EF60771225B37B00855344 /* NSMutableString+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+Extras.m"; sourceTree = "<group>"; };
 		D3F166E211CCA72C004838C8 /* SearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchController.h; sourceTree = "<group>"; };
 		D3F166E311CCA72C004838C8 /* SearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchController.m; sourceTree = "<group>"; };
 		D3F1698E11CCD165004838C8 /* Paper+DeepDyve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Paper+DeepDyve.h"; sourceTree = "<group>"; };
@@ -322,6 +330,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3E160A91224D7C700C8524F /* plos.xsl */,
 				D3F16AE511CD928F004838C8 /* Nibs */,
 				D3F16AE411CD9279004838C8 /* Images */,
 				D3FB3EF411890D4100AC0932 /* Journal Images */,
@@ -369,6 +378,8 @@
 				D3FB4034118A04CD00AC0932 /* PageScrollView.m */,
 				D3F16AA811CD8FC2004838C8 /* SearchArchiveCell.h */,
 				D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */,
+				D3E15EF31224D18D00C8524F /* PaperHypertextView.h */,
+				D3E15EF41224D18D00C8524F /* PaperHypertextView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -409,6 +420,8 @@
 				D33D3C2F119A1F960083A058 /* UIColor+Extras.m */,
 				D3DCDBBD11A71E0900ECAC8E /* SpecialHTTPRequest.h */,
 				D3DCDBBE11A71E0900ECAC8E /* SpecialHTTPRequest.m */,
+				D3EF60761225B37B00855344 /* NSMutableString+Extras.h */,
+				D3EF60771225B37B00855344 /* NSMutableString+Extras.m */,
 			);
 			name = Extras;
 			sourceTree = "<group>";
@@ -676,6 +689,7 @@
 				D3B65A9811AE485A00EF9BCA /* ThumbnailCell.xib in Resources */,
 				D3B6694E11B883E100EF9BCA /* FeedHeader.xib in Resources */,
 				D3F16B0B11CD9396004838C8 /* SearchArchiveCell.xib in Resources */,
+				D3E160AA1224D7C700C8524F /* plos.xsl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +749,8 @@
 				D3F166E411CCA72C004838C8 /* SearchController.m in Sources */,
 				D3F1699011CCD165004838C8 /* Paper+DeepDyve.m in Sources */,
 				D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */,
+				D3E15EF51224D18D00C8524F /* PaperHypertextView.m in Sources */,
+				D3EF60781225B37B00855344 /* NSMutableString+Extras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

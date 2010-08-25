@@ -1,0 +1,85 @@
+//
+//  PaperHypertextView.m
+//  Reader
+//
+//  Created by Tom Brow on 8/24/10.
+//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//
+
+#import "PaperHypertextView.h"
+#import "Utilities.h"
+#import "TouchXML.h"
+#import "NSMutableString+Extras.h"
+
+@implementation PaperHypertextView
+
+@synthesize paper;
+
+- (void) awakeFromNib {
+	super.delegate = self;
+}
+
+- (void) dealloc {
+	[paper release];
+	[super dealloc];
+}
+
+- (void) loadPaperXMLFile:(NSString *)xmlFile {	
+	NSString *docPath = [temporaryPath() stringByAppendingPathExtension:@"xml"];
+	
+	NSMutableString *docString = [NSMutableString stringWithContentsOfFile:xmlFile
+													encoding:NSUTF8StringEncoding 
+													   error:nil];
+	
+	// Add a reference to our XSLT stylesheet
+	NSString *stylesheetString = [NSString stringWithFormat:@"<?xml-stylesheet type='text/xsl' href='%@'?>",
+								  [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"plos" ofType:@"xsl"]]];
+	
+	// Remove the DOCTYPE so we don't get slow-ass validated parsing
+	[docString replaceOccurrenceOfPattern:@"(?s:<!DOCTYPE.*?>)" 
+							   withString:stylesheetString];
+
+	[docString writeToFile:docPath 
+				atomically:NO 
+				  encoding:NSUTF8StringEncoding 
+					 error:nil];
+	[super loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:docPath]]];
+}
+
+#pragma mark accessors
+
+- (void) setPaper:(Paper *)value {
+	[paper removeObserver:self forKeyPath:@"downloadStatus"];
+	
+	[paper autorelease];
+	paper = [value retain];
+	
+	if (paper.downloadStatus == StatusDownloaded)
+		[self loadPaperXMLFile:paper.localXMLPath];
+	[paper addObserver:self 
+			forKeyPath:@"downloadStatus" 
+			   options:NSKeyValueObservingOptionNew 
+			   context:nil];
+}
+
+#pragma mark NSKeyValueObserving methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	if (paper.downloadStatus == StatusDownloaded)
+		[self loadPaperXMLFile:paper.localXMLPath];
+}
+
+#pragma mark UIWebViewDelegate methods 
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+	NSLog(@"start");
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+	NSLog(@"finish");
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+	
+}
+@end

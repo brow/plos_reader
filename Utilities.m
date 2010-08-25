@@ -19,3 +19,8 @@ CGAffineTransform aspectFit(CGRect innerRect, CGRect outerRect) {
 NSInteger dateSort(id a, id b, void *context) { 
 	return [[b date] compare:[a date]]; 
 }
+
+NSString *temporaryPath() {
+	NSString *uuid = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
+	return [NSTemporaryDirectory() stringByAppendingPathComponent:uuid];
+}

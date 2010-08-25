@@ -10,3 +10,4 @@
 
 CGAffineTransform aspectFit(CGRect innerRect, CGRect outerRect);
 NSInteger dateSort(id a, id b, void *context);
+NSString *temporaryPath();
