@@ -12,6 +12,7 @@
 #import "SpecialHTTPRequest.h"
 #import "Paper+Saving.h"
 #import "XMLParsingException.h"
+#import "Utilities.h"
 
 
 @interface Paper() <ASIProgressDelegate>
@@ -26,7 +27,7 @@ NSString *temporaryPath();
 
 @implementation Paper
 
-@synthesize remotePDFUrl, remoteXMLUrl, localPDFPath, metadata;
+@synthesize remotePDFUrl, remoteXMLUrl, localPDFPath, localXMLPath, metadata;
 
 + (id) paperWithAtomXMLNode:(id)node {
 	return [[[Paper alloc] initWithAtomXMLNode:node] autorelease];
@@ -419,7 +420,3 @@ NSString *temporaryPath();
 
 @end
 
-NSString *temporaryPath() {
-	NSString *uuid = [(NSString *)CFUUIDCreateString(NULL, CFUUIDCreate(NULL)) autorelease];
-	return [NSTemporaryDirectory() stringByAppendingPathComponent:uuid];
-}

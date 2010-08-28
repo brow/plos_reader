@@ -29,6 +29,7 @@ typedef enum {StatusNotDownloaded, StatusDownloaded, StatusFailed} Status;
 @property (readonly) NSString *title;
 @property (readonly) NSString *authors;
 @property (readonly) NSString *localPDFPath;
+@property (readonly) NSString *localXMLPath;
 @property (readonly) Status downloadStatus;
 @property (readonly) float downloadProgress;
 @property (readonly) NSDictionary *metadata;
