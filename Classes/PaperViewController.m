@@ -142,12 +142,14 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 										   self.view.bounds.size.width + 100, 
 										   self.view.bounds.size.height - toolbar.frame.size.height + 100);
 		self.leavesView.preferredTargetWidth = 90;
+		magnifyButton.hidden = NO;
 	} else {
 		scrollView.scrollEnabled = NO;
 		innerShadowView.frame = CGRectMake(-100, toolbar.frame.size.height, 
 										   self.view.bounds.size.width + 200, 
 										   self.view.bounds.size.height - toolbar.frame.size.height + 100);
 		self.leavesView.preferredTargetWidth = 180;
+		magnifyButton.hidden = YES;
 	}
 }
 
