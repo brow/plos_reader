@@ -24,29 +24,41 @@
 	[super dealloc];
 }
 
-- (void) loadPaperXMLFile:(NSString *)xmlFile {	
-	NSString *docPath = [temporaryPath() stringByAppendingPathExtension:@"xml"];
-	
+- (void) loadPaperXMLFile:(NSString *)xmlFile {		
 	NSMutableString *docString = [NSMutableString stringWithContentsOfFile:xmlFile
 													encoding:NSUTF8StringEncoding 
 													   error:nil];
 	
 	// Add a reference to our XSLT stylesheet
-	NSString *stylesheetString = [NSString stringWithFormat:@"<?xml-stylesheet type='text/xsl' href='%@'?>",
-								  [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"plos" ofType:@"xsl"]]];
+	NSString *stylesheetString = [NSString stringWithFormat:@"<?xml-stylesheet type='text/xsl' href='plos.xsl'?>"];
 	
 	// Remove the DOCTYPE so we don't get slow-ass validated parsing
 	[docString replaceOccurrenceOfPattern:@"(?s:<!DOCTYPE.*?>)" 
 							   withString:stylesheetString];
 
-	[docString writeToFile:docPath 
-				atomically:NO 
-				  encoding:NSUTF8StringEncoding 
-					 error:nil];
-	[super loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:docPath]]];
+	[super loadData:[docString dataUsingEncoding:NSUTF8StringEncoding] 
+		   MIMEType:@"text/xml" 
+   textEncodingName:@"utf-8" 
+			baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+}
+
+- (void) configureView {
+	if (paper.downloadStatus == StatusDownloaded)
+		super.alpha = 1;
+	else
+		super.alpha = 0;
 }
 
 #pragma mark accessors
+
+- (CGFloat) scrollPosition {
+	return [[super stringByEvaluatingJavaScriptFromString: @"window.pageYOffset"] floatValue];
+}
+
+- (void) setScrollPosition:(CGFloat)value {
+	NSString *js  = [NSString stringWithFormat:@"window.scrollTo(0, %.0f)",value];
+	[super stringByEvaluatingJavaScriptFromString:js];
+}
 
 - (void) setPaper:(Paper *)value {
 	[paper removeObserver:self forKeyPath:@"downloadStatus"];
@@ -72,11 +84,11 @@
 #pragma mark UIWebViewDelegate methods 
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-	NSLog(@"start");
+	super.alpha = 0;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-	NSLog(@"finish");
+	super.alpha = 1;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {

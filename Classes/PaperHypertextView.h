@@ -14,6 +14,7 @@
 }
 
 @property (retain) Paper *paper;
+@property (assign) CGFloat scrollPosition;
 
 - (void) loadPaperXMLFile:(NSString *)xmlFile;
 

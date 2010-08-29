@@ -63,6 +63,8 @@
 		D3B6637711B3510700EF9BCA /* LeavesTrivialCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B6637611B3510700EF9BCA /* LeavesTrivialCache.m */; };
 		D3B666DE11B72B3A00EF9BCA /* LeavesNullCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B666DD11B72B3A00EF9BCA /* LeavesNullCache.m */; };
 		D3B6694E11B883E100EF9BCA /* FeedHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B6694D11B883E100EF9BCA /* FeedHeader.xib */; };
+		D3D030A41228AA3500464519 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D3D030A31228AA3500464519 /* Settings.bundle */; };
+		D3D03159122AE97B00464519 /* jquery.js in Sources */ = {isa = PBXBuildFile; fileRef = D3D03158122AE97B00464519 /* jquery.js */; };
 		D3DCD87B11A4C11900ECAC8E /* About_Biology.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87511A4C11900ECAC8E /* About_Biology.png */; };
 		D3DCD87C11A4C11900ECAC8E /* About_CompBio.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87611A4C11900ECAC8E /* About_CompBio.png */; };
 		D3DCD87D11A4C11900ECAC8E /* About_Genetics.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DCD87711A4C11900ECAC8E /* About_Genetics.png */; };
@@ -209,6 +211,8 @@
 		D3B666DC11B72B3A00EF9BCA /* LeavesNullCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeavesNullCache.h; sourceTree = "<group>"; };
 		D3B666DD11B72B3A00EF9BCA /* LeavesNullCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeavesNullCache.m; sourceTree = "<group>"; };
 		D3B6694D11B883E100EF9BCA /* FeedHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedHeader.xib; sourceTree = "<group>"; };
+		D3D030A31228AA3500464519 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		D3D03158122AE97B00464519 /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
 		D3DCD87511A4C11900ECAC8E /* About_Biology.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Biology.png; sourceTree = "<group>"; };
 		D3DCD87611A4C11900ECAC8E /* About_CompBio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_CompBio.png; sourceTree = "<group>"; };
 		D3DCD87711A4C11900ECAC8E /* About_Genetics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About_Genetics.png; sourceTree = "<group>"; };
@@ -330,12 +334,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3D03158122AE97B00464519 /* jquery.js */,
 				D3E160A91224D7C700C8524F /* plos.xsl */,
 				D3F16AE511CD928F004838C8 /* Nibs */,
 				D3F16AE411CD9279004838C8 /* Images */,
 				D3FB3EF411890D4100AC0932 /* Journal Images */,
 				8D1107310486CEB800E47090 /* Reader-Info.plist */,
 				D3DCDD1111A87F5A00ECAC8E /* Entitlements.plist */,
+				D3D030A31228AA3500464519 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -690,6 +696,7 @@
 				D3B6694E11B883E100EF9BCA /* FeedHeader.xib in Resources */,
 				D3F16B0B11CD9396004838C8 /* SearchArchiveCell.xib in Resources */,
 				D3E160AA1224D7C700C8524F /* plos.xsl in Resources */,
+				D3D030A41228AA3500464519 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +758,7 @@
 				D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */,
 				D3E15EF51224D18D00C8524F /* PaperHypertextView.m in Sources */,
 				D3EF60781225B37B00855344 /* NSMutableString+Extras.m in Sources */,
+				D3D03159122AE97B00464519 /* jquery.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

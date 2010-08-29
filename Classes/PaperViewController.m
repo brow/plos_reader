@@ -20,9 +20,10 @@
 
 @synthesize toolbar, popoverController, paper, leavesView, downloadingView, pageLabel, 
 citationButton, citationLabel, scrollView, innerShadowView, progressIndicator, downloadingTitleLabel,
-magnifyButton, thumbnailsButton;
+magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 
 - (void)dealloc {
+	[hypertextView release];
     [popoverController release];
     [toolbar release];
 	[citationLabel release];
@@ -30,6 +31,7 @@ magnifyButton, thumbnailsButton;
 	[leavesView release];
 	[downloadingView release];
 	[progressIndicator release];
+	[activityIndicator release];
 	[citationButton release];
 	[scrollView release];
 	[innerShadowView release];
@@ -41,6 +43,10 @@ magnifyButton, thumbnailsButton;
 	CGPDFDocumentRelease(pdfDoc);
     [paper release];
     [super dealloc];
+}
+
+- (BOOL) hypertextEnabled {
+	return [[NSUserDefaults standardUserDefaults] boolForKey:@"hypertext_preference"];
 }
 
 - (void) displayPageNumber:(NSUInteger)pageNumber {
@@ -68,17 +74,28 @@ magnifyButton, thumbnailsButton;
 
 - (void)configureView {
 	if (!paper || paper.downloadStatus == StatusFailed) {
-		downloadingView.hidden = YES;
 		leavesView.hidden = YES;
+		hypertextView.hidden = YES;
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
 		magnifyButton.alpha = 0;
 		thumbnailsButton.alpha = 0;
+		downloadingView.hidden = YES;
 	}
 	else if (paper.downloadStatus == StatusDownloaded) {
-		leavesView.hidden = NO;
-		downloadingView.hidden = YES;
+		if ([self hypertextEnabled]) {
+			leavesView.hidden = YES;
+			hypertextView.hidden = NO;
+			thumbnailsButton.hidden = YES;
+			pageLabel.hidden = YES;
+		}
+		else {
+			leavesView.hidden = NO;
+			hypertextView.hidden = YES;
+			thumbnailsButton.hidden = NO;
+			pageLabel.hidden = NO;
+		}
 		[UIView beginAnimations:@"" context:nil];
 		[UIView setAnimationDuration:0.4];
 		citationButton.alpha = 1;
@@ -89,25 +106,31 @@ magnifyButton, thumbnailsButton;
 		[UIView commitAnimations];
 		[self displayPageNumber:leavesView.currentPageIndex+1];
 		citationLabel.text = paper.runningHead;
+		downloadingView.hidden = NO;
+		progressIndicator.hidden = YES;
+		activityIndicator.hidden = NO;
 	} else {
 		leavesView.hidden = YES;
-		downloadingView.hidden = NO;
+		hypertextView.hidden = YES;
 		pageLabel.alpha = 0;
 		citationLabel.alpha = 0;
 		citationButton.alpha = 0;
 		magnifyButton.alpha = 0;
 		thumbnailsButton.alpha = 0;
-		downloadingTitleLabel.text = paper.title;
-		
-		CGSize titleLabelSize = [downloadingTitleLabel.text sizeWithFont:downloadingTitleLabel.font
-													   constrainedToSize:CGSizeMake(downloadingTitleLabel.frame.size.width,
-																					75)
-														   lineBreakMode:downloadingTitleLabel.lineBreakMode];
-		downloadingTitleLabel.frame = CGRectMake(downloadingTitleLabel.frame.origin.x, 
-												 downloadingTitleLabel.frame.origin.y, 
-												 downloadingTitleLabel.frame.size.width, 
-												 titleLabelSize.height);
+		downloadingView.hidden = NO;
+		progressIndicator.hidden = NO;
+		activityIndicator.hidden = YES;
 	}
+	
+	downloadingTitleLabel.text = paper.title;
+	CGSize titleLabelSize = [downloadingTitleLabel.text sizeWithFont:downloadingTitleLabel.font
+												   constrainedToSize:CGSizeMake(downloadingTitleLabel.frame.size.width,
+																				75)
+													   lineBreakMode:downloadingTitleLabel.lineBreakMode];
+	downloadingTitleLabel.frame = CGRectMake(downloadingTitleLabel.frame.origin.x, 
+											 downloadingTitleLabel.frame.origin.y, 
+											 downloadingTitleLabel.frame.size.width, 
+											 titleLabelSize.height);
 	
 	[self configureMasterButton];
 }
@@ -167,6 +190,7 @@ magnifyButton, thumbnailsButton;
 		[self loadPDF];
 		[self.leavesView reloadData];
 		[self configureView];
+		hypertextView.paper = paper;
 		if (paper.downloadStatus != StatusDownloaded)
 			[paper load];
     }
@@ -411,7 +435,6 @@ magnifyButton, thumbnailsButton;
 		[leavesView reloadData];
 	
 	[self configureView];
-	
 	
 	UIImage *buttonBackground = [[UIImage imageNamed:@"CitationButton.png"] stretchableImageWithLeftCapWidth:10 
 																								topCapHeight:10];

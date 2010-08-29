@@ -61,6 +61,7 @@
 	leavesView.cache = [[[LeavesNullCache alloc] init] autorelease];
 	[super viewDidLoad];
 	leavesView.cache = [[[LeavesCache alloc] init] autorelease];
+	hypertextView.paper = paper;
 }
 
 @end

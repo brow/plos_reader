@@ -12,18 +12,21 @@
 #import "PageScrollView.h"
 #import "Paper.h"
 #import "ThumbnailsViewController.h"
+#import "PaperHypertextView.h"
 
 @interface PaperViewController : UIViewController 
 <UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, 
 LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
 UINavigationControllerDelegate, ThumbnailsViewControllerDelegate> {
     
+	PaperHypertextView *hypertextView;
 	PageScrollView *scrollView;
     UIPopoverController *popoverController;
     UIToolbar *toolbar;
 	UIView *downloadingView;
 	UILabel *downloadingTitleLabel;
 	UIProgressView *progressIndicator;
+	UIActivityIndicatorView *activityIndicator;
 	LeavesView *leavesView;
 	UILabel *pageLabel;
 	UIButton *citationButton;
@@ -39,12 +42,14 @@ UINavigationControllerDelegate, ThumbnailsViewControllerDelegate> {
 	NSUInteger currentPage;
 }
 
+@property (nonatomic, retain) IBOutlet PaperHypertextView *hypertextView;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UILabel *citationLabel;
 @property (nonatomic, retain) IBOutlet UILabel *pageLabel;
 @property (nonatomic, retain) IBOutlet LeavesView *leavesView;
 @property (nonatomic, retain) IBOutlet UIView *downloadingView;
 @property (nonatomic, retain) IBOutlet UIProgressView *progressIndicator;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIButton *citationButton;
 @property (nonatomic, retain) IBOutlet PageScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UIImageView *innerShadowView;
