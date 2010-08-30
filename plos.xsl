@@ -75,36 +75,6 @@ THE SOFTWARE.
             </head>
             <body>
                 <div>
-                    <!-- contents -->
-                    <!--
-                <div
-                    style="float:right;border:1px solid rgb(192,192,192);background:rgb(210,247,255);-moz-border-radius: 5px; -webkit-border-radius: 5px;">
-                    <ul>
-                        <li>
-                            <a>
-                                <xsl:attribute name="href">
-                                    <xsl:text>#abstract</xsl:text>
-                                </xsl:attribute>
-                                <xsl:text>Abstract</xsl:text>
-                            </a>
-                        </li>
-
-                        <xsl:for-each select="//body/sec">
-                            <li>
-                                <a>
-                                    <xsl:attribute name="href">
-                                        <xsl:text>#</xsl:text>
-                                        <xsl:value-of select="@id"/>
-                                    </xsl:attribute>
-                                    <xsl:value-of select="title"/>
-                                </a>
-                            </li>
-                        </xsl:for-each>
-                    </ul>
-                </div>
-				-->
-
-
                     <!-- article metadata -->
                     <xsl:apply-templates select="//article-meta"/>
 
@@ -125,10 +95,6 @@ THE SOFTWARE.
                                         <xsl:text>http://www.plosone.org/article/fetchObject.action?uri=info:doi/</xsl:text>
                                         <xsl:value-of select="object-id"/>
                                         <xsl:text>&amp;representation=PNG_M</xsl:text>
-                                    </xsl:attribute>
-
-                                    <xsl:attribute name="rel">
-                                        <xsl:text>lightbox[article]</xsl:text>
                                     </xsl:attribute>
 
                                     <xsl:attribute name="title">
@@ -511,14 +477,10 @@ THE SOFTWARE.
         </xsl:choose>
     </xsl:template>
 
-
-
-
     <!-- cross references within document -->
     <xsl:template match="xref">
         <xsl:choose>
-
-
+	
             <!-- references -->
             <xsl:when test="@ref-type='bibr'">
                 <xsl:variable name="rid" select="@rid"/>
@@ -537,8 +499,6 @@ THE SOFTWARE.
                 </span>
             </xsl:when>
 
-
-            <!-- figures can be viewed with lightbox -->
             <xsl:when test="@ref-type='fig'">
                 <xsl:variable name="rid" select="@rid"/>
                 <a>
@@ -546,10 +506,6 @@ THE SOFTWARE.
                         <xsl:text>http://www.plosone.org/article/fetchObject.action?uri=info:doi/</xsl:text>
                         <xsl:value-of select="//fig[@id=$rid]/object-id"/>
                         <xsl:text>&amp;representation=PNG_M</xsl:text>
-                    </xsl:attribute>
-
-                    <xsl:attribute name="rel">
-                        <xsl:text>lightbox[article]</xsl:text>
                     </xsl:attribute>
 
                     <xsl:attribute name="title">
@@ -560,8 +516,6 @@ THE SOFTWARE.
                     <xsl:value-of select="."/>
                 </a>
             </xsl:when>
-
-
 
             <xsl:when test="@ref-type='supplementary-material'">
                 <a>
