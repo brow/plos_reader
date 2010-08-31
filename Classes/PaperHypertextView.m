@@ -24,13 +24,16 @@
 	[super dealloc];
 }
 
-- (void) loadPaperXMLFile:(NSString *)xmlFile {		
-	NSMutableString *docString = [NSMutableString stringWithContentsOfFile:xmlFile
+- (void) loadPaper {
+	NSMutableString *docString = [NSMutableString stringWithContentsOfFile:paper.localXMLPath
 													encoding:NSUTF8StringEncoding 
 													   error:nil];
 	
-	// Add a reference to our XSLT stylesheet
+	// Add a reference to our XSLT stylesheet, and link it into the directory
 	NSString *stylesheetString = [NSString stringWithFormat:@"<?xml-stylesheet type='text/xsl' href='plos.xsl'?>"];
+	[[NSFileManager defaultManager] createSymbolicLinkAtPath:[paper.localDirectory stringByAppendingPathComponent:@"plos.xsl"]
+										 withDestinationPath:[[NSBundle mainBundle] pathForResource:@"plos" ofType:@"xsl"] 
+													   error:nil];
 	
 	// Remove the DOCTYPE so we don't get slow-ass validated parsing
 	[docString replaceOccurrenceOfPattern:@"(?s:<!DOCTYPE.*?>)" 
@@ -39,7 +42,7 @@
 	[super loadData:[docString dataUsingEncoding:NSUTF8StringEncoding] 
 		   MIMEType:@"text/xml" 
    textEncodingName:@"utf-8" 
-			baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+			baseURL:[NSURL fileURLWithPath:paper.localDirectory]];
 }
 
 - (void) configureView {
@@ -67,7 +70,7 @@
 	paper = [value retain];
 	
 	if (paper.downloadStatus == StatusDownloaded)
-		[self loadPaperXMLFile:paper.localXMLPath];
+		[self loadPaper];
 	[paper addObserver:self 
 			forKeyPath:@"downloadStatus" 
 			   options:NSKeyValueObservingOptionNew 
@@ -78,7 +81,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if (paper.downloadStatus == StatusDownloaded)
-		[self loadPaperXMLFile:paper.localXMLPath];
+		[self loadPaper];
 }
 
 #pragma mark UIWebViewDelegate methods 
@@ -94,4 +97,11 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
 	
 }
+
+- (BOOL)webView:(UIWebView *)webView 
+shouldStartLoadWithRequest:(NSURLRequest *)aRequest 
+ navigationType:(UIWebViewNavigationType)navigationType {	
+	return YES;
+}
+
 @end

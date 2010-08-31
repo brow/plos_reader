@@ -92,9 +92,9 @@ THE SOFTWARE.
                                 <a>
 
                                     <xsl:attribute name="href">
-                                        <xsl:text>http://www.plosone.org/article/fetchObject.action?uri=info:doi/</xsl:text>
-                                        <xsl:value-of select="object-id"/>
-                                        <xsl:text>&amp;representation=PNG_M</xsl:text>
+										<xsl:text>images/</xsl:text>
+                                        <xsl:value-of select="@id"/>
+                                        <xsl:text>_TIF.tif</xsl:text>
                                     </xsl:attribute>
 
                                     <xsl:attribute name="title">
@@ -104,9 +104,9 @@ THE SOFTWARE.
 
                                     <img>
                                         <xsl:attribute name="src">
-                                            <xsl:text>http://www.plosone.org/article/fetchObject.action?uri=info:doi/</xsl:text>
-                                            <xsl:value-of select="object-id"/>
-                                            <xsl:text>&amp;representation=PNG_S</xsl:text>
+											<xsl:text>images/</xsl:text>
+                                            <xsl:value-of select="@id"/>
+                                            <xsl:text>_PNG_S.png</xsl:text>
                                         </xsl:attribute>
                                     </img>
                                 </a>

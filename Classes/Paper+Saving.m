@@ -17,40 +17,28 @@ static SavedPapersManager *savedPapersManager;
 }
 
 + (NSString *) savedPapersDirectory {
-	return [[self documentsDirectory] stringByAppendingPathComponent:@"saved"];
+	return [[self documentsDirectory] stringByAppendingPathComponent:@"saved.2"];
 }
 
 + (NSString *) autosavedPaperDirectory {
-	return [[self documentsDirectory] stringByAppendingPathComponent:@"autosaved"];
-}
-
-+ (NSString *) autosavedXMLPath {
-	return [[self autosavedPaperDirectory] stringByAppendingPathComponent:@"paper.xml"];
-}
-
-+ (NSString *) autosavedPDFPath {
-	return [[self autosavedPaperDirectory] stringByAppendingPathComponent:@"paper.pdf"];
+	return [[self documentsDirectory] stringByAppendingPathComponent:@"autosaved.2"];
 }
 
 - (NSString *)filenameBase {
-	assert(self.doi);
 	return [self.doi stringByReplacingOccurrencesOfString:@"/" 
 											   withString:@"_"];
 }
 
-- (NSString *) permanentPDFPath {
-	return [[self.class savedPapersDirectory] stringByAppendingPathComponent:
-			[[self filenameBase] stringByAppendingPathExtension:@"pdf"]];
+- (NSString *) permanentDirectory {
+	return [[self.class savedPapersDirectory] stringByAppendingPathComponent:[self filenameBase]];
 }
 
-- (NSString *) permanentXMLPath {
-	return [[self.class savedPapersDirectory] stringByAppendingPathComponent:
-			[[self filenameBase] stringByAppendingPathExtension:@"xml"]];
+- (NSString *) permanentImagesDirectory {
+	return [[self.class savedPapersDirectory] stringByAppendingPathComponent:@"images"];
 }
 
 - (BOOL) saved {
-	return	[[NSFileManager defaultManager] fileExistsAtPath:self.permanentPDFPath] &&
-			[[NSFileManager defaultManager] fileExistsAtPath:self.permanentXMLPath];
+	return	[[NSFileManager defaultManager] fileExistsAtPath:self.permanentDirectory];
 }
 
 - (void) save {
@@ -63,11 +51,8 @@ static SavedPapersManager *savedPapersManager;
 	[[Paper savedPapersManager] willChangeValueForKey:@"savedPapers" 
 									  withSetMutation:NSKeyValueUnionSetMutation 
 										 usingObjects:[NSSet setWithObject:self]];
-	[[NSFileManager defaultManager] copyItemAtPath:localPDFPath 
-											toPath:self.permanentPDFPath 
-											 error:nil];
-	[[NSFileManager defaultManager] copyItemAtPath:localXMLPath
-											toPath:self.permanentXMLPath 
+	[[NSFileManager defaultManager] copyItemAtPath:localDirectory 
+											toPath:self.permanentDirectory 
 											 error:nil];
 	[[Paper savedPapersManager] didChangeValueForKey:@"savedPapers" 
 									 withSetMutation:NSKeyValueUnionSetMutation 
@@ -78,22 +63,18 @@ static SavedPapersManager *savedPapersManager;
 	[[Paper savedPapersManager] willChangeValueForKey:@"savedPapers" 
 									  withSetMutation:NSKeyValueMinusSetMutation 
 										 usingObjects:[NSSet setWithObject:self]];
-	[[NSFileManager defaultManager] removeItemAtPath:self.permanentPDFPath error:nil];
-	[[NSFileManager defaultManager] removeItemAtPath:self.permanentXMLPath error:nil];
+	[[NSFileManager defaultManager] removeItemAtPath:self.permanentDirectory error:nil];
 	[[Paper savedPapersManager] didChangeValueForKey:@"savedPapers" 
 									 withSetMutation:NSKeyValueMinusSetMutation 
 										usingObjects:[NSSet setWithObject:self]];
 }
 
 - (void) restore {
-	[[NSFileManager defaultManager] copyItemAtPath:self.permanentPDFPath 
-											toPath:localPDFPath 
-											 error:nil];
-	[[NSFileManager defaultManager] copyItemAtPath:self.permanentXMLPath 
-											toPath:localXMLPath 
+	[[NSFileManager defaultManager] copyItemAtPath:self.permanentDirectory
+											toPath:localDirectory 
 											 error:nil];
 	
-	[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
+	[self parsePaperXML:[NSData dataWithContentsOfFile:self.localXMLPath]];
 	
 	[self setValue:[NSNumber numberWithInt:StatusDownloaded] 
 			forKey:@"downloadStatus"];
@@ -105,31 +86,22 @@ static SavedPapersManager *savedPapersManager;
 			[[NSFileManager defaultManager] createDirectoryAtPath:[self.class autosavedPaperDirectory]
 													   attributes:nil];
 
-		[[NSFileManager defaultManager] removeItemAtPath:[Paper autosavedPDFPath] error:nil];
-		[[NSFileManager defaultManager] removeItemAtPath:[Paper autosavedXMLPath] error:nil];
-		
-		[[NSFileManager defaultManager] copyItemAtPath:localPDFPath 
-												toPath:[Paper autosavedPDFPath]
-												 error:nil];
-		[[NSFileManager defaultManager] copyItemAtPath:localXMLPath 
-												toPath:[Paper autosavedXMLPath]
+		[[NSFileManager defaultManager] removeItemAtPath:[Paper autosavedPaperDirectory] error:nil];
+		[[NSFileManager defaultManager] copyItemAtPath:localDirectory 
+												toPath:[Paper autosavedPaperDirectory]
 												 error:nil];
 	}
 }
 
 + (Paper *) autosavedPaper {
-	if ([[NSFileManager defaultManager] fileExistsAtPath:[Paper autosavedXMLPath]] &&
-		[[NSFileManager defaultManager] fileExistsAtPath:[Paper autosavedPDFPath]]) 
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[Paper autosavedPaperDirectory]]) 
 	{
-		NSData *xmlData = [NSData dataWithContentsOfFile:[Paper autosavedXMLPath]];
-		Paper *paper = [[[Paper alloc] initWithPaperXML:xmlData] autorelease];
-		
-		[[NSFileManager defaultManager] copyItemAtPath:[Paper autosavedPDFPath]
-												toPath:paper->localPDFPath 
+		Paper *paper = [[[Paper alloc] init] autorelease];
+		[[NSFileManager defaultManager] copyItemAtPath:[Paper autosavedPaperDirectory]
+												toPath:paper->localDirectory 
 												 error:nil];
-		[[NSFileManager defaultManager] copyItemAtPath:[Paper autosavedXMLPath]
-												toPath:paper->localXMLPath 
-												 error:nil];
+		NSData *xmlData = [NSData dataWithContentsOfFile:paper.localXMLPath];
+		[paper parsePaperXML:xmlData];
 		
 		[paper setValue:[NSNumber numberWithInt:StatusDownloaded] 
 				 forKey:@"downloadStatus"];
@@ -154,12 +126,15 @@ static SavedPapersManager *savedPapersManager;
 	NSArray *filenames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[Paper savedPapersDirectory] 
 																			 error:nil];
 	NSMutableSet *savedPapers = [NSMutableSet set];
-	for (NSString *filename in filenames)
-		if ([filename.pathExtension isEqualToString:@"xml"]) {
-			NSString *xmlPath = [[Paper savedPapersDirectory] stringByAppendingPathComponent:filename];
-			NSData *xmlData = [NSData dataWithContentsOfFile:xmlPath];
-			[savedPapers addObject:[[[Paper alloc] initWithPaperXML:xmlData] autorelease]];
-		}
+	for (NSString *filename in filenames) {
+		Paper *paper = [[[Paper alloc] init] autorelease];
+		NSString *permanentDirectory = [[Paper savedPapersDirectory] stringByAppendingPathComponent:filename];
+		[[NSFileManager defaultManager] copyItemAtPath:permanentDirectory 
+												toPath:paper.localDirectory 
+												 error:nil];
+		[paper parsePaperXML:[NSData dataWithContentsOfFile:paper.localXMLPath]];
+		[savedPapers addObject:paper];
+	}
 	return savedPapers;
 }
 

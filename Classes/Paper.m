@@ -27,7 +27,7 @@ NSString *temporaryPath();
 
 @implementation Paper
 
-@synthesize remotePDFUrl, remoteXMLUrl, localPDFPath, localXMLPath, metadata;
+@synthesize remotePDFUrl, remoteXMLUrl, metadata, localDirectory;
 
 + (id) paperWithAtomXMLNode:(id)node {
 	return [[[Paper alloc] initWithAtomXMLNode:node] autorelease];
@@ -40,8 +40,8 @@ NSString *temporaryPath();
 		downloadStatus = StatusNotDownloaded;
 		metadata = [[NSMutableDictionary alloc] init];
 		requestsQueue = [[ASINetworkQueue alloc] init];
-		localPDFPath = [temporaryPath() retain];
-		localXMLPath = [temporaryPath() retain];
+		requestsQueue.maxConcurrentOperationCount = 30;
+		localDirectory = [temporaryPath() retain];
 		errors = [[NSMutableArray alloc] init];
 	}
 	return self;
@@ -69,8 +69,7 @@ NSString *temporaryPath();
 	[title release];
 	[authors release];
 	[identifier release];
-	[localPDFPath release];
-	[localXMLPath release];
+	[localDirectory release];
 	[metadata release];
 	[requestsQueue release];
 	[errors release];
@@ -78,6 +77,15 @@ NSString *temporaryPath();
 }
 
 - (void) load {
+	[[NSFileManager defaultManager] createDirectoryAtPath:localDirectory 
+							  withIntermediateDirectories:YES 
+											   attributes:nil 
+													error:nil];
+	[[NSFileManager defaultManager] createDirectoryAtPath:self.localImagesDirectory 
+							  withIntermediateDirectories:YES 
+											   attributes:nil 
+													error:nil];
+	
 	/* Do nothing if this paper is already downloading or downloaded.*/
 	if (self.downloadStatus == StatusDownloaded || requestsQueue.isNetworkActive)
 		return;
@@ -100,15 +108,16 @@ NSString *temporaryPath();
 	requestsQueue.queueDidFinishSelector = @selector(queueDidFinish:);
 	
 	ASIHTTPRequest *pdfRequest = [SpecialHTTPRequest requestWithURL:remotePDFUrl];
-	pdfRequest.downloadDestinationPath = localPDFPath;	
+	pdfRequest.downloadDestinationPath = self.localPDFPath;	
 	pdfRequest.allowCompressedResponse = NO;
 	[pdfRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:pdfRequest];
 //	NSLog(@"[REQUEST %@]", remotePDFUrl);
 
 	ASIHTTPRequest *xmlRequest = [SpecialHTTPRequest requestWithURL:remoteXMLUrl];
-	xmlRequest.downloadDestinationPath = localXMLPath;
-	pdfRequest.allowCompressedResponse = NO;
+	[xmlRequest setUserInfo:[NSDictionary dictionaryWithObject:@"xml" forKey:@"requestType"]];
+	xmlRequest.downloadDestinationPath = self.localXMLPath;
+	xmlRequest.allowCompressedResponse = NO;
 	[xmlRequest setTimeOutSeconds:15];
 	[requestsQueue addOperation:xmlRequest];
 //	NSLog(@"[REQUEST %@]", remoteXMLUrl);
@@ -211,6 +220,12 @@ NSString *temporaryPath();
 									nil]];
 	}
 	[metadata setValue:authorsMetadata forKey:@"authors"];
+	
+	NSMutableDictionary *figuresMetadata = [NSMutableDictionary dictionary];
+	for (CXMLNode *figureNode in [doc nodesForXPath:@"//fig" error:nil])
+		[figuresMetadata setObject:[figureNode flatStringForXPath:@"./object-id" namespaceMappings:nil] 
+							forKey:[figureNode flatStringForXPath:@"./@id" namespaceMappings:nil]];
+	[metadata setValue:figuresMetadata forKey:@"figures"];
 }
 
 + (NSString *)shortenedTitleForJournalTitle:(NSString*)journalTitle {
@@ -224,6 +239,27 @@ NSString *temporaryPath();
 		return journalTitle;
 }
 
++ (NSString *)hostForJournalId:(NSString *)journalId {
+	NSDictionary *journalIdToHost = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									 @"plosbiology.org",@"PLoS Biol",
+									 @"plosmedicine.org",@"PLoS Med",
+									 @"plosntds.org",@"PLoS Negl Trop Dis",
+									 @"ploscompbiol.org",@"PLoS Comput Biol",
+									 @"plosgenetics.org",@"PLoS Genet",
+									 @"plospathogens.org",@"PLoS Pathog",
+									 @"plosone.org",@"PLoS ONE",
+									 nil];
+	return [journalIdToHost objectForKey:journalId];
+}
+
+- (NSURL *) urlForImageDOI:(NSString *)imageDOI representation:(NSString *)representation {
+	NSString *urlString = [NSString stringWithFormat:@"http://%@/article/fetchObject.action?uri=info:doi/%@&representation=%@",
+						   [[self class] hostForJournalId:[metadata objectForKey:@"journal-id"]],
+						   imageDOI,
+						   representation];
+	return [NSURL URLWithString:urlString];
+}
+
 - (void) showDownloadAlert {
 	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Download Failed" 
 													 message:@"This paper could not be downloaded. Please check your internet connection and try again." 
@@ -234,6 +270,18 @@ NSString *temporaryPath();
 }
 
 #pragma mark accessors
+
+- (NSString *)localPDFPath {
+	return [localDirectory stringByAppendingPathComponent:@"pdf.pdf"];
+}
+
+- (NSString *)localXMLPath {
+	return [localDirectory stringByAppendingPathComponent:@"xml.xml"];
+}
+
+- (NSString *)localImagesDirectory {
+	return [localDirectory stringByAppendingPathComponent:@"images"];
+}
 
 - (NSString *) feedTitle {
 	return [metadata objectForKey:@"feed-title"];
@@ -374,8 +422,35 @@ NSString *temporaryPath();
 #pragma mark ASIHTTPRequest delegate methods
 
 - (void)requestFinished:(ASIHTTPRequest *)request
-{		
-//	NSLog(@"[LOADED %@]", request.url);
+{	
+	if ([[request.userInfo objectForKey:@"requestType"] isEqualToString:@"xml"]) {
+		@try {
+			[self parsePaperXML:[NSData dataWithContentsOfFile:self.localXMLPath]];
+			for (NSString *figureId in [[metadata objectForKey:@"figures"] allKeys])
+				for (NSString *representation in [NSArray arrayWithObjects:@"PNG_S",@"TIF",nil]) {
+					NSURL *imageUrl = [self urlForImageDOI:[[metadata objectForKey:@"figures"] objectForKey:figureId]
+											 representation:representation];
+					NSString *localFile = [NSString stringWithFormat:@"%@_%@%@",
+										   figureId,
+										   representation,
+										   [representation isEqualToString:@"TIF"] ? @".tif" : @".png"];
+					
+					ASIHTTPRequest *imageRequest = [SpecialHTTPRequest requestWithURL:imageUrl];
+					imageRequest.downloadDestinationPath = [self.localImagesDirectory stringByAppendingPathComponent:localFile];
+					imageRequest.allowCompressedResponse = NO;
+					[imageRequest setTimeOutSeconds:15];
+					[requestsQueue addOperation:imageRequest];
+				}
+		}
+		@catch (XMLParsingException * e) {
+			[errors addObject:[NSError errorWithDomain:@"XML Parsing Exception" 
+												  code:0 
+											  userInfo:nil]];
+			if (errors.count == 1)
+				[self showDownloadAlert];
+		}
+	}
+	NSLog(@"[LOADED %@]", request.url);
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -392,18 +467,7 @@ NSString *temporaryPath();
 }
 
 - (void) queueDidFinish:(ASINetworkQueue *)queue {
-	if (errors.count > 0)
-		self.downloadStatus = StatusFailed;
-	else {
-		@try {
-			[self parsePaperXML:[NSData dataWithContentsOfFile:localXMLPath]];
-			self.downloadStatus = StatusDownloaded;
-		}
-		@catch (XMLParsingException * e) {
-			[self showDownloadAlert];
-			self.downloadStatus = StatusFailed;
-		}
-	}
+	self.downloadStatus = (errors.count == 0) ? StatusDownloaded : StatusFailed;
 }
 
 #pragma mark NSObject methods
