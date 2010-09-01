@@ -13,6 +13,7 @@
 #import "Paper+Saving.h"
 #import "XMLParsingException.h"
 #import "Utilities.h"
+#import "Citation.h"
 
 
 @interface Paper() <ASIProgressDelegate>
@@ -178,10 +179,6 @@ NSString *temporaryPath();
 							  namespaceMappings:nil]
 				forKey:@"issue"];
 	
-	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/issue" 
-							 namespaceMappings:nil]
-				forKey:@"issue"];
-	
 	[metadata setValue:[doc flatStringForXPath:@"article/front/article-meta/pub-date[@pub-type='epub']/day" 
 							 namespaceMappings:nil]
 				forKey:@"pub-day"];
@@ -226,6 +223,14 @@ NSString *temporaryPath();
 		[figuresMetadata setObject:[figureNode flatStringForXPath:@"./object-id" namespaceMappings:nil] 
 							forKey:[figureNode flatStringForXPath:@"./@id" namespaceMappings:nil]];
 	[metadata setValue:figuresMetadata forKey:@"figures"];
+	
+	NSMutableDictionary *referenceMetadata = [NSMutableDictionary dictionary];
+	for (CXMLNode *referenceNode in [doc nodesForXPath:@"//ref" error:nil]) {		
+		NSString *referenceId = [referenceNode flatStringForXPath:@"./@id" namespaceMappings:nil];
+		Citation *refCitation = [[[Citation alloc] initWithXML:[referenceNode xmlDataForXPath:@"./citation" namespaceMappings:nil]] autorelease];
+		[referenceMetadata setObject:refCitation forKey:referenceId];
+	}
+	[metadata setValue:referenceMetadata forKey:@"references"];
 }
 
 + (NSString *)shortenedTitleForJournalTitle:(NSString*)journalTitle {

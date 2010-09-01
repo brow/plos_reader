@@ -87,6 +87,11 @@
 		D3F16AAA11CD8FC2004838C8 /* SearchArchiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F16AA911CD8FC2004838C8 /* SearchArchiveCell.m */; };
 		D3F16B0B11CD9396004838C8 /* SearchArchiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F16B0A11CD9396004838C8 /* SearchArchiveCell.xib */; };
 		D3F26DAC122D97F6001A543A /* FigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F26DAB122D97F6001A543A /* FigureViewController.m */; };
+		D3F2704C122E09C7001A543A /* Citation.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F2704B122E09C7001A543A /* Citation.m */; };
+		D3F27117122E187F001A543A /* CitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F27115122E187F001A543A /* CitationViewController.m */; };
+		D3F27118122E187F001A543A /* CitationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F27116122E187F001A543A /* CitationViewController.xib */; };
+		D3F2711C122E1BFE001A543A /* BigWhiteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F2711A122E1BFE001A543A /* BigWhiteButton.png */; };
+		D3F2711D122E1BFE001A543A /* SmallBlackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F2711B122E1BFE001A543A /* SmallBlackButton.png */; };
 		D3FB38691180F3DB00AC0932 /* PaperCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FB38681180F3DB00AC0932 /* PaperCell.xib */; };
 		D3FB386D1180F48C00AC0932 /* PaperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FB386C1180F48C00AC0932 /* PaperCell.m */; };
 		D3FB39BC11815B0900AC0932 /* CitationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB39BB11815B0900AC0932 /* CitationButton.png */; };
@@ -244,6 +249,13 @@
 		D3F16B0A11CD9396004838C8 /* SearchArchiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchArchiveCell.xib; sourceTree = "<group>"; };
 		D3F26DAA122D97F6001A543A /* FigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FigureViewController.h; sourceTree = "<group>"; };
 		D3F26DAB122D97F6001A543A /* FigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FigureViewController.m; sourceTree = "<group>"; };
+		D3F2704A122E09C7001A543A /* Citation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Citation.h; sourceTree = "<group>"; };
+		D3F2704B122E09C7001A543A /* Citation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Citation.m; sourceTree = "<group>"; };
+		D3F27114122E187F001A543A /* CitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitationViewController.h; sourceTree = "<group>"; };
+		D3F27115122E187F001A543A /* CitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitationViewController.m; sourceTree = "<group>"; };
+		D3F27116122E187F001A543A /* CitationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CitationViewController.xib; path = Classes/CitationViewController.xib; sourceTree = "<group>"; };
+		D3F2711A122E1BFE001A543A /* BigWhiteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BigWhiteButton.png; sourceTree = "<group>"; };
+		D3F2711B122E1BFE001A543A /* SmallBlackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallBlackButton.png; sourceTree = "<group>"; };
 		D3FB38681180F3DB00AC0932 /* PaperCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperCell.xib; sourceTree = "<group>"; };
 		D3FB386B1180F48C00AC0932 /* PaperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperCell.h; sourceTree = "<group>"; };
 		D3FB386C1180F48C00AC0932 /* PaperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperCell.m; sourceTree = "<group>"; };
@@ -416,6 +428,8 @@
 				D3B65A1411AE3E3500EF9BCA /* ThumbnailsViewController.m */,
 				D3F26DAA122D97F6001A543A /* FigureViewController.h */,
 				D3F26DAB122D97F6001A543A /* FigureViewController.m */,
+				D3F27114122E187F001A543A /* CitationViewController.h */,
+				D3F27115122E187F001A543A /* CitationViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -450,6 +464,8 @@
 				D3F1698F11CCD165004838C8 /* Paper+DeepDyve.m */,
 				D3AEC53B11934B8F009BE344 /* Paper+Saving.h */,
 				D3AEC53C11934B8F009BE344 /* Paper+Saving.m */,
+				D3F2704A122E09C7001A543A /* Citation.h */,
+				D3F2704B122E09C7001A543A /* Citation.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -562,6 +578,8 @@
 		D3F16AE411CD9279004838C8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D3F2711A122E1BFE001A543A /* BigWhiteButton.png */,
+				D3F2711B122E1BFE001A543A /* SmallBlackButton.png */,
 				D3FB39F2118161CF00AC0932 /* CitationButtonHighlighted.png */,
 				D3FB39BB11815B0900AC0932 /* CitationButton.png */,
 				D3B659EF11ADDA5F00EF9BCA /* Unmagnify.png */,
@@ -581,6 +599,7 @@
 		D3F16AE511CD928F004838C8 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
+				D3F27116122E187F001A543A /* CitationViewController.xib */,
 				D3F16B0A11CD9396004838C8 /* SearchArchiveCell.xib */,
 				D3B6694D11B883E100EF9BCA /* FeedHeader.xib */,
 				D3B65A9711AE485A00EF9BCA /* ThumbnailCell.xib */,
@@ -703,6 +722,9 @@
 				D3E160AA1224D7C700C8524F /* plos.xsl in Resources */,
 				D3D03159122AE97B00464519 /* jquery.js in Resources */,
 				D3D030A41228AA3500464519 /* Settings.bundle in Resources */,
+				D3F27118122E187F001A543A /* CitationViewController.xib in Resources */,
+				D3F2711C122E1BFE001A543A /* BigWhiteButton.png in Resources */,
+				D3F2711D122E1BFE001A543A /* SmallBlackButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +787,8 @@
 				D3E15EF51224D18D00C8524F /* PaperHypertextView.m in Sources */,
 				D3EF60781225B37B00855344 /* NSMutableString+Extras.m in Sources */,
 				D3F26DAC122D97F6001A543A /* FigureViewController.m in Sources */,
+				D3F2704C122E09C7001A543A /* Citation.m in Sources */,
+				D3F27117122E187F001A543A /* CitationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

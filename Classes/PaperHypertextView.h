@@ -28,5 +28,6 @@
 
 - (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedImageAtURL:(NSURL *)imageURL rect:(CGRect)rect;
 - (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedEmailAddress:(NSString *)emailAddress rect:(CGRect)rect;
+- (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedReferenceId:(NSString *)referenceId rect:(CGRect)rect;
 
 @end

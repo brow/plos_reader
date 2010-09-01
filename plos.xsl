@@ -127,29 +127,7 @@ THE SOFTWARE.
                             </div>
                         </xsl:for-each>
                     </div>
-
-
                 </div>
-
-                <div id="popup"
-                    style="-webkit-border-radius:10px;color:white;position:absolute;top:10px;display:none;z-index:5;width:70%;background:url(images/background.png);padding:10px;">
-                    <table width="100%">
-                        <tbody style="color:white;font-size:18px;">
-                            <tr>
-                                <td width="5%">
-                                    <span style="font-size:24px;" onclick="$('popup').hide();"
-                                    >×</span>
-                                </td>
-                                <td id="citation"/>
-                                <td width="5%" align="right" id="progress"/>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-
-
             </body>
         </html>
     </xsl:template>
@@ -476,19 +454,23 @@ THE SOFTWARE.
             <!-- references -->
             <xsl:when test="@ref-type='bibr'">
                 <xsl:variable name="rid" select="@rid"/>
-                <span class="lookup">
+                <a class="lookup">
+					<xsl:attribute name="id">
+						<xsl:value-of select="generate-id(.)"/>
+					</xsl:attribute>
 
-                    <xsl:attribute name="onclick">
-                        <xsl:text>lookahead(this,'</xsl:text>
-                        <xsl:apply-templates select="//ref[@id=$rid]/citation"/>
-                        <xsl:text>')</xsl:text>
-                    </xsl:attribute>
-
+					<xsl:attribute name="href">
+						<xsl:text>reference:///</xsl:text>
+						<xsl:value-of select="@rid"/>
+						<xsl:text>#</xsl:text>
+						<xsl:value-of select="generate-id(.)"/>
+	                </xsl:attribute>
+	
                     <xsl:value-of
                         select="//ref[@id=$rid]/citation/person-group[@person-group-type='author']/name[1]/surname"/>
                     <xsl:text> </xsl:text>
                     <xsl:value-of select="//ref[@id=$rid]/citation/year"/>
-                </span>
+                </a>
             </xsl:when>
 
             <xsl:when test="@ref-type='fig'">

@@ -138,6 +138,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)aRequest
 										 rect:[self rectOfElementWithId:[aRequest.URL fragment]]];
 		return NO;
 	}
+	else if ([[aRequest.URL scheme] isEqualToString:@"reference"]) {
+		[hypertextDelegate paperHypertextView:self 
+						  selectedReferenceId:[[aRequest.URL path] lastPathComponent] 
+										 rect:[self rectOfElementWithId:[aRequest.URL fragment]]];
+		return NO;
+	}
 	else if ([[aRequest.URL scheme] isEqualToString:@"mailto"]) {
 		NSString *recipient = [[aRequest.URL relativeString] stringByReplacingOccurrencesOfString:@"mailto:" 
 																					   withString:@""];

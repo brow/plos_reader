@@ -12,6 +12,7 @@
 #import "Paper+Saving.h"
 #import "MagnifierViewController.h"
 #import "FigureViewController.h"
+#import "CitationViewController.h"
 
 @interface PaperViewController () <MagnifierViewControllerDelegate>
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -290,6 +291,20 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 	[mailController setSubject:paper.title];
 	mailController.mailComposeDelegate = self;
 	[self presentModalViewController:mailController animated:YES];
+}
+
+- (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedReferenceId:(NSString *)referenceId rect:(CGRect)rect {
+	CitationViewController *vc = [[[CitationViewController alloc] init] autorelease];
+	vc.citation = [[paper.metadata objectForKey:@"references"] objectForKey:referenceId];
+	
+	if (self.popoverController)
+		[self.popoverController dismissPopoverAnimated:YES];
+	
+	self.popoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+	[self.popoverController presentPopoverFromRect:rect
+											inView:hypertextView
+						  permittedArrowDirections:UIPopoverArrowDirectionAny
+										  animated:YES];
 }
 
 #pragma mark MagnifierViewControllerDelegate methods
