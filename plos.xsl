@@ -81,7 +81,9 @@ THE SOFTWARE.
                     <xsl:apply-templates select="//article-meta"/>
 
                     <!-- article -->
-                    <xsl:apply-templates select="//abstract"/>
+					<div class="abstract">
+                    	<xsl:apply-templates select="//abstract"/>
+					</div>
                     <xsl:apply-templates select="//body"/>
                     <xsl:apply-templates select="//back"/>
 
@@ -202,19 +204,13 @@ THE SOFTWARE.
 
     <!-- abstract -->
     <xsl:template match="//abstract">
-        <div class="abstract">
-            <a>
-                <xsl:attribute name="name">
-                    <xsl:text>abstract</xsl:text>
-                </xsl:attribute>
-            </a>
-
+        <p>
 			<xsl:choose>
 		    	<xsl:when test="@abstract-type='summary'"><!-- <h2>Author Summary</h2> --></xsl:when>
 				<xsl:otherwise><h2>Abstract</h2></xsl:otherwise>
 			</xsl:choose>
             <xsl:apply-templates/>
-        </div>
+        </p>
     </xsl:template>
 
     <xsl:template match="//body">
