@@ -17,7 +17,7 @@
 @interface PaperViewController : UIViewController 
 <UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, 
 LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
-UINavigationControllerDelegate, ThumbnailsViewControllerDelegate> {
+UINavigationControllerDelegate, ThumbnailsViewControllerDelegate, PaperHypertextViewDelegate> {
     
 	PaperHypertextView *hypertextView;
 	PageScrollView *scrollView;

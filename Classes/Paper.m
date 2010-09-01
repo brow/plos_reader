@@ -427,13 +427,12 @@ NSString *temporaryPath();
 		@try {
 			[self parsePaperXML:[NSData dataWithContentsOfFile:self.localXMLPath]];
 			for (NSString *figureId in [[metadata objectForKey:@"figures"] allKeys])
-				for (NSString *representation in [NSArray arrayWithObjects:@"PNG_S",@"TIF",nil]) {
+				for (NSString *representation in [NSArray arrayWithObjects:@"PNG_S",@"PNG_M",nil]) {
 					NSURL *imageUrl = [self urlForImageDOI:[[metadata objectForKey:@"figures"] objectForKey:figureId]
 											 representation:representation];
-					NSString *localFile = [NSString stringWithFormat:@"%@_%@%@",
+					NSString *localFile = [NSString stringWithFormat:@"%@_%@.png",
 										   figureId,
-										   representation,
-										   [representation isEqualToString:@"TIF"] ? @".tif" : @".png"];
+										   representation];
 					
 					ASIHTTPRequest *imageRequest = [SpecialHTTPRequest requestWithURL:imageUrl];
 					imageRequest.downloadDestinationPath = [self.localImagesDirectory stringByAppendingPathComponent:localFile];

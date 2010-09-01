@@ -13,7 +13,7 @@
 
 @implementation PaperHypertextView
 
-@synthesize paper;
+@synthesize paper, hypertextDelegate;
 
 - (void) awakeFromNib {
 	super.delegate = self;
@@ -35,6 +35,11 @@
 										 withDestinationPath:[[NSBundle mainBundle] pathForResource:@"plos" ofType:@"xsl"] 
 													   error:nil];
 	
+	// Link in jquery.js
+	[[NSFileManager defaultManager] createSymbolicLinkAtPath:[paper.localDirectory stringByAppendingPathComponent:@"jquery.js"] 
+										 withDestinationPath:[[NSBundle mainBundle] pathForResource:@"jquery" ofType:@"js"] 
+														error:nil];
+	
 	// Remove the DOCTYPE so we don't get slow-ass validated parsing
 	[docString replaceOccurrenceOfPattern:@"(?s:<!DOCTYPE.*?>)" 
 							   withString:stylesheetString];
@@ -50,6 +55,30 @@
 		super.alpha = 1;
 	else
 		super.alpha = 0;
+}
+
+- (CGRect) rectOfElementWithId:(NSString *)elementId {
+	CGFloat documentWidth = [[super stringByEvaluatingJavaScriptFromString:@"$(window).width();"] floatValue];
+	CGFloat scale = super.bounds.size.width / documentWidth;
+	
+	CGRect ret;
+	ret.origin.x = [[super stringByEvaluatingJavaScriptFromString:
+					 [NSString stringWithFormat:
+					  @"$('#%@').offset().left;",
+					  elementId]] floatValue] * scale;
+	ret.origin.y = [[super stringByEvaluatingJavaScriptFromString:
+					 [NSString stringWithFormat:
+					  @"$('#%@').offset().top-2*$(window).scrollTop();",
+					  elementId]] floatValue] * scale;
+	ret.size.width = [[super stringByEvaluatingJavaScriptFromString:
+					 [NSString stringWithFormat:
+					  @"$('#%@').width();",
+					  elementId]] floatValue] * scale;
+	ret.size.height = [[super stringByEvaluatingJavaScriptFromString:
+					   [NSString stringWithFormat:
+						@"$('#%@').height();",
+						elementId]] floatValue] * scale;
+	return ret;
 }
 
 #pragma mark accessors
@@ -101,7 +130,16 @@
 - (BOOL)webView:(UIWebView *)webView 
 shouldStartLoadWithRequest:(NSURLRequest *)aRequest 
  navigationType:(UIWebViewNavigationType)navigationType {	
-	return YES;
+	if (navigationType == UIWebViewNavigationTypeOther)
+		return YES;
+	else if ([aRequest.URL isFileURL]) {
+		[hypertextDelegate paperHypertextView:self 
+						   selectedImageAtURL:aRequest.URL 
+										 rect:[self rectOfElementWithId:[aRequest.URL fragment]]];
+		return NO;
+	}
+	else
+		return NO;
 }
 
 @end

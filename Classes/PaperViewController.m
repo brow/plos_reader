@@ -11,6 +11,7 @@
 #import "Utilities.h"
 #import "Paper+Saving.h"
 #import "MagnifierViewController.h"
+#import "FigureViewController.h"
 
 @interface PaperViewController () <MagnifierViewControllerDelegate>
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -266,6 +267,27 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 										  animated:YES];
 }
 
+#pragma mark PaperHypertextViewDelegate methods
+
+- (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedImageAtURL:(NSURL *)imageURL rect:(CGRect)rect {
+	FigureViewController *vc = [[[FigureViewController alloc] init] autorelease];
+	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+	vc.figureImage = [UIImage imageWithData:imageData];
+	
+	if (self.popoverController)
+		[self.popoverController dismissPopoverAnimated:YES];
+	
+	self.popoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+	[self.popoverController presentPopoverFromRect:rect
+											inView:hypertextView
+						  permittedArrowDirections:UIPopoverArrowDirectionAny
+										  animated:YES];
+}
+
+- (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedEmailAddress:(NSString *)emailAddress rect:(CGRect)rect {
+	
+}
+
 #pragma mark MagnifierViewControllerDelegate methods
 
 - (void) magnifierViewControllerDidFinish:(MagnifierViewController *)magnifierViewController {
@@ -435,6 +457,8 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 	leavesView.backgroundRendering = YES;
 	if (paper && paper.downloadStatus == StatusDownloaded)
 		[leavesView reloadData];
+	
+	hypertextView.hypertextDelegate = self;
 	
 	[self configureView];
 	

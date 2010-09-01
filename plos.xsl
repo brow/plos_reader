@@ -59,6 +59,8 @@ THE SOFTWARE.
             <head>
                 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 
+				<script type="text/javascript" src="jquery.js"/>
+
                 <title>PLoS Viewer</title>
 
                 <style type="text/css"> body { padding:20px; margin:0px; font-family: Verdana,
@@ -89,12 +91,19 @@ THE SOFTWARE.
                         <xsl:for-each select="//fig">
                             <div
                                 style="display:inline;padding:10px;background-color:white;text-align:center;">
+
+								<xsl:attribute name="id">
+									<xsl:value-of select="generate-id(.)"/>
+								</xsl:attribute>
+
                                 <a>
 
                                     <xsl:attribute name="href">
 										<xsl:text>images/</xsl:text>
                                         <xsl:value-of select="@id"/>
-                                        <xsl:text>_TIF.tif</xsl:text>
+                                        <xsl:text>_PNG_M.png</xsl:text>
+										<xsl:text>#</xsl:text>
+										<xsl:value-of select="generate-id(.)"/>
                                     </xsl:attribute>
 
                                     <xsl:attribute name="title">
@@ -152,28 +161,12 @@ THE SOFTWARE.
         <div>
             <xsl:apply-templates select="//corresp"/>
         </div>
-        <!-- correspond -->
-        <p>
-            <xsl:value-of select="//journal-meta/journal-title"/>
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="//volume"/>(<xsl:value-of select="//issue"/>): <xsl:value-of
-                select="//elocation-id"/>
-            <xsl:text> </xsl:text>
-            <xsl:text>doi:</xsl:text><xsl:value-of select="//article-id[@pub-id-type='doi']"/>
-            <!-- papers -->
-            <ul>
-                <li>
-                    <a>
-                        <xsl:attribute name="href">
-                            <xsl:text>papers://url/http://dx.doi.org/</xsl:text>
-                            <xsl:value-of select="//article-id[@pub-id-type='doi']"/>
-                        </xsl:attribute>
-                        <xsl:text>Bookmark in Papers</xsl:text>
-                    </a>
-                </li>
-            </ul>
-        </p> ©<xsl:text> </xsl:text><xsl:value-of select="//copyright-year"
-            /><xsl:text> </xsl:text><xsl:value-of select="//copyright-statement"/>
+		<p>
+        	<xsl:text>©</xsl:text>
+			<xsl:value-of select="//copyright-year"/>
+			<xsl:text> </xsl:text>
+			<xsl:value-of select="//copyright-statement"/>
+		</p>
     </xsl:template>
 
     <!-- authors -->
@@ -216,7 +209,10 @@ THE SOFTWARE.
                 </xsl:attribute>
             </a>
 
-            <h2>Abstract</h2>
+			<xsl:choose>
+		    	<xsl:when test="@abstract-type='summary'"><!-- <h2>Author Summary</h2> --></xsl:when>
+				<xsl:otherwise><h2>Abstract</h2></xsl:otherwise>
+			</xsl:choose>
             <xsl:apply-templates/>
         </div>
     </xsl:template>
@@ -502,10 +498,16 @@ THE SOFTWARE.
             <xsl:when test="@ref-type='fig'">
                 <xsl:variable name="rid" select="@rid"/>
                 <a>
+					<xsl:attribute name="id">
+						<xsl:value-of select="generate-id(.)"/>
+					</xsl:attribute>
+						
                     <xsl:attribute name="href">
-                        <xsl:text>http://www.plosone.org/article/fetchObject.action?uri=info:doi/</xsl:text>
-                        <xsl:value-of select="//fig[@id=$rid]/object-id"/>
-                        <xsl:text>&amp;representation=PNG_M</xsl:text>
+                        <xsl:text>images/</xsl:text>
+                        <xsl:value-of select="@rid"/>
+                        <xsl:text>_PNG_M.png</xsl:text>
+						<xsl:text>#</xsl:text>
+						<xsl:value-of select="generate-id(.)"/>
                     </xsl:attribute>
 
                     <xsl:attribute name="title">
