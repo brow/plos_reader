@@ -285,7 +285,11 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 }
 
 - (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedEmailAddress:(NSString *)emailAddress rect:(CGRect)rect {
-	
+	MFMailComposeViewController *mailController = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailController setToRecipients:[NSArray arrayWithObject:emailAddress]];
+	[mailController setSubject:paper.title];
+	mailController.mailComposeDelegate = self;
+	[self presentModalViewController:mailController animated:YES];
 }
 
 #pragma mark MagnifierViewControllerDelegate methods
