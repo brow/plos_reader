@@ -62,22 +62,22 @@
 	CGFloat scale = super.bounds.size.width / documentWidth;
 	
 	CGRect ret;
-	ret.origin.x = [[super stringByEvaluatingJavaScriptFromString:
-					 [NSString stringWithFormat:
-					  @"$('#%@').offset().left;",
-					  elementId]] floatValue] * scale;
-	ret.origin.y = [[super stringByEvaluatingJavaScriptFromString:
-					 [NSString stringWithFormat:
-					  @"$('#%@').offset().top-2*$(window).scrollTop();",
-					  elementId]] floatValue] * scale;
-	ret.size.width = [[super stringByEvaluatingJavaScriptFromString:
-					 [NSString stringWithFormat:
-					  @"$('#%@').width();",
-					  elementId]] floatValue] * scale;
-	ret.size.height = [[super stringByEvaluatingJavaScriptFromString:
-					   [NSString stringWithFormat:
-						@"$('#%@').height();",
-						elementId]] floatValue] * scale;
+	ret.origin.x = floorf([[super stringByEvaluatingJavaScriptFromString:
+							[NSString stringWithFormat:
+							 @"$('#%@').offset().left;",
+							 elementId]] floatValue] * scale);
+	ret.origin.y = floorf([[super stringByEvaluatingJavaScriptFromString:
+							[NSString stringWithFormat:
+							 @"$('#%@').offset().top-2*$(window).scrollTop();",
+							 elementId]] floatValue] * scale);
+	ret.size.width = floorf([[super stringByEvaluatingJavaScriptFromString:
+							  [NSString stringWithFormat:
+							   @"$('#%@').width();",
+							   elementId]] floatValue] * scale);
+	ret.size.height = floorf([[super stringByEvaluatingJavaScriptFromString:
+							   [NSString stringWithFormat:
+								@"$('#%@').height();",
+								elementId]] floatValue] * scale);
 	return ret;
 }
 

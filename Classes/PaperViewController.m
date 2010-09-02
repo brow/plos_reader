@@ -268,6 +268,27 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 										  animated:YES];
 }
 
+#pragma mark CitationViewControllerDelegate methods
+
+- (void) citationViewController:(CitationViewController *)citationViewController didOpenCitation:(Citation *)aCitation {
+	[self.popoverController dismissPopoverAnimated:YES];
+}
+
+- (void) citationViewController:(CitationViewController *)citationViewController didEmailCitation:(Citation *)aCitation {
+	MFMailComposeViewController *mailController = [[[MFMailComposeViewController alloc] init] autorelease];
+	[mailController setSubject:aCitation.title];
+	[mailController setMessageBody:aCitation.citationString
+							isHTML:NO];
+	mailController.mailComposeDelegate = self;
+	[self presentModalViewController:mailController animated:YES];
+	[self.popoverController dismissPopoverAnimated:YES];
+}
+
+- (void) citationViewController:(CitationViewController *)citationViewController didCopyCitation:(Citation *)aCitation {
+	[[UIPasteboard generalPasteboard] setString:aCitation.citationString];
+	[self.popoverController dismissPopoverAnimated:YES];
+}
+
 #pragma mark PaperHypertextViewDelegate methods
 
 - (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedImageAtURL:(NSURL *)imageURL rect:(CGRect)rect {
@@ -296,6 +317,7 @@ magnifyButton, thumbnailsButton, hypertextView, activityIndicator;
 - (void) paperHypertextView:(PaperHypertextView *)paperHypertextView selectedReferenceId:(NSString *)referenceId rect:(CGRect)rect {
 	CitationViewController *vc = [[[CitationViewController alloc] init] autorelease];
 	vc.citation = [[paper.metadata objectForKey:@"references"] objectForKey:referenceId];
+	vc.delegate = self;
 	
 	if (self.popoverController)
 		[self.popoverController dismissPopoverAnimated:YES];

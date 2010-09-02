@@ -83,6 +83,8 @@
 	[metadata setValue:authorsMetadata forKey:@"authors"];
 }
 
+#pragma mark accessors
+
 - (NSString *) citationString {
 	NSMutableString *citationString = [NSMutableString string];
 	
@@ -131,6 +133,15 @@
 	}
 
 	return citationString;
+}
+
+- (NSString *) title {
+	if ([metadata objectForKey:@"article-title"])
+		return [metadata objectForKey:@"article-title"];
+	else if ([metadata objectForKey:@"source"])
+		return [metadata objectForKey:@"source"];
+	else
+		return @"";
 }
 
 @end

@@ -14,6 +14,7 @@
 }
 
 @property (readonly) NSString *citationString;
+@property (readonly) NSString *title;
 
 - (id) initWithXML:(NSData *)xmlString;
 - (void) parseCitationXML:(NSData *)xmlData;

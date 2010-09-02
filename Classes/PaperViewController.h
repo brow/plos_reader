@@ -13,11 +13,13 @@
 #import "Paper.h"
 #import "ThumbnailsViewController.h"
 #import "PaperHypertextView.h"
+#import "CitationViewController.h"
 
 @interface PaperViewController : UIViewController 
 <UIPopoverControllerDelegate, UISplitViewControllerDelegate, LeavesViewDelegate, 
 LeavesViewDataSource, UIActionSheetDelegate, MFMailComposeViewControllerDelegate,
-UINavigationControllerDelegate, ThumbnailsViewControllerDelegate, PaperHypertextViewDelegate> {
+UINavigationControllerDelegate, ThumbnailsViewControllerDelegate, PaperHypertextViewDelegate, 
+CitationViewControllerDelegate> {
     
 	PaperHypertextView *hypertextView;
 	PageScrollView *scrollView;
