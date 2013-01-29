@@ -30,7 +30,6 @@
 		D33D529E117FB65B00BA7203 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D529D117FB65B00BA7203 /* CFNetwork.framework */; };
 		D33D52A0117FB65B00BA7203 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D529F117FB65B00BA7203 /* MobileCoreServices.framework */; };
 		D33D52A2117FB65B00BA7203 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D52A1117FB65B00BA7203 /* SystemConfiguration.framework */; };
-		D33D52A4117FB65B00BA7203 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D33D52A3117FB65B00BA7203 /* libz.1.2.3.dylib */; };
 		D33D5380117FBD5D00BA7203 /* Paper.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D537F117FBD5D00BA7203 /* Paper.m */; };
 		D33D548D117FCCA700BA7203 /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D5476117FCCA700BA7203 /* CXMLDocument_CreationExtensions.m */; };
 		D33D548E117FCCA700BA7203 /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D33D5478117FCCA700BA7203 /* CXMLNode_CreationExtensions.m */; };
@@ -112,6 +111,7 @@
 		D3FB4298118E4C8B00AC0932 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */; };
 		D3FB4299118E4C8B00AC0932 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */; };
 		D3FB43B5118E83DA00AC0932 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3FB43B4118E83DA00AC0932 /* Icon.png */; };
+		EA88DEF716B75CA800DD2F88 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EA88DEF616B75CA800DD2F88 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -280,6 +280,7 @@
 		D3FB4296118E4C8B00AC0932 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
 		D3FB4297118E4C8B00AC0932 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		D3FB43B4118E83DA00AC0932 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		EA88DEF616B75CA800DD2F88 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,13 +288,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA88DEF716B75CA800DD2F88 /* libz.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				D33D529E117FB65B00BA7203 /* CFNetwork.framework in Frameworks */,
 				D33D52A0117FB65B00BA7203 /* MobileCoreServices.framework in Frameworks */,
 				D33D52A2117FB65B00BA7203 /* SystemConfiguration.framework in Frameworks */,
-				D33D52A4117FB65B00BA7203 /* libz.1.2.3.dylib in Frameworks */,
 				D33D5717117FF44C00BA7203 /* QuartzCore.framework in Frameworks */,
 				D3FB3C1A11862FAA00AC0932 /* MessageUI.framework in Frameworks */,
 			);
@@ -326,6 +327,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				EA88DEF616B75CA800DD2F88 /* libz.dylib */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -661,6 +663,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Reader" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -806,6 +809,8 @@
 				GCC_PREFIX_HEADER = Reader_Prefix.pch;
 				INFOPLIST_FILE = "Reader-Info.plist";
 				PRODUCT_NAME = Reader;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -818,6 +823,8 @@
 				GCC_PREFIX_HEADER = Reader_Prefix.pch;
 				INFOPLIST_FILE = "Reader-Info.plist";
 				PRODUCT_NAME = Reader;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -889,6 +896,8 @@
 				INFOPLIST_FILE = "Reader-Info.plist";
 				PRODUCT_NAME = Reader;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "Ad Hoc Distribution";
@@ -923,6 +932,8 @@
 				GCC_PREFIX_HEADER = Reader_Prefix.pch;
 				INFOPLIST_FILE = "Reader-Info.plist";
 				PRODUCT_NAME = Reader;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "App Store Distribution";
